@@ -14,6 +14,22 @@ function LoginFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
+  const handleDemoLogin1 = () => {
+    const user = {
+      email:'demo1@simplyoptions.com',
+      password:'password1'
+    };
+    return dispatch(thunkLogin(user));
+  }
+
+  const handleDemoLogin2 = () => {
+    const user = {
+      email:'demo2@simplyoptions.com',
+      password:'password2'
+    };
+    return dispatch(thunkLogin(user));
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -32,34 +48,57 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
-      </form>
-    </>
+    <div className='login-page'>
+      <div className="video-background">
+          <video autoPlay loop muted className="fullscreen-video">
+              <source src="cover.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+          </video>
+      </div>
+      <div className="content-overlay">
+      <h2 className='login-title'>Log in to SimplyOptions</h2>
+        {errors.length > 0 &&
+          errors.map((message) => <p key={message}>{message}</p>)}
+          <form className = 'login-form' onSubmit={handleSubmit}>
+          <label>
+            Email
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
+          {errors.email && <p className='error'>{errors.email}</p>}
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {errors.password && <p>{errors.password}</p>}
+          <button className= 'login-button' type="submit">Log In</button>
+          <button 
+            onClick ={handleDemoLogin1} 
+            className='login-button'
+            type="button">
+            Log In As Demo User(Non Issuer)
+          </button>
+          <button 
+            onClick ={handleDemoLogin2} 
+            className='login-button'
+            type="button">
+            Log In As Demo User(As Issuer)
+          </button>
+
+        </form>
+        <a className='SignUpLink' href='/signup'>Dont have an account yet? Sign up one here.</a>
+        </div>
+    </div>
+
   );
 }
 

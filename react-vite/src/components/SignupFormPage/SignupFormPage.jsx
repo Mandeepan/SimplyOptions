@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
+import "./SignupFormPage.css"
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -45,10 +46,17 @@ function SignupFormPage() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
+    <div className="signup-page">
+      <div className="video-background">
+          <video autoPlay loop muted className="fullscreen-video">
+              <source src="cover.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+          </video>
+      </div>
+      <div className="content-overlay"></div>
+      <h2 className='signup-title'>Register A New Account</h2>
       {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className="signup-form" onSubmit={handleSubmit}>
       <label>
           First Name
           <input
@@ -98,18 +106,18 @@ function SignupFormPage() {
             required
           />
         </label>
-        <label>
-          Register as Issuer
+        <label id="issuer-checkbox-container">
           <input
             type="checkbox"
             checked={isIssuer}
             onChange={(e) => setIsIssuer(e.target.checked)}
           />
+          Register as Issuer
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="signup-button">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
