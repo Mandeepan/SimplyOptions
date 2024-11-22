@@ -8,7 +8,9 @@ function SignupFormPage() {
   const navigate = useNavigate();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isIssuer, setIsIssuer] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -27,9 +29,11 @@ function SignupFormPage() {
 
     const serverResponse = await dispatch(
       thunkSignup({
+        firstName,
+        lastName,
         email,
-        username,
         password,
+        isIssuer
       })
     );
 
@@ -45,6 +49,26 @@ function SignupFormPage() {
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
+      <label>
+          First Name
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </label>
+        {errors.username && <p>{errors.first_name}</p>}
+        <label>
+          Last Name
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </label>
+        {errors.username && <p>{errors.last_name}</p>}
         <label>
           Email
           <input
@@ -55,16 +79,6 @@ function SignupFormPage() {
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
         <label>
           Password
           <input
@@ -82,6 +96,14 @@ function SignupFormPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+          />
+        </label>
+        <label>
+          Register as Issuer
+          <input
+            type="checkbox"
+            checked={isIssuer}
+            onChange={(e) => setIsIssuer(e.target.checked)}
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}

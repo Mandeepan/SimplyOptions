@@ -2,8 +2,12 @@ from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from .db import SCHEMA, db, environment
-from .likes import likes
+from datetime import datetime
+import pytz
 
+def current_eastern_time():
+    tz = pytz.timezone("America/New_York")
+    return datetime.now(tz)
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
@@ -12,13 +16,23 @@ class User(db.Model, UserMixin):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(40), nullable=False, unique=True)
+    first_name = db.Column(db.String(40), nullable=False)
+    last_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    user_cash_balance = db.Column(db.Float(precision=2), default=0.0)
+    amount_to_be_debited = db.Column(db.Float(precision=2), default=0.0)
+    amount_to_be_credited = db.Column(db.Float(precision=2), default=0.0)
+    user_available_balance = db.Column(db.Float(precision=2), default=0.0)
+    is_issuer=db.Column(db.Boolean, default=False)
+    company_id=db.Column(db.Integer,default=0)
+    created_on_et = db.Column(db.Date, default=lambda: current_eastern_time().date())
+    created_at_et = db.Column(db.DateTime, default=current_eastern_time)
+    updated_at_et = db.Column(db.DateTime,  default=current_eastern_time, onupdate=current_eastern_time)
 
     # Related data
-    tweets = db.relationship("Tweet", back_populates="author")
-    liked_tweets = db.relationship("Tweet", back_populates="liked_by", secondary=likes)
+    # tweets = db.relationship("Tweet", back_populates="author")
+    # liked_tweets = db.relationship("Tweet", back_populates="liked_by", secondary=likes)
 
     @property
     def password(self):
@@ -32,11 +46,21 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict_basic(self):
-        return {"id": self.id, "username": self.username, "email": self.email}
+        return {"id": self.id, 
+                "first_name": self.first_name, 
+                "last_name": self.last_name, 
+                "email": self.email,
+                "user_cash_balance" : self.user_cash_balance,
+                "amount_to_be_credited" : self.amount_to_be_credited,
+                "amount_to_be_debited": self.amount_to_be_debited,
+                "user_available_balance": self.user_available_balance,
+                "is_issuer": self.is_issuer,
+                "company_id": self.company_id
+                }
 
     def to_dict(self):
         return {
             **self.to_dict_basic(),
-            "Tweets": [tweet.to_dict_basic() for tweet in self.tweets],
-            "LikedTweets": [tweet.to_dict_basic() for tweet in self.liked_tweets],
+            # "Tweets": [tweet.to_dict_basic() for tweet in self.tweets],
+            # "LikedTweets": [tweet.to_dict_basic() for tweet in self.liked_tweets],
         }

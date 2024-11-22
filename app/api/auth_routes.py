@@ -51,17 +51,39 @@ def sign_up():
     Creates a new user and logs them in
     """
     form = SignUpForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+    # form['csrf_token'].data = request.cookies['csrf_token']
+    csrf_token = request.cookies.get('csrf_token', None)
+    print("!!!!CSRF Token:", csrf_token)
+    form['csrf_token'].data = csrf_token
+    
+    # Debug: Print the form data
+    print("!!!!Form data received:", form.data)
+
+    if not form.validate_on_submit():
+    # Print form errors to understand why it failed validation
+        print("Form validation failed. Errors:", form.errors)
+        return form.errors, 401
+    
+    
     if form.validate_on_submit():
         user = User(
-            username=form.data['username'],
-            email=form.data['email'],
-            password=form.data['password']
+            first_name=form.data['first_name'],
+            last_name=form.data['last_name'],
+            email=form.data['email'].lower(),
+            is_issuer=form.data['is_issuer']
         )
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return user.to_dict()
+        user.password=form.data['password']
+        try:
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return user.to_dict()
+        except Exception as e:
+            print("!!!!!!!")
+            print("Database error:", str(e))  
+            db.session.rollback()
+            return {'errors': {'database': 'An error occurred while saving the user'}}, 500
+    
     return form.errors, 401
 
 

@@ -29,3 +29,4 @@ def user(id):
 
     else:
         return {"error": "User Not Found"}, 404
+

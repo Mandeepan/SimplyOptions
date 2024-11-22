@@ -3,9 +3,9 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import Home from '../components/Home';
-import Profile from '../components/Profile';
-import GenericError from '../components/Error';
-import * as api from './api';
+// import Profile from '../components/Profile';
+// import GenericError from '../components/Error';
+// import * as api from './api';
 
 export const router = createBrowserRouter([
     {
@@ -14,8 +14,6 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home />,
-                loader: api.getAllTweets,
-                action: api.postNewTweet,
             },
             {
                 path: 'login',
@@ -25,12 +23,12 @@ export const router = createBrowserRouter([
                 path: 'signup',
                 element: <SignupFormPage />,
             },
-            {
-                path: 'profile/:userId',
-                element: <Profile />,
-                errorElement: <GenericError />,
-                loader: api.getUserById,
-            },
+            // {
+            //     path: 'profile/:userId',
+            //     element: <Profile />,
+            //     errorElement: <GenericError />,
+            //     loader: api.getUserById,
+            // },
             // {
             //     path: 'stories/post',
             //     action: () => 'it would hit me!',
