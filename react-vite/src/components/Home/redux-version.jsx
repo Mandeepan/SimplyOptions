@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 // import { getAllTweetsThunk } from '../../redux/tweets';
 
 export default function Home() {
-    const dispatch = useDispatch();
-    const tweets = useSelector((store) => Object.values(store.tweets));
+    // const dispatch = useDispatch();
+    // const tweets = useSelector((store) => Object.values(store.tweets));
 
-    useEffect(() => {
-        dispatch(getAllTweetsThunk());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getAllTweetsThunk());
+    // }, [dispatch]);
 
     // console.log()
 

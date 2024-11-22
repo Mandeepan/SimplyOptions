@@ -1,1 +1,16 @@
 /* TODO: Add sitewide styles */
+
+button{
+    color:white;
+    background-color:rgba(65, 44, 116, 1);
+    box-shadow: 2px white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    color:white;
+    background-color:rgb(94, 63, 165);
+    box-shadow: 2px white;
+    border-radius: 5px;
+}

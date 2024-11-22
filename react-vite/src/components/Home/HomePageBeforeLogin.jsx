@@ -5,23 +5,31 @@ export default function HomePageBeforeLogin() {
         <div className="home-before-login-container">
             <div className="video-background">
                 <video autoPlay loop muted className="fullscreen-video">
-                    <source src="/path/to/your/video.mp4" type="video/mp4" />
+                    <source src="cover.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             </div>
             <div className="content-overlay">
-                <h1>SimplyOptions: Your Platform for Private Share Liquidity</h1>
-                <p>
-                    SimplyOptions is the marketplace for trading private company shares. Our platform provides a seamless
-                    experience for investors, issuers, and shareholders looking for efficient liquidity solutions within
-                    private markets. We simplify the process and empower you to manage transactions on your own terms.
-                </p>
+                <h1 className='company-name'>SimplyOptions</h1>
+                <div className='login-signup-container'>
+                    <button>Log In</button>
+                    <button>Sign Up</button>
+                </div>
+                <div className="company-description">
+                    <h2>Your Platform for Private Share Liquidity</h2>
+                    <p>
+                        SimplyOptions is the marketplace for trading private company shares. Our platform provides a seamless
+                        experience for investors, issuers, and shareholders looking for efficient liquidity solutions within
+                        private markets. We simplify the process and empower you to manage transactions on your own terms.
+                    </p>
+                </div>
+               
                 <div className="user-roles-container">
                     <div className="user-role-box">
                         <h2>Investor</h2>
                         <ul>
                             <li>Gain transparency and access to a live order book for private shares.</li>
-                            <li>Maintain control over investments with complete anonymity until you're ready to transact.</li>
+                            <li>Maintain control over investments with complete anonymity until you&apos;re ready to transact.</li>
                             <li>Effortlessly execute transactions with direct negotiations and standardized agreements.</li>
                             <li>Expand your investment opportunities in pre-IPO companies, all with transparent fees.</li>
                         </ul>
