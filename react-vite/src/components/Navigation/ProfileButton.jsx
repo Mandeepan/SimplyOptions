@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from 'react-icons/fa';
+// import { FaUserCircle } from 'react-icons/fa';
+import { FaUserLarge } from "react-icons/fa6";
+
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -39,10 +41,11 @@ function ProfileButton() {
     closeMenu();
   };
 
+  const profileButtonClassName = user ? "profile-button": "profile-button-hidden"
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button className={profileButtonClassName} onClick={toggleMenu}>
+        <FaUserLarge />
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>

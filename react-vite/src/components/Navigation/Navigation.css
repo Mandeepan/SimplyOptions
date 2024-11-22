@@ -1,3 +1,57 @@
+.nav-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  background-color: rgb(0,0,0,0.5); 
+  padding:0.5rem 4rem;
+}
+
 .profile-dropdown {
   position: absolute;
+}
+
+.logo *{
+  font-size: 3rem;
+  color:white;
+}
+
+.profile-button{
+  border:1px  rgb(94, 63, 165) solid;
+  border-radius: 50%;
+  width: 2rem;
+  height:2rem;
+  background-color: transparent;
+}
+
+.profile-button-hidden{
+  display:none
+}
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(126, 126, 126);
+  border-radius: 5px;
+  height: 32px;
+  width: 30%;
+}
+
+.search-bar-container svg {
+  margin-left: 5px;
+  color: grey;
+  font-size: 20px;
+}
+
+.search-bar-container input {
+  border: none;
+  height: 20px;
+  margin-bottom: 5px;
+  outline: none;
+  background-color: transparent; 
+  color: white;
+  width: 100%;
+}
+
+.search-bar-container-hidden{
+  display:none
 }

@@ -54,3 +54,34 @@
     background: rgba(255, 255, 255, 0.6); /* Slight background to improve text visibility */
     color: #fff;
 }
+
+
+.login-signup-container{
+    margin:0 40%;
+    width: 20%;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-signup-container button{
+    width: 7rem
+}
+
+.company-description{
+    max-width: 60%;
+    align-items: center;
+    position:relative;
+    left:20%
+}
+
+.user-roles-container{
+    max-width: 80%;
+    position:relative;
+    left:10%
+}
+
+li {
+    text-align: left;
+}
