@@ -55,3 +55,46 @@
 .search-bar-container-hidden{
   display:none
 }
+
+/* Following are for the profile button dropdown menu*/
+
+.profile-dropdown{
+  border: 1px  #cecece solid;
+  border-radius: 5px;
+  padding:0.5rem 1rem;
+  background-color: white;
+  position: absolute;
+  right:2%
+}
+.profile-dropdown > li {
+  list-style-type: none;
+  padding: 0.25rem;
+  color:rgba(65, 44, 116, 1);
+}
+
+.profile-list-item-with-icon:hover{
+  color:rgb(94, 63, 165);
+  background-color: #cecece;
+  width:100%
+}
+
+.profile-list-item-with-icon>button:hover{
+  color: rgb(94, 63, 165);
+  background-color: transparent;
+}
+
+
+
+.profile-list-item-with-icon{
+  border-top: 1px #cecece solid;
+  display:flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
+
+.profile-list-item-with-icon * {
+  background-color: transparent;
+  color: rgba(65, 44, 116, 1);
+  border:none
+}

@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {useNavigate } from "react-router-dom"
 // import { FaUserCircle } from 'react-icons/fa';
 import { FaUserLarge } from "react-icons/fa6";
+import { FaBriefcase } from "react-icons/fa";
+import { MdOutlineLogout } from "react-icons/md";
+import { MdSpaceDashboard } from "react-icons/md";
 
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
@@ -10,6 +14,7 @@ import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
@@ -41,6 +46,14 @@ function ProfileButton() {
     closeMenu();
   };
 
+  const handleIssuerPanelClick = () => {
+    navigate("/issuerPanel");
+  };
+
+  const handleDashboardClick = () => {
+    navigate("/dashboard");
+  };
+
   const profileButtonClassName = user ? "profile-button": "profile-button-hidden"
   return (
     <>
@@ -51,10 +64,18 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
+              <li className='profile-username'>Hi, {user.first_name}</li>
+              <li className='profile-list-item-with-icon'>
+                <FaBriefcase />
+                <button className='profile-my-portfolio' onClick={handleIssuerPanelClick} >Issuer Panel</button>
+              </li>
+              <li className='profile-list-item-with-icon'>
+                <MdSpaceDashboard />
+                <button className='profile-mode-button' onClick={handleDashboardClick}>User Dashboard</button>
+              </li>
+              <li className='profile-list-item-with-icon'>
+                <MdOutlineLogout />
+                <button className='profile-log-out' onClick={logout}>Log Out</button>
               </li>
             </>
           ) : (
