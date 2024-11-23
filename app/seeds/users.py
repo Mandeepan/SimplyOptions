@@ -12,8 +12,7 @@ user1 = User(
     amount_to_be_debited=100.00,
     amount_to_be_credited=50.00,
     user_available_balance=950.00,
-    is_issuer=False,
-    company_id=None
+    is_issuer=False
 )
 
 user2 = User(
@@ -39,7 +38,6 @@ user3 = User(
     amount_to_be_credited=100.00,
     user_available_balance=1850.00,
     is_issuer=False,
-    company_id=None
 )
 
 user4 = User(

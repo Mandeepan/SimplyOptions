@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     amount_to_be_credited = db.Column(db.Float(precision=2), default=0.0)
     user_available_balance = db.Column(db.Float(precision=2), default=0.0)
     is_issuer=db.Column(db.Boolean, default=False)
-    company_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod('companies.id')),default=0)
+    company_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod('companies.id')))
     created_on_et = db.Column(db.Date, default=lambda: current_eastern_time().date())
     created_at_et = db.Column(db.DateTime, default=current_eastern_time)
     updated_at_et = db.Column(db.DateTime,  default=current_eastern_time, onupdate=current_eastern_time)
