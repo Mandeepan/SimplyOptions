@@ -28,4 +28,5 @@ class Company(db.Model):
     created_at_et = db.Column(db.DateTime, default=lambda: datetime.now(pytz.timezone("America/New_York")))
     updated_at_et = db.Column(db.DateTime, default=lambda: datetime.now(pytz.timezone("America/New_York")), onupdate=lambda: datetime.now(pytz.timezone("America/New_York")))
 
-    users = db.relationship('User', back_ref="company", lazy='dynamic')
+    users = db.relationship('User', backref="company", lazy='dynamic')
+    

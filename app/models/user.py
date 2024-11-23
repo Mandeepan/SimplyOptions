@@ -3,7 +3,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from .db import SCHEMA, db, environment, add_prefix_for_prod
 from datetime import datetime
 import pytz
-from app.models import Company
 
 def current_eastern_time():
     tz = pytz.timezone("America/New_York")
@@ -31,7 +30,6 @@ class User(db.Model, UserMixin):
     updated_at_et = db.Column(db.DateTime,  default=current_eastern_time, onupdate=current_eastern_time)
 
     # Related data
-    company = db.relationship("Company", back_populates="users")
     # tweets = db.relationship("Tweet", back_populates="author")
     # liked_tweets = db.relationship("Tweet", back_populates="liked_by", secondary=likes)
 
