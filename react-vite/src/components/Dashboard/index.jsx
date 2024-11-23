@@ -50,9 +50,16 @@
 //         </>
 //     );
 // }
-
+import {useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom';
 
 export default function Dashboard(){
+    const sessionUser = useSelector((state) => state.session.user);
+
+    if (!sessionUser) {
+        return <Navigate to='/'></Navigate>
+    }
+    
     return (
         <>
         <h1>Dashboard Page</h1>

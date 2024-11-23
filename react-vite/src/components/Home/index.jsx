@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import HomePageBeforeLogin from "./HomePageBeforeLogin";
+import HomePageAfterLogin from "./HomePageAfterLogin";
 
 export default function Home() {
     const sessionUser = useSelector((state) => state.session.user);
@@ -11,7 +12,7 @@ export default function Home() {
 
     return (
         <>{sessionUser? 
-            <h1>Welcome to SimplyOptions!</h1> 
+            <HomePageAfterLogin />
             : 
             <HomePageBeforeLogin />
         }

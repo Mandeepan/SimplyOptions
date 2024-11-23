@@ -10,7 +10,7 @@ from .api.auth_routes import auth_routes
 
 from .api.user_routes import user_routes
 from .config import Config
-from .models import User, db
+from .models import User, db, Company
 from .seeds import seed_commands
 
 app = Flask(__name__, static_folder="../react-vite/dist", static_url_path="/")

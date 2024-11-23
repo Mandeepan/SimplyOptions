@@ -4,6 +4,7 @@ from app.models.db import SCHEMA, db, environment
 
 # from .tweets import seed_tweets, undo_tweets
 from .users import seed_users, undo_users
+from .companies import seed_companies,undo_companies
 
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
@@ -19,8 +20,10 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_users()
+        undo_companies()
         
     seed_users()
+    seed_companies()
     
 
 
@@ -28,3 +31,4 @@ def seed():
 @seed_commands.command("undo")
 def undo():
     undo_users()
+    undo_companies()

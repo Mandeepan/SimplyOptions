@@ -18,6 +18,10 @@ export default function Layout() {
                 <Navigation />
                 {isLoaded && <Outlet />}
                 <Modal />
+                {/* Footer */}
+                <footer className="footer">
+                    <p>© {new Date().getFullYear()} SimplyOptions. All rights reserved.</p>
+                </footer>
             </ModalProvider>
         </>
     );
