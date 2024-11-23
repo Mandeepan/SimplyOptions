@@ -21,9 +21,9 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_users()
         undo_companies()
-        
+    
+    seed_companies() 
     seed_users()
-    seed_companies()
     
 
 
