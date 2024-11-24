@@ -728,7 +728,7 @@ offers = [
         "offered_price": 12.0,
         "initial_quantity": 500,
         "remaining_quantity": 0,
-        "offered_on_et": "2024-08-18",
+        "offered_on_et": "2024-08-21",
         "settled_on_et": "2024-08-22",
     },
 ]
@@ -832,5 +832,38 @@ transactions = [
         "transaction_price": 20.0,
         "transaction_quantity": 200,
         "settled_on_et": None,
+    }
+]
+
+documents = [
+    {
+        "listing_id": 4,
+        "offer_id": 8,
+        "user_id": 1,
+        "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
+    },
+    {
+        "listing_id": 2,
+        "offer_id": 2,
+        "user_id": 6,
+        "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
+    },
+    {
+        "listing_id": 3,
+        "offer_id": 3,
+        "user_id": 7,
+        "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
+    },
+    {
+        "listing_id": 4,
+        "offer_id": 4,
+        "user_id": 8,
+        "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
+    },
+    {
+        "listing_id": 5,
+        "offer_id": 5,
+        "user_id": 9,
+        "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
     }
 ]
