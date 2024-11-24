@@ -55,7 +55,7 @@ function SignupFormPage() {
       </div>
       <div className="content-overlay"></div>
       <h2 className='signup-title'>Register A New Account</h2>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className='error'>{errors.server}</p>}
       <form className="signup-form" onSubmit={handleSubmit}>
       <label>
           First Name
@@ -66,7 +66,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.username && <p>{errors.first_name}</p>}
+        {errors.username && <p className='error'>{errors.first_name}</p>}
         <label>
           Last Name
           <input
@@ -76,7 +76,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.username && <p>{errors.last_name}</p>}
+        {errors.username && <p className='error'>{errors.last_name}</p>}
         <label>
           Email
           <input
@@ -86,7 +86,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='error'>{errors.email}</p>}
         <label>
           Password
           <input
@@ -96,7 +96,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='error'>{errors.password}</p>}
         <label>
           Confirm Password
           <input
@@ -114,7 +114,7 @@ function SignupFormPage() {
           />
           Register as Issuer
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
         <button type="submit" className="signup-button">Sign Up</button>
       </form>
     </div>

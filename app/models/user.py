@@ -1,12 +1,7 @@
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
-from .db import SCHEMA, db, environment, add_prefix_for_prod
-from datetime import datetime
-import pytz
+from .db import SCHEMA, db, environment, add_prefix_for_prod, current_eastern_time
 
-def current_eastern_time():
-    tz = pytz.timezone("America/New_York")
-    return datetime.now(tz)
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
@@ -30,6 +25,7 @@ class User(db.Model, UserMixin):
     updated_at_et = db.Column(db.DateTime,  default=current_eastern_time, onupdate=current_eastern_time)
 
     # Related data
+    instruments = db.relationship('Instrument', backref='users',lazy=True)
     # tweets = db.relationship("Tweet", back_populates="author")
     # liked_tweets = db.relationship("Tweet", back_populates="liked_by", secondary=likes)
 
@@ -43,23 +39,17 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
-
-    def to_dict_basic(self):
-        return {"id": self.id, 
-                "first_name": self.first_name, 
-                "last_name": self.last_name, 
-                "email": self.email,
-                "user_cash_balance" : self.user_cash_balance,
-                "amount_to_be_credited" : self.amount_to_be_credited,
-                "amount_to_be_debited": self.amount_to_be_debited,
-                "user_available_balance": self.user_available_balance,
-                "is_issuer": self.is_issuer,
-                "company_id": self.company_id
-                }
-
+    
     def to_dict(self):
         return {
-            **self.to_dict_basic(),
-            # "Tweets": [tweet.to_dict_basic() for tweet in self.tweets],
-            # "LikedTweets": [tweet.to_dict_basic() for tweet in self.liked_tweets],
+            "id": self.id, 
+            "first_name": self.first_name, 
+            "last_name": self.last_name, 
+            "email": self.email,
+            "user_cash_balance" : self.user_cash_balance,
+            "amount_to_be_credited" : self.amount_to_be_credited,
+            "amount_to_be_debited": self.amount_to_be_debited,
+            "user_available_balance": self.user_available_balance,
+            "is_issuer": self.is_issuer,
+            "company_id": self.company_id
         }

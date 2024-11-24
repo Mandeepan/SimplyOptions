@@ -3,3 +3,4 @@ from .db import SCHEMA, db, environment
 # from .tweet import Tweet
 from .user import User
 from .company import Company
+from .instrument import Instrument
