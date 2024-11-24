@@ -7,3 +7,4 @@ from .instrument import Instrument
 from .instrumentPrice import InstrumentPrice
 from .offer import Offer
 from .listing import Listing
+from .transaction import Transaction

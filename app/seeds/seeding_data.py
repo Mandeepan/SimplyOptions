@@ -535,7 +535,7 @@ instrument_prices = [
     {
         "instrument_id": 1,
         "recorded_on_et": "2024-10-15",
-        "recorded_price": 13.2
+        "recorded_price": 15.2
     },
     {
         "instrument_id": 2,
@@ -722,10 +722,10 @@ offers = [
         "settled_on_et": None,
     },
     {
-        "instrument_id": 6,
+        "instrument_id": 1,
         "offer_user_id": 5,
         "status": "Filled",
-        "offered_price": 22.0,
+        "offered_price": 12.0,
         "initial_quantity": 500,
         "remaining_quantity": 0,
         "offered_on_et": "2024-08-18",
@@ -765,14 +765,14 @@ listings = [
         "settled_on_et": None
     },
     {
-        "instrument_id": 8,
+        "instrument_id": 1,
         "listing_user_id": 1,
         "status": "Filled",
-        "listed_price": 30.0,
-        "initial_quantity": 250,
+        "listed_price": 12.0,
+        "initial_quantity": 500,
         "remaining_quantity": 0,
-        "listed_on_et": "2024-11-15",
-        "settled_on_et": "2024-11-20"
+        "listed_on_et": "2023-11-15",
+        "settled_on_et": "2024-08-22"
     },
     {
         "instrument_id": 2,
@@ -783,5 +783,54 @@ listings = [
         "remaining_quantity": 100,
         "listed_on_et": "2024-11-18",
         "settled_on_et": None
+    }
+]
+
+
+transactions = [
+    {
+        "instrument_id": 1,
+        "offer_id": 8,
+        "listing_id": 4,
+        "status": "Completed",
+        "transaction_price": 12.00,
+        "transaction_quantity": 500,
+        "settled_on_et": "2024-08-22",
+    },
+    {
+        "instrument_id": 1,
+        "offer_id": 2,
+        "listing_id": 2,
+        "status": "Pending",
+        "transaction_price": 15.0,
+        "transaction_quantity": 100,
+        "settled_on_et": None,
+    },
+    {
+        "instrument_id": 3,
+        "offer_id": 3,
+        "listing_id": 3,
+        "status": "Completed",
+        "transaction_price": 25.0,
+        "transaction_quantity": 75,
+        "settled_on_et": "2024-11-23"
+    },
+    {
+        "instrument_id": 4,
+        "offer_id": 4,
+        "listing_id": 4,
+        "status": "Completed",
+        "transaction_price": 18.5,
+        "transaction_quantity": 120,
+        "settled_on_et": "2024-11-24",
+    },
+    {
+        "instrument_id": 5,
+        "offer_id": 5,
+        "listing_id": 5,
+        "status": "Pending",
+        "transaction_price": 20.0,
+        "transaction_quantity": 200,
+        "settled_on_et": None,
     }
 ]

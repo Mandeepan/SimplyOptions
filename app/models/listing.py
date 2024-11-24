@@ -1,5 +1,5 @@
 from .db import SCHEMA, add_prefix_for_prod, db, environment, current_eastern_time
-
+from .transaction import Transaction
 
 class Listing(db.Model):
     __tablename__ = "listings"
@@ -18,6 +18,8 @@ class Listing(db.Model):
     settled_on_et = db.Column (db.Date)
     created_at_et = db.Column(db.DateTime, default=current_eastern_time)
     updated_at_et = db.Column(db.DateTime, default=current_eastern_time, onupdate=current_eastern_time)
+    
+    transactions = db.relationship('Transaction', backref='listings',lazy=True)
 
     def to_dict(self):
         return {
