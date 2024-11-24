@@ -8,6 +8,7 @@ from .companies import seed_companies,undo_companies
 from .instruments import seed_instruments,undo_instruments
 from .instrument_prices import seed_instrument_prices,undo_instrument_prices
 from .offers import seed_offers, undo_offers
+from .listings import seed_listings, undo_listings
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
 seed_commands = AppGroup("seed")
@@ -22,6 +23,7 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         undo_offers()
+        undo_listings()
         undo_instrument_prices()
         undo_instruments()
         undo_users()
@@ -31,12 +33,14 @@ def seed():
     seed_users()
     seed_instruments()
     seed_instrument_prices()
+    seed_listings()
     seed_offers()
 
 # Creates the `flask seed undo` command
 @seed_commands.command("undo")
 def undo():
     undo_offers()
+    undo_listings()
     undo_instrument_prices()
     undo_instruments()
     undo_users()

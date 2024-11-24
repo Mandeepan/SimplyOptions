@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from .db import SCHEMA, db, environment, add_prefix_for_prod, current_eastern_time
 from .offer import Offer
+from .listing import Listing
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
@@ -26,7 +27,8 @@ class User(db.Model, UserMixin):
 
     # Related data
     instruments = db.relationship('Instrument', backref='users',lazy=True)
-    Offers = db.relationship('Offer', backref='users',lazy=True)
+    offers = db.relationship('Offer', backref='users',lazy=True)
+    listings = db.relationship('Listing', backref='users',lazy=True)
 
 
     @property

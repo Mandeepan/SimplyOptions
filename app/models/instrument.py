@@ -1,6 +1,7 @@
 from .db import SCHEMA, add_prefix_for_prod, db, environment, current_eastern_time
 from .instrumentPrice import InstrumentPrice
 from .offer import Offer
+from .listing import Listing
 class Instrument(db.Model):
     __tablename__ = "instruments"
 
@@ -21,7 +22,8 @@ class Instrument(db.Model):
     updated_at_et = db.Column(db.DateTime, default=current_eastern_time, onupdate=current_eastern_time)
     
     instrument_prices = db.relationship('InstrumentPrice', backref='instruments',lazy=True)
-    Offers = db.relationship('Offer', backref='instruments',lazy=True)
+    offers = db.relationship('Offer', backref='instruments',lazy=True)
+    listings = db.relationship('Listing', backref='instruments',lazy=True)
 
     def to_dict(self):
         return {

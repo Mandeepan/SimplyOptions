@@ -732,3 +732,56 @@ offers = [
         "settled_on_et": "2024-08-22",
     },
 ]
+
+listings = [
+    {
+        "instrument_id": 1,
+        "listing_user_id": 5,
+        "status": "Not Filled",
+        "listed_price": 12.5,
+        "initial_quantity": 100,
+        "remaining_quantity": 100,
+        "listed_on_et": "2024-11-10",
+        "settled_on_et": None
+    },
+    {
+        "instrument_id": 1,
+        "listing_user_id": 3,
+        "status": "Partially Filled",
+        "listed_price": 15.0,
+        "initial_quantity": 200,
+        "remaining_quantity": 150,
+        "listed_on_et": "2024-11-12",
+        "settled_on_et": None
+    },
+    {
+        "instrument_id": 5,
+        "listing_user_id": 2,
+        "status": "Not Filled",
+        "listed_price": 25.0,
+        "initial_quantity": 150,
+        "remaining_quantity": 150,
+        "listed_on_et": "2024-11-14",
+        "settled_on_et": None
+    },
+    {
+        "instrument_id": 8,
+        "listing_user_id": 1,
+        "status": "Filled",
+        "listed_price": 30.0,
+        "initial_quantity": 250,
+        "remaining_quantity": 0,
+        "listed_on_et": "2024-11-15",
+        "settled_on_et": "2024-11-20"
+    },
+    {
+        "instrument_id": 2,
+        "listing_user_id": 1,
+        "status": "Partially Filled",
+        "listed_price": 18.5,
+        "initial_quantity": 300,
+        "remaining_quantity": 100,
+        "listed_on_et": "2024-11-18",
+        "settled_on_et": None
+    }
+]
