@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from .db import SCHEMA, db, environment, add_prefix_for_prod, current_eastern_time
-
+from .offer import Offer
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
@@ -26,8 +26,8 @@ class User(db.Model, UserMixin):
 
     # Related data
     instruments = db.relationship('Instrument', backref='users',lazy=True)
-    # tweets = db.relationship("Tweet", back_populates="author")
-    # liked_tweets = db.relationship("Tweet", back_populates="liked_by", secondary=likes)
+    Offers = db.relationship('Offer', backref='users',lazy=True)
+
 
     @property
     def password(self):
