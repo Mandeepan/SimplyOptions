@@ -4,3 +4,4 @@ from .db import SCHEMA, db, environment
 from .user import User
 from .company import Company
 from .instrument import Instrument
+from .instrumentPrice import InstrumentPrice

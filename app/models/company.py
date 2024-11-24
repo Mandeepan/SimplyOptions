@@ -1,6 +1,5 @@
-from .user import User;
 from .db import SCHEMA, add_prefix_for_prod, db, environment,current_eastern_time
-
+from .user import User
 from .instrument import Instrument
 
 class Company(db.Model):

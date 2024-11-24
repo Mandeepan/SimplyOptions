@@ -519,3 +519,132 @@ instruments = [
         "updated_price": 20.0
     }
 ]
+
+
+instrument_prices = [
+    {
+        "instrument_id": 1,
+        "recorded_on_et": "2024-10-02",
+        "recorded_price": 12.8
+    },
+    {
+        "instrument_id": 1,
+        "recorded_on_et": "2024-10-10",
+        "recorded_price": 13.0
+    },
+    {
+        "instrument_id": 1,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 13.2
+    },
+    {
+        "instrument_id": 2,
+        "recorded_on_et": "2024-10-06",
+        "recorded_price": 15.2
+    },
+    {
+        "instrument_id": 2,
+        "recorded_on_et": "2024-10-12",
+        "recorded_price": 15.5
+    },
+    {
+        "instrument_id": 2,
+        "recorded_on_et": "2024-10-18",
+        "recorded_price": 15.8
+    },
+        {
+        "instrument_id": 3,
+        "recorded_on_et": "2024-10-02",
+        "recorded_price": 22.8
+    },
+    {
+        "instrument_id": 3,
+        "recorded_on_et": "2024-10-10",
+        "recorded_price": 23.0
+    },
+    {
+        "instrument_id": 3,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 30.2
+    },
+        {
+        "instrument_id": 4,
+        "recorded_on_et": "2023-10-02",
+        "recorded_price": 12.8
+    },
+    {
+        "instrument_id": 4,
+        "recorded_on_et": "2024-10-10",
+        "recorded_price": 50.0
+    },
+    {
+        "instrument_id": 4,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 48.2
+    },
+        {
+        "instrument_id": 5,
+        "recorded_on_et": "2022-10-02",
+        "recorded_price": 6.8
+    },
+    {
+        "instrument_id": 5,
+        "recorded_on_et": "2024-06-10",
+        "recorded_price": 13.0
+    },
+    {
+        "instrument_id": 5,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+        {
+        "instrument_id": 6,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 7,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 8,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 9,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 10,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 11,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 12,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 13,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 14,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+    {
+        "instrument_id": 15,
+        "recorded_on_et": "2024-10-15",
+        "recorded_price": 59.2
+    },
+]
