@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 316dd6c99255
+Revision ID: 2bc7248efc38
 Revises: 
-Create Date: 2024-11-24 16:47:02.626150
+Create Date: 2024-11-24 17:07:51.133678
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '316dd6c99255'
+revision = '2bc7248efc38'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('api_identifier', sa.String(), nullable=True),
     sa.Column('location_identifiers', sa.String(), nullable=True),
     sa.Column('categories', sa.String(), nullable=True),
-    sa.Column('num_employees_enum', sa.Integer(), nullable=True),
+    sa.Column('num_employees_enum', sa.String(), nullable=True),
     sa.Column('revenue_range', sa.String(), nullable=True),
     sa.Column('operating_status', sa.String(), nullable=True),
     sa.Column('website_url', sa.String(), nullable=True),
@@ -158,7 +158,6 @@ def upgrade():
         op.execute(f"ALTER TABLE instruments SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE companies SET SCHEMA {SCHEMA};")
-
 
 
 def downgrade():

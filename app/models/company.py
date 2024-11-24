@@ -16,7 +16,7 @@ class Company(db.Model):
     api_identifier = db.Column(db.String)
     location_identifiers = db.Column(db.String)
     categories = db.Column(db.String)
-    num_employees_enum = db.Column(db.Integer)
+    num_employees_enum = db.Column(db.String)
     revenue_range = db.Column(db.String)
     operating_status = db.Column(db.String)
     website_url = db.Column(db.String)
