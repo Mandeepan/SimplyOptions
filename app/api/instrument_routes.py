@@ -7,7 +7,7 @@ from datetime import datetime
 instrument_routes = Blueprint("instruments", __name__)
 
 @instrument_routes.route("/", methods=["GET"] )
-@login_required
+# @login_required
 def get_all_instruments():
     try:
         instruments = (

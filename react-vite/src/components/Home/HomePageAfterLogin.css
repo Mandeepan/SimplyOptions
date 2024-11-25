@@ -1,0 +1,45 @@
+.homepage-container {
+    padding: 20px;
+}
+
+.homepage-container a{
+    /* text-decoration: none; */
+    color:white;
+    font-weight: bold;
+}
+
+.homepage-container h1{
+    text-align: center;
+}
+
+.instruments-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgb(84, 75, 106);
+    max-width:90%;
+    justify-self: center;
+}
+
+.instruments-table th, .instruments-table td {
+    border: 2px solid #1a1a1a; 
+    padding: 8px;
+    text-align: left;
+}
+
+.instruments-table th {
+    background-color: rgba(65, 44, 116, 1)
+}
+
+.pagination {
+margin-top: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+  
+.pagination button {
+margin: 0 10px;
+padding: 8px 16px;
+min-width: 7rem;
+}
+  
