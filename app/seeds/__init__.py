@@ -10,6 +10,7 @@ from .instrument_prices import seed_instrument_prices,undo_instrument_prices
 from .offers import seed_offers, undo_offers
 from .listings import seed_listings, undo_listings
 from .transactions import seed_transactions, undo_transactions
+from .documents import seed_documents, undo_documents
 # Creates a seed group to hold our commands
 # So we can type `flask seed --help`
 seed_commands = AppGroup("seed")
@@ -23,6 +24,7 @@ def seed():
         # command, which will  truncate all tables prefixed with
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
+        undo_documents()
         undo_transactions()
         undo_offers()
         undo_listings()
@@ -38,10 +40,12 @@ def seed():
     seed_listings()
     seed_offers()
     seed_transactions()
+    seed_documents()
 
 # Creates the `flask seed undo` command
 @seed_commands.command("undo")
 def undo():
+    undo_documents()
     undo_transactions()
     undo_offers()
     undo_listings()

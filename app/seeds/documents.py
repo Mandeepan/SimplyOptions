@@ -9,7 +9,7 @@ def seed_documents():
             listing_id=document['listing_id'],
             offer_id=document['offer_id'],
             user_id=document['user_id'],
-            doc_url =document['dpc_url'],
+            doc_url =document['doc_url'],
         )
         db.session.add(new_document)
     db.session.commit()
