@@ -9,6 +9,7 @@ from flask_wtf.csrf import CSRFProtect, generate_csrf
 from .api.auth_routes import auth_routes
 from .api.user_routes import user_routes
 from .api.instrument_routes import instrument_routes
+from .api.company_routes import company_routes
 
 from .config import Config
 from .models import User, db
@@ -33,6 +34,7 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix="/api/users")
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(instrument_routes, url_prefix="/api/instruments")
+app.register_blueprint(company_routes, url_prefix="/api/companies")
 
 db.init_app(app)
 Migrate(app, db)
