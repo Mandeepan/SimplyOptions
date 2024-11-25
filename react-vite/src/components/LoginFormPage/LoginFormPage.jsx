@@ -16,16 +16,16 @@ function LoginFormPage() {
 
   const handleDemoLogin1 = () => {
     const user = {
-      email:'demo1@simplyoptions.com',
-      password:'password1'
+      email:'nonissuerdemo@simplyoptions.com',
+      password:'password123'
     };
     return dispatch(thunkLogin(user));
   }
 
   const handleDemoLogin2 = () => {
     const user = {
-      email:'demo2@simplyoptions.com',
-      password:'password2'
+      email:'issuerdemo@simplyoptions.com',
+      password:'password456'
     };
     return dispatch(thunkLogin(user));
   }
