@@ -1,9 +1,19 @@
 import "./CreateInstrumentPage.css"
+import {useSelector} from 'react-redux'
+
+import { Navigate } from 'react-router-dom';
+
 
 export default function CreateInstrumentPage() {
+    const sessionUser = useSelector((state) => state.session.user);
+    
+    if (!sessionUser) {
+        return <Navigate to='/'></Navigate>
+    }
+
     return(
         <>
-            <h1>create an instrument</h1>
+            <h1>Create An Instrument</h1>
         </>
     )
 }

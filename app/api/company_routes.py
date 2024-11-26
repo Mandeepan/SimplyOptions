@@ -58,7 +58,7 @@ def get_an_company(companyId):
     
     
 @company_routes.route("/", methods=["POST"])
-@login_required
+# @login_required
 def add_an_company():
     try:
         data = request.get_json()

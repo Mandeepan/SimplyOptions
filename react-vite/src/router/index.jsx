@@ -7,6 +7,7 @@ import IssuerPanel from '../components/IssuerPanel';
 import Dashboard from '../components/Dashboard';
 import CreateInstrumentPage from '../components/CreateInstrumentPage';
 import InstrumentDetailPage from '../components/InstrumentDetailPage';
+import CreateCompanyPage from "../components/CreateCompanyPage";
 // import GenericError from '../components/Error';
 // import * as api from './api';
 
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
             {
                 path:'createInstrument',
                 element:<CreateInstrumentPage />
+            },
+            {
+                path:'createCompany',
+                element:<CreateCompanyPage />
             }
         ],
     },

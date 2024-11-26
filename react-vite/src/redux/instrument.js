@@ -13,7 +13,7 @@ export const getAllInstrumentsThunk= () => async (dispatch) => {
   const res = await fetch('/api/instruments');
   if (res.ok) {
       const data = await res.json();
-      console.log("API Response: ", data);
+    //   console.log("API Response: ", data);
       dispatch(getAllInstruments(data.instruments));
   } else {
       const errors = await res.json();

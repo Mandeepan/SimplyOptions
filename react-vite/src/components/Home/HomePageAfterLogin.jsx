@@ -3,10 +3,12 @@ import {useDispatch, useSelector} from 'react-redux'
 import { getAllInstrumentsThunk } from "../../redux/instrument"
 // import { useNavigate} from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import{getAUserThunk} from "../../redux/user";
 import "./HomePageAfterLogin.css"
 
 export default function HomePageAfterLogin(){
     const dispatch = useDispatch();
+    const sessionUser = useSelector((state) => state.session.user);
     const instrumentsObject = useSelector((state) => state.allInstruments.allInstruments);
     const instruments = Object.values(instrumentsObject);
     // Pagination state
@@ -14,13 +16,12 @@ export default function HomePageAfterLogin(){
     const rowsPerPage = 10;
     const totalPages = Math.ceil(instruments.length / rowsPerPage);
 
-    useEffect(() => {
-        dispatch(getAllInstrumentsThunk());
-    }, [dispatch]);
 
     useEffect(() => {
-        console.log("Instruments Object from Redux: ", instrumentsObject); // Add this line to log the instruments object
-    }, [instrumentsObject]);
+        dispatch(getAllInstrumentsThunk());
+        dispatch(getAUserThunk(parseInt(sessionUser.id)))
+    }, [dispatch, sessionUser]);
+
     
     // Get current page instruments
     const indexOfLastRow = currentPage * rowsPerPage;
@@ -32,13 +33,13 @@ export default function HomePageAfterLogin(){
         setCurrentPage(pageNumber);
     };
 
-    // Ensure URL has a valid protocol
-    const getValidURL = (url) => {
-        if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
-        return `https://${url}`;
-        }
-        return url;
-    };
+    // // Ensure URL has a valid protocol
+    // const getValidURL = (url) => {
+    //     if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+    //     return `https://${url}`;
+    //     }
+    //     return url;
+    // };
 
     return (
     <div className="homepage-container">
@@ -57,7 +58,7 @@ export default function HomePageAfterLogin(){
             {currentInstruments.map((instrument) => (
             <tr key={instrument.id}>
                 <td>
-                <a href={getValidURL(instrument.website_url)} target="_blank" rel="noopener noreferrer">
+                <a href={`/instruments/${instrument.id}`} target="_blank" rel="noopener noreferrer">
                     {instrument.company_name}
                 </a>
                 </td>
