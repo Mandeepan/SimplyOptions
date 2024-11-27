@@ -192,10 +192,9 @@ def update_an_company(companyId):
         return make_response(jsonify({"message": str(e)}), 500, {"Content-Type": "application/json"})
     
 @company_routes.route("/<int:companyId>", methods=["DELETE"])
-@login_required
+# @login_required
 def delete_an_company(companyId):
     try:
-        data = request.get_json()
         company = Company.query.filter_by(id=companyId).first()
         
         if not company:

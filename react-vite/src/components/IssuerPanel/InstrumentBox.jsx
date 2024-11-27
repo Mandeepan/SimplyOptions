@@ -42,7 +42,7 @@ export default function InstrumentBox({currentCompany}){
                                     <th>Type</th>
                                     <th>Class</th>
                                     <th>Value</th>
-                                    <th>Issued Quantity</th>
+                                    <th>Issued Qty</th>
                                     <th>Price</th>
                                 </tr>
                             </thead>

@@ -39,7 +39,7 @@ export default function IssuerPanel() {
         {userInfo.is_issuer?
         <div className="issuer-container">
             <h2> Welcome to SimplyOptions Issuer Panel, {sessionUser.first_name}!</h2>
-            <CompanyInfoBox currentCompany={currentCompany} />
+            <CompanyInfoBox currentCompany={currentCompany} userId={sessionUser.id} />
             <InstrumentBox currentCompany={currentCompany} />
             
         </div>

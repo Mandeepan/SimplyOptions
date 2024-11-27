@@ -1,7 +1,14 @@
 import {useNavigate} from 'react-router-dom';
+import {useDispatch } from 'react-redux';
+import { useModal } from '../../context/Modal';
+import ConfirmDeleteModal from '../ConfirmDeleteModal/ConfirmDeleteModal';
+import { deleteACompanyThunk } from '../../redux/company';
+import { updateAUserThunk } from '../../redux/user';
 
-export default function CompanyInfoBox({currentCompany}){
+export default function CompanyInfoBox({currentCompany, userId}){
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { setModalContent, closeModal } = useModal();
     // Ensure URL has a valid protocol
     const getValidURL = (url) => {
         if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
@@ -12,6 +19,39 @@ export default function CompanyInfoBox({currentCompany}){
 
     const handleUpdateCompanyClick=()=>{
         navigate('/updateCompany')
+    }
+
+    const handleDeleteCompanyProcess= async (companyId, userId)=>{
+        try{
+            await dispatch(deleteACompanyThunk(companyId))
+        } catch (error) {
+            console.error('Error deleting company', error);
+            alert("Can not delete this company record, please reach out to help@simplyoptions.com")
+            navigate('/issuerPanel')
+        }
+        try{
+            const newUserInfo = {
+                is_issuer: false,
+                company_id: null,
+            };
+            await dispatch(updateAUserThunk(userId, newUserInfo))
+
+            closeModal();
+        } catch (error) {
+            console.error('Error updating user profile:', error);
+            alert("Can not update user record, please reach out to help@simplyoptions.com")
+            navigate('/issuerPanel')
+        }
+    }
+
+    const handleDeleteCompanyClick=(companyId, userId)=>{
+        setModalContent(
+			<ConfirmDeleteModal
+            itemToDelete={"COMPANY"}
+				onConfirm={()=> handleDeleteCompanyProcess(companyId,userId)}
+				onCancel={closeModal}
+			/>
+		);
     }
 
     return (
@@ -62,7 +102,10 @@ export default function CompanyInfoBox({currentCompany}){
 
                 <div className="company-buttons">
                     <button className="update-company-button" onClick={handleUpdateCompanyClick}>Update Company Profile</button>
-                    <button className="delete-company-button">Delete Company Account</button>
+                    <button className="delete-company-button" onClick={(e)=>{
+                            e.preventDefault();
+                            handleDeleteCompanyClick(currentCompany.id, userId)
+                    }}>Delete Company Account</button>
                 </div>
                 </div>
         </div>
