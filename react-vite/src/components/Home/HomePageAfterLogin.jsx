@@ -33,13 +33,7 @@ export default function HomePageAfterLogin(){
         setCurrentPage(pageNumber);
     };
 
-    // // Ensure URL has a valid protocol
-    // const getValidURL = (url) => {
-    //     if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
-    //     return `https://${url}`;
-    //     }
-    //     return url;
-    // };
+
 
     return (
     <div className="homepage-container">

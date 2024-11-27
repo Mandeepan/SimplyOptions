@@ -2,10 +2,7 @@
     padding: 20px;
 }
 
-.homepage-container * {
-    position: relative;
-    z-index: 2; /* Make sure content stays above the overlay */
-}
+
 
 .homepage-container h1{
     font-weight: bolder;
