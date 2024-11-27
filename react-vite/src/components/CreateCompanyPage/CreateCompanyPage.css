@@ -14,9 +14,10 @@
 
 .create-company-page .create-company-container{
     text-align: center;
+    background-color:rgb(17, 2, 38)
 }
 
-input, textarea, select{
+input, select{
     color:white;
     margin:20px 0;
     background-color: transparent;
@@ -33,6 +34,13 @@ textarea{
     display:flex;
     flex-direction: row;
 }
+.row2 > .each-item >textarea{
+    color:white;
+    margin:20px 0;
+    background-color: transparent;
+    border: 1px white solid;
+    height:4rem;
+}
 
 .each-item{
     display:flex;
@@ -44,5 +52,8 @@ textarea{
 .each-item label{
     text-align: left;
     margin-left:0;
+<<<<<<< HEAD
     padding-left:left;
+=======
+>>>>>>> dev
 }

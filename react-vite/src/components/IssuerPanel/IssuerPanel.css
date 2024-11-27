@@ -4,3 +4,105 @@
     justify-content: center;
     align-items: center;
 }
+
+.issuer-container h2{
+    text-align: center;
+}
+
+
+/*below is for the Company Info Box section */
+.company-controller{
+    display:flex;
+    flex-direction: column;
+    margin:2% 20%;
+}
+
+.company-controller-head-banner{
+    
+    background-color: rgb(126, 85, 246);
+    border-radius:30px 0px 30px 0px;
+    width: 30%;
+    margin-left:0;
+    height: 4rem;
+}
+
+.company-controller-head-banner h3{
+    text-align: center;
+}
+
+.company-controller-body{
+    margin-left: 5%;
+    margin-top:1%;
+    background: #cecece;
+    border-radius:30px 0px 30px 0px;
+}
+
+.company-info-box p{
+    margin:0 5%;
+}
+
+.company-info-box h3, a{
+    text-align: center;
+    color:rgb(126, 85, 246);
+}
+
+.company-info-heading {
+    font-weight: bold;
+    color: rgb(126, 85, 246);
+    
+}
+.company-info-content {
+    color:  rgb(126, 126, 126);
+}
+
+.company-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin:2rem 0;
+    width:auto
+}
+
+/* below is for the insurance section*/
+
+.instruments-list-container{
+    margin:0 5%;
+    border:1px rgb(126, 126, 126) solid;
+}
+
+.instrument-table{
+    border:1px rgb(126, 126, 126) solid;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.instrument-table-hidden{
+    display:none
+}
+
+
+.instrument-table td{
+    /* font-size:90%; */
+    padding:0;
+    margin:0;
+    border:1px rgb(126, 126, 126) solid;
+    line-height: 1rem;
+    color: rgb(84, 57, 164);
+    padding-left: 1px;
+}
+
+.instrument-table th{
+    border:1px rgb(126, 126, 126) solid;
+    background-color:rgb(126, 126, 126); 
+    padding:0
+}
+
+.update-instrument-button-hidden, .delete-instrument-button-hidden{
+    display:none
+}
+
+.no-instrument-label{
+    font-weight: bolder;
+    text-align: center;
+    color: rgb(84, 57, 164);
+}

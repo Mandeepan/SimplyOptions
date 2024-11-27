@@ -4,7 +4,7 @@
 body {
     font-family: 'Questrial', sans-serif;
     color: #ffffff; 
-    background-color: #1a1a1a; 
+    background-color: rgb(17, 2, 38);
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -53,4 +53,8 @@ button:disabled{
 
 .error{
     color:rgb(223,49,49)
+}
+
+textarea, input, td{
+    letter-spacing: -0.8px;
 }

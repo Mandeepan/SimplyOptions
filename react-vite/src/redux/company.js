@@ -9,14 +9,14 @@ const getACompany= (companyObjectData) => ({
 })
 
 export const getACompanyThunk= (companyId) => async (dispatch) => {
-  const res = await fetch(`/api/companies/${companyId}`);
-  if (res.ok) {
-      const data = await res.json();
-      dispatch(getACompany(data));
-  } else {
-      const errors = await res.json();
-      return errors;
-  }
+    const res = await fetch(`/api/companies/${companyId}`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getACompany(data));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
 };
 
 // add a company

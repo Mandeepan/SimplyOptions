@@ -8,6 +8,8 @@ import Dashboard from '../components/Dashboard';
 import CreateInstrumentPage from '../components/CreateInstrumentPage';
 import InstrumentDetailPage from '../components/InstrumentDetailPage';
 import CreateCompanyPage from "../components/CreateCompanyPage";
+import UpdateCompanyPage from '../components/UpdateCompanyPage/UpdateCompanyPage';
+import UpdateInstrumentPage from '../components/UpdateInstrumentPage/UpdateInstrumentPage';
 // import GenericError from '../components/Error';
 // import * as api from './api';
 
@@ -46,6 +48,14 @@ export const router = createBrowserRouter([
             {
                 path:'createCompany',
                 element:<CreateCompanyPage />
+            },
+            {
+                path:'updateCompany',
+                element:<UpdateCompanyPage />
+            },
+            {
+                path:'updateInstrument',
+                element:<UpdateInstrumentPage />
             }
         ],
     },

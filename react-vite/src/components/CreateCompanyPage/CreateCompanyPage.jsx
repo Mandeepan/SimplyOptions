@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 import { addACompanyThunk } from "../../redux/company";
 import { updateAUserThunk} from "../../redux/user";
 import { usCities, industrySectors, revenueRanges, employeeRanges } from "./selectOptionList"
-import coverImage from '../../../public/cover1.jpg';
+// import coverImage from '../../../public/cover1.jpg';
 
 export default function CreateCompanyPage(){
     const dispatch = useDispatch();
@@ -73,43 +73,46 @@ export default function CreateCompanyPage(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // Dispatch thunk to add the company
-        const newCompany = {
-            company_name: formValue.companyName,
-            short_description: formValue.shortDescription,
-            ai_prompt: formValue.aiPrompt,
-            founded_year: formValue.foundedYear,
-            api_identifier: formValue.apiIdentifier,
-            location_identifiers: formValue.locationIdentifiers,
-            categories: formValue.categories,
-            num_employees_enum: formValue.numEmployeesEnum,
-            revenue_range: formValue.revenueRange,
-            operating_status: formValue.operatingStatus,
-            website_url: formValue.websiteUrl,
-            logo_url: formValue.logoUrl,
-            investors: formValue.investors,
-        };
 
-        try {
-            // Dispatch the thunk to add a company, if successful, update user info
-            const addedCompany = await dispatch(addACompanyThunk(newCompany));
-            if (addedCompany && addedCompany.id) {
-                const newUserInfo = {
-                    is_issuer: true,
-                    company_id: addedCompany.id,
-                };
-                // Dispatch the thunk to update the user with the new company info
-                await dispatch(updateAUserThunk(parseInt(sessionUser.id), newUserInfo));
+        if (formTouched){
+            // Dispatch thunk to add the company
+            const newCompany = {
+                company_name: formValue.companyName,
+                short_description: formValue.shortDescription,
+                ai_prompt: formValue.aiPrompt,
+                founded_year: formValue.foundedYear,
+                api_identifier: formValue.apiIdentifier,
+                location_identifiers: formValue.locationIdentifiers,
+                categories: formValue.categories,
+                num_employees_enum: formValue.numEmployeesEnum,
+                revenue_range: formValue.revenueRange,
+                operating_status: formValue.operatingStatus,
+                website_url: formValue.websiteUrl,
+                logo_url: formValue.logoUrl,
+                investors: formValue.investors,
+            };
+
+            try {
+                // Dispatch the thunk to add a company, if successful, update user info
+                const addedCompany = await dispatch(addACompanyThunk(newCompany));
+                if (addedCompany && addedCompany.id) {
+                    const newUserInfo = {
+                        is_issuer: true,
+                        company_id: addedCompany.id,
+                    };
+                    // Dispatch the thunk to update the user with the new company info
+                    await dispatch(updateAUserThunk(parseInt(sessionUser.id), newUserInfo));
+                }
+                // after the user info is updated , direct to issuerPanel
+                navigate('/issuerPanel')
+            } catch (error) {
+                console.error('Error adding company or updating user:', error);
+                setErrors({...errors, "Error":error})
             }
-            // after the user info is updated , direct to issuerPanel
-            navigate('/issuerPanel')
-        } catch (error) {
-            console.error('Error adding company or updating user:', error);
-            setErrors({...errors, "Error":error})
+        } else {
+            setErrors({...errors, "Error":"Please enter company information above."})
+            setShouldDisable(true)
         }
-
-        
     };
 
     return (
@@ -163,7 +166,6 @@ export default function CreateCompanyPage(){
                     name="aiPrompt"
                     value={formValue.aiPrompt}
                     onChange={handleChange}
-                    placeholder="If set, the response to this prompt will be shown in the instrument detail page"
                     style={{ borderColor: errors.aiPrompt ? 'rgb(223,49,49)' : 'white' }}
                 />
                 </div>
@@ -303,7 +305,7 @@ export default function CreateCompanyPage(){
         </div>
 
         <div className="create-company-image-container">
-            <img src={coverImage} alt="Cover" />
+            <img src="/cover1.jpg" alt="Cover" />
         </div>
         </div>
     );
