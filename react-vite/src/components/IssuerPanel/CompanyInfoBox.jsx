@@ -1,4 +1,7 @@
+import {useNavigate} from 'react-router-dom';
+
 export default function CompanyInfoBox({currentCompany}){
+    const navigate = useNavigate()
     // Ensure URL has a valid protocol
     const getValidURL = (url) => {
         if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
@@ -6,6 +9,10 @@ export default function CompanyInfoBox({currentCompany}){
         }
         return url;
     };
+
+    const handleUpdateCompanyClick=()=>{
+        navigate('/updateCompany')
+    }
 
     return (
         <div className="company-controller">
@@ -54,7 +61,7 @@ export default function CompanyInfoBox({currentCompany}){
                 </div>
 
                 <div className="company-buttons">
-                    <button className="update-company-button">Update Company Profile</button>
+                    <button className="update-company-button" onClick={handleUpdateCompanyClick}>Update Company Profile</button>
                     <button className="delete-company-button">Delete Company Account</button>
                 </div>
                 </div>

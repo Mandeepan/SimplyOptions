@@ -14,7 +14,7 @@
 .company-controller{
     display:flex;
     flex-direction: column;
-    margin:2% 10%;
+    margin:2% 20%;
 }
 
 .company-controller-head-banner{
@@ -76,6 +76,9 @@
     width: 100%;
 }
 
+.instrument-table-hidden{
+    display:none
+}
 
 
 .instrument-table td{
@@ -84,6 +87,8 @@
     margin:0;
     border:1px rgb(126, 126, 126) solid;
     line-height: 1rem;
+    color: rgb(84, 57, 164);
+    padding-left: 1px;
 }
 
 .instrument-table th{
@@ -92,3 +97,12 @@
     padding:0
 }
 
+.update-instrument-button-hidden, .delete-instrument-button-hidden{
+    display:none
+}
+
+.no-instrument-label{
+    font-weight: bolder;
+    text-align: center;
+    color: rgb(84, 57, 164);
+}

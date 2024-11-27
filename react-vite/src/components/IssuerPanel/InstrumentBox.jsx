@@ -7,36 +7,31 @@ export default function InstrumentBox({currentCompany}){
         navigate('/createInstrument')
     }
 
-    const instruments =currentCompany.instruments;
-    if (!instruments.length) {
-        return (
-            <div className="company-controller">
-                <div className="company-controller-head-banner">
-                    <h3>INSURANCE</h3>
-                </div>
-                <div className="company-controller-body">
-                <div className="company-info-box">
-                    <h3>Total Instruments : {instruments.length}</h3>
-                    <p>
-                        <span className="company-info-content">There is no instrument linked to this company yet.</span>
-                    </p>
-                </div>
-                <div className="company-buttons">
-                    <button className="add-new-instrument-button" onClick={handleAddInstrument}>Add A New Instrument</button>
-                </div>
-            </div>
-            </div>
-        )
+    const handleUpdateInstrument=()=>{
+        navigate('/updateInstrument')
     }
+
+    const dateFormatter=(dateString)=>{
+        const dateObject = new Date(dateString);
+        const options = {  year: 'numeric', month: 'short', day: '2-digit' };
+        const formattedDate = dateObject.toLocaleDateString('en-US', options);
+        return formattedDate
+
+    }
+
+    const shouldUpdateButtonDisable = currentCompany.instruments && currentCompany.instruments.length > 0 ? "update-instrument-button" :"update-instrument-button-hidden"
+    const shouldDeleteButtonDisable = currentCompany.instruments && currentCompany.instruments.length > 0 ? "delete-instrument-button" :"delete-instrument-button-hidden"
+    const shouldInstrumentTableHidden = currentCompany.instruments && currentCompany.instruments.length > 0 ? "instruments-list-container" : "instruments-list-container-hidden"
+
     return (
         <div className="company-controller">
             <div className="company-controller-head-banner">
-                <h3>INSURANCE</h3>
+                <h3>INSTRUMENTS</h3>
             </div>
             <div className="company-controller-body">
                 <div className="company-info-box">
                     <h3>Total Instruments : {currentCompany.instruments?.length}</h3>
-                    <div className="instruments-list-container" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                    <div className={shouldInstrumentTableHidden} style={{ maxHeight: '300px', overflowY: 'auto' }}>
                     {currentCompany.instruments && currentCompany.instruments.length > 0 ? (
                         <table className="instrument-table">
                             <thead>
@@ -56,25 +51,25 @@ export default function InstrumentBox({currentCompany}){
                                     <tr key={index} className="instrument-row">
                                         <td><input type="checkbox" className="instrument-checkbox" /></td>
                                         <td>{instrument.instrument_name}</td>
-                                        <td>{instrument.issued_on_et}</td>
+                                        <td>{dateFormatter(instrument.issued_on_et)}</td>
                                         <td>{instrument.instrument_type}</td>
                                         <td>{instrument.instrument_class}</td>
                                         <td>{instrument.updated_value}</td>
-                                        <td>{instrument.updated_issued_quantity}</td>
-                                        <td>{instrument.updated_price}</td>
+                                        <td>{instrument.updated_issued_quantity.toLocaleString('en-US')}</td>
+                                        <td>$ {instrument.updated_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     ) : (
-                        <p>No instruments available.</p>
+                        <p className="no-instrument-label">Start the journey to list your company instruments by clicking button below.</p>
                     )}
                 </div>
                 </div>
                 <div className="company-buttons">
                     <button className="add-new-instrument-button" onClick={handleAddInstrument}>Add A New Instrument</button>
-                    <button className="update-instrument-button">Update Selected Instrument</button>
-                    <button className="delete-instrument-button">Delete Selected Instrument</button>
+                    <button className={shouldUpdateButtonDisable} onClick={handleUpdateInstrument}>Update Selected Instrument</button>
+                    <button className={shouldDeleteButtonDisable}>Delete Selected Instrument</button>
                 </div>
             </div>
         </div>
