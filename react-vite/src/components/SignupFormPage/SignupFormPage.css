@@ -41,7 +41,7 @@
 
 .signup-form input{
     border-radius: 1px;
-    border:none;
+    /* border:none; */
     height: 1.5rem;
     margin:0.5rem 0;
 }

@@ -43,4 +43,6 @@ textarea{
 
 .each-item label{
     text-align: left;
+    margin-left:0;
+    padding-left:left;
 }
