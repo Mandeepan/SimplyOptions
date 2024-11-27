@@ -15,8 +15,9 @@
   color:white;
 }
 
+
 .profile-button{
-  border:1px  rgb(94, 63, 165) solid;
+  border:1px  rgb(126, 85, 246) solid;
   border-radius: 50%;
   width: 2rem;
   height:2rem;
@@ -69,17 +70,17 @@
 .profile-dropdown > li {
   list-style-type: none;
   padding: 0.25rem;
-  color:rgba(65, 44, 116, 1);
+  color:rgb(126, 85, 246);
 }
 
 .profile-list-item-with-icon:hover{
-  color:rgb(94, 63, 165);
+  color:rgb(126, 85, 246);
   background-color: #cecece;
   width:100%
 }
 
 .profile-list-item-with-icon>button:hover{
-  color: rgb(94, 63, 165);
+  color:  rgb(84, 57, 164);
   background-color: transparent;
 }
 
@@ -95,6 +96,6 @@
 
 .profile-list-item-with-icon * {
   background-color: transparent;
-  color: rgba(65, 44, 116, 1);
+  color: rgb(126, 85, 246,1);
   border:none
 }

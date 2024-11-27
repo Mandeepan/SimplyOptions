@@ -4,6 +4,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
 import { addACompanyThunk } from "../../redux/company";
 import { updateAUserThunk} from "../../redux/user";
+import { usCities, industrySectors, revenueRanges, employeeRanges } from "./selectOptionList"
+import coverImage from '../../../public/cover1.jpg';
 
 export default function CreateCompanyPage(){
     const dispatch = useDispatch();
@@ -111,144 +113,198 @@ export default function CreateCompanyPage(){
     };
 
     return (
+        <div className="create-company-page">
         <div className="create-company-container">
-        <h2>Create a New Company</h2>
+        <h2>Create Company Profile</h2>
         <form onSubmit={handleSubmit} className="create-company-form">
-            <div>
-            <label>Company Name</label>
-            <input
-                type="text"
-                name="companyName"
-                value={formValue.companyName}
-                onChange={handleChange}
-            />
-            {errors.companyName && <p className="error">{errors.companyName}</p>}
+            <div className="row1">
+                <div className='each-item'>
+                <label>Company Name *</label>
+                <input
+                    type="text"
+                    name="companyName"
+                    value={formValue.companyName}
+                    onChange={handleChange}
+                    style={{ borderColor: errors.companyName ? 'rgb(223,49,49)' : 'white' }}
+                />
+                {errors.companyName && <p className="error">{errors.companyName}</p>}
+                </div>
+
+                <div className='each-item'>
+                <label>Founded Year *</label>
+                <input
+                    type="number"
+                    name="foundedYear"
+                    value={formValue.foundedYear}
+                    onChange={handleChange}
+                    style={{ borderColor: errors.foundedYear ? 'rgb(223,49,49)' : 'white' }}
+                />
+                {errors.foundedYear && <p className="error">{errors.foundedYear}</p>}
+                </div>
+            </div>
+            
+            <div className="row2">
+                <div className='each-item'>
+                <label className='each-item'>Short Description *</label>
+                <textarea
+                    type="text"
+                    name="shortDescription"
+                    value={formValue.shortDescription}
+                    onChange={handleChange}
+                    style={{ borderColor: errors.shortDescription ? 'rgb(223,49,49)' : 'white' }}
+                />
+                {errors.shortDescription && <p className="error">{errors.shortDescription}</p>}
+                </div>
+
+                <div className='each-item'>
+                <label className='each-item'>AI Prompt</label>
+                <textarea
+                    type="text"
+                    name="aiPrompt"
+                    value={formValue.aiPrompt}
+                    onChange={handleChange}
+                    placeholder="If set, the response to this prompt will be shown in the instrument detail page"
+                    style={{ borderColor: errors.aiPrompt ? 'rgb(223,49,49)' : 'white' }}
+                />
+                </div>
             </div>
 
-            <div>
-            <label>Short Description</label>
-            <textarea
-                type="text"
-                name="shortDescription"
-                value={formValue.shortDescription}
-                onChange={handleChange}
-            />
-            {errors.shortDescription && <p className="error">{errors.shortDescription}</p>}
-            </div>
 
-            <div>
-            <label>AI Prompt</label>
-            <input
-                type="text"
-                name="aiPrompt"
-                value={formValue.aiPrompt}
-                onChange={handleChange}
-            />
-            </div>
-
-            <div>
-            <label>Founded Year</label>
-            <input
-                type="number"
-                name="foundedYear"
-                value={formValue.foundedYear}
-                onChange={handleChange}
-            />
-            {errors.foundedYear && <p className="error">{errors.foundedYear}</p>}
-            </div>
-
-            <div>
+            {/* <div>
             <label>API Identifier</label>
             <input
                 type="text"
                 name="apiIdentifier"
                 value={formValue.apiIdentifier}
                 onChange={handleChange}
+                style={{ borderColor: errors.apiIdentifier ? 'rgb(223,49,49)' : 'white' }}
             />
+            </div> */}
+
+            <div className="row3">
+                <div className='each-item'>
+                    <label>Location</label>
+                    <select
+                        name="locationIdentifiers"
+                        value={formValue.locationIdentifiers}
+                        onChange={handleChange}
+                        style={{ borderColor: errors.locationIdentifiers ? 'rgb(223,49,49)' : 'white' }}
+                    >
+                        <option value="">--</option>
+                        {usCities.map((city, index) => (
+                            <option key={index} value={city}>{city}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='each-item'>
+                    <label>Category</label>
+                    <select
+                        name="categories"
+                        value={formValue.categories}
+                        onChange={handleChange}
+                        style={{ borderColor: errors.categories ? 'rgb(223,49,49)' : 'white' }}
+                    >
+                        <option value="">--</option>
+                        {industrySectors.map((sector, index) => (
+                            <option key={index} value={sector}>{sector}</option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+            
+            <div className="row4">
+                <div className='each-item'>
+                    <label>Number of Employees</label>
+                    <select
+                        name="numEmployeesEnum"
+                        value={formValue.numEmployeesEnum}
+                        onChange={handleChange}
+                        style={{ borderColor: errors.numEmployeesEnum ? 'rgb(223,49,49)' : 'white' }}
+                    >
+                        <option value="">--</option>
+                        {employeeRanges.map((sector, index) => (
+                            <option key={index} value={sector}>{sector}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className='each-item'>
+                <label>Revenue Range</label>
+                <select
+                    type="text"
+                        name="revenueRange"
+                        value={formValue.revenueRange}
+                        onChange={handleChange}
+                        style={{ borderColor: errors.revenueRange ? 'rgb(223,49,49)' : 'white' }}
+                >
+                    <option value="">--</option>
+                            {revenueRanges.map((sector, index) => (
+                                <option key={index} value={sector}>{sector}</option>
+                            ))}
+                    </select>
+                </div>
             </div>
 
-            <div>
-            <label>Location Identifiers</label>
-            <input
-                type="text"
-                name="locationIdentifiers"
-                value={formValue.locationIdentifiers}
-                onChange={handleChange}
-            />
+            <div className="row5">
+                <div className='each-item'>
+                    <label>Operating Status</label>
+                    <select
+                        name="operatingStatus"
+                        value={formValue.operatingStatus}
+                        onChange={handleChange}
+                        style={{ borderColor: errors.operatingStatus ? 'rgb(223,49,49)' : 'white' }}
+                    >
+                        <option value="">--</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+
+                <div className='each-item'>
+                <label>Website URL</label>
+                <input
+                    type="text"
+                    name="websiteUrl"
+                    value={formValue.websiteUrl}
+                    onChange={handleChange}
+                    style={{ borderColor: errors.websiteUrl ? 'rgb(223,49,49)' : 'white' }}
+                />
+                </div>
             </div>
 
-            <div>
-            <label>Categories</label>
-            <input
-                type="text"
-                name="categories"
-                value={formValue.categories}
-                onChange={handleChange}
-            />
-            </div>
+            <div className="row6">
+                <div className='each-item'>
+                <label>Logo URL</label>
+                <input
+                    type="text"
+                    name="logoUrl"
+                    value={formValue.logoUrl}
+                    onChange={handleChange}
+                    style={{ borderColor: errors.logoUrl ? 'rgb(223,49,49)' : 'white' }}
+                />
+                </div>
 
-            <div>
-            <label>Number of Employees Enum</label>
-            <input
-                type="text"
-                name="numEmployeesEnum"
-                value={formValue.numEmployeesEnum}
-                onChange={handleChange}
-            />
-            </div>
-
-            <div>
-            <label>Revenue Range</label>
-            <input
-                type="text"
-                name="revenueRange"
-                value={formValue.revenueRange}
-                onChange={handleChange}
-            />
-            </div>
-
-            <div>
-            <label>Operating Status</label>
-            <input
-                type="text"
-                name="operatingStatus"
-                value={formValue.operatingStatus}
-                onChange={handleChange}
-            />
-            </div>
-
-            <div>
-            <label>Website URL</label>
-            <input
-                type="text"
-                name="websiteUrl"
-                value={formValue.websiteUrl}
-                onChange={handleChange}
-            />
-            </div>
-
-            <div>
-            <label>Logo URL</label>
-            <input
-                type="text"
-                name="logoUrl"
-                value={formValue.logoUrl}
-                onChange={handleChange}
-            />
-            </div>
-
-            <div>
-            <label>Investors</label>
-            <input
-                type="text"
-                name="investors"
-                value={formValue.investors}
-                onChange={handleChange}
-            />
+                <div className='each-item'>
+                <label>Investors</label>
+                <input
+                    type="text"
+                    name="investors"
+                    value={formValue.investors}
+                    onChange={handleChange}
+                    style={{ borderColor: errors.investors ? 'rgb(223,49,49)' : 'white' }}
+                />
+                </div>
             </div>
             {errors.Error && <p className="error">{errors.Error}</p>}
-            <button type="submit" disabled={shouldDisable}>Add Company</button>
+            <button type="submit" disabled={shouldDisable} className="create-company-button">Add Company</button>
         </form>
+        </div>
+
+        <div className="create-company-image-container">
+            <img src={coverImage} alt="Cover" />
+        </div>
         </div>
     );
 } 

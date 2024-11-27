@@ -31,6 +31,11 @@
     background: rgba(0, 0, 0, 0.5); /* Adds a dark overlay */
     z-index: -1;
 }
+.company-name{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 4rem;
+    margin-top:0;
+}
 
 .content-overlay {
     position: relative;
@@ -50,7 +55,7 @@
     width: 30%;
     padding: 20px;
     border: 2px solid #ccc;
-    border-radius: 8px;
+    border-radius: 2px;
     background: rgba(255, 255, 255, 0.6); /* Slight background to improve text visibility */
     color: #fff;
 }
@@ -66,7 +71,8 @@
 }
 
 .login-signup-container button{
-    width: 7rem
+    width: 7rem;
+    /* margin:2rem; */
 }
 
 .company-description{

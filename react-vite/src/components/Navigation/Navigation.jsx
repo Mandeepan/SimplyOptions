@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { SiFramework } from "react-icons/si";
 import { FaSearch } from "react-icons/fa"
 
+
+
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
@@ -12,7 +14,7 @@ function Navigation() {
   return (
     <header className="nav-bar-container">
       <div className="logo">
-        <NavLink to="/"><SiFramework /></NavLink>
+        <NavLink to="/"><SiFramework className="logo-button-1"/></NavLink>
       </div>
       <div className={searchBarClassName}>
         <FaSearch />
