@@ -21,11 +21,93 @@ export const getAllInstrumentsThunk= () => async (dispatch) => {
   }
 };
 
-const initialState={allInstruments:[]}
+// add a new instrument
+const ADD_AN_INSTRUMENT = 'instruments/addAInstrument'
+
+const addAnInstrument = (instrumentObjectData) => ({
+    type: ADD_AN_INSTRUMENT,
+    payload : instrumentObjectData
+})
+
+export const addAnInstrumentThunk= (requestData) => async (dispatch) => {
+    const res = await fetch(`/api/instruments/`,{
+        method :'POST',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addAnInstrument(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+// update an instrument
+const UPDATE_AN_INSTRUMENT = 'instruments/updateAnInstrument'
+
+const updateAnInstrument = (instrumentObjectData) => ({
+    type: UPDATE_AN_INSTRUMENT,
+    payload : instrumentObjectData
+})
+
+export const updateAnInstrumentThunk= (instrumentId, requestData) => async (dispatch) => {
+    const res = await fetch(`/api/instruments/${instrumentId}`,{
+        method :'PATCH',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateAnInstrument(data));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+
+// delete an instrument
+const DELETE_AN_INSTRUMENT = 'instruments/deleteAnInstrument'
+
+const deleteAnInstrument = (instrumentObjectData) => ({
+    type: DELETE_AN_INSTRUMENT,
+    payload : instrumentObjectData
+})
+
+export const deleteAnInstrumentThunk= (instrumentId) => async (dispatch) => {
+    const res = await fetch(`/api/instruments/${instrumentId}`,{
+        method :'DELETE',
+    });
+    console.log("API response: ============")
+    console.log(res)
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(deleteAnInstrument(data));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+
+const initialState={allInstruments:[],currentInstrument:{}}
 function instrumentsReducer(state=initialState,action){
     switch (action.type) {
         case GET_ALL_INS:
             return { ...state, allInstruments: normalizer(action.payload) };
+        case ADD_AN_INSTRUMENT:
+            return { ...state, currentInstrument:action.payload}
+        case UPDATE_AN_INSTRUMENT:
+            return { ...state, currentInstrument:action.payload}
+        case DELETE_AN_INSTRUMENT:
+            return { ...state, currentInstrument:{}}
         default:
             return state;
     }

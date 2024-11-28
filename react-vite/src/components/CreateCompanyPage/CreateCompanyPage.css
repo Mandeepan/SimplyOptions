@@ -53,3 +53,8 @@ textarea{
     text-align: left;
     margin-left:0;
 }
+
+.create-company-button{
+    margin-bottom:5%;
+    min-width:30%
+}

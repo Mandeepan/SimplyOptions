@@ -68,27 +68,27 @@ export default function CompanyInfoBox({currentCompany, userId}){
                     </p>
                     <p>
                         <span className="company-info-heading">Operating Status:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
+                        <span className="company-info-content"> {currentCompany.operating_status ? currentCompany.operating_status : "Not Available."}</span>
                     </p>
                     <p>
                         <span className="company-info-heading">Category:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
+                        <span className="company-info-content"> {currentCompany.categories ? currentCompany.categories : "Not Available."}</span>
                     </p>
                     <p>
                         <span className="company-info-heading">Location:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
+                        <span className="company-info-content"> {currentCompany.location_identifiers ? currentCompany.location_identifiers : "Not Available."}</span>
                     </p>
                     <p>
                         <span className="company-info-heading">Revenue Range:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
+                        <span className="company-info-content"> {currentCompany.revenue_range ? currentCompany.revenue_range : "Not Available."}</span>
                     </p>
                     <p>
                         <span className="company-info-heading">Employees:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
+                        <span className="company-info-content"> {currentCompany.num_employees_enum ? currentCompany.num_employees_enum : "Not Available."}</span>
                     </p>
                     <p>
                         <span className="company-info-heading">Investors:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
+                        <span className="company-info-content"> {currentCompany.investors ? currentCompany.investors : "Not Available."}</span>
                     </p>
                     <p>
                         <span className="company-info-heading">AI Prompt:</span>
