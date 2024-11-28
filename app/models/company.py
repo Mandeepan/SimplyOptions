@@ -26,7 +26,7 @@ class Company(db.Model):
     updated_at_et = db.Column(db.DateTime,  default=current_eastern_time, onupdate=current_eastern_time)
 
     users = db.relationship('User', backref="companies", lazy='dynamic')
-    instruments = db.relationship('Instrument', backref='companies',lazy=True)
+    instruments = db.relationship('Instrument', backref='companies',lazy=True, cascade="all, delete-orphan")
     
     def to_dict(self):
         return {
