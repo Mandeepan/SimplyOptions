@@ -50,8 +50,6 @@ def get_all_instruments():
 def add_an_instrument():
     try:
         data = request.get_json()
-        print("request body data!!!!!!!!!!!")
-        print(data)
         instrument_name = data.get("instrument_name")
         company_id = data.get("company_id")
         issuer_user_id = data.get("issuer_user_id")

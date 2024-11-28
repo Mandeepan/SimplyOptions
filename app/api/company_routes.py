@@ -205,5 +205,6 @@ def delete_an_company(companyId):
         return make_response(jsonify({"message": "successfully deleted"}), 200, {"Content-Type": "application/json"})
     except Exception as e :
         # if there's error, rollback the database change
+        print("!!!!!!!!!!!!!BACKEND API MSG",  str(e))
         db.session.rollback()
         return make_response(jsonify({"message": str(e)}), 500, {"Content-Type": "application/json"})

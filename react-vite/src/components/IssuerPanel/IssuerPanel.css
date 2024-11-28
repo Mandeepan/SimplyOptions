@@ -24,6 +24,17 @@
     width: 30%;
     margin-left:0;
     height: 4rem;
+    position: relative;
+    animation: slideLeft 1s ease-out forwards;
+}
+
+@keyframes slideLeft {
+    0% {
+        left: 0; /* Initial position */
+    }
+    100% {
+        left: -20px; /* Move it 20 pixels to the left */
+    }
 }
 
 .company-controller-head-banner h3{
@@ -35,6 +46,17 @@
     margin-top:1%;
     background: #cecece;
     border-radius:30px 0px 30px 0px;
+    position: relative;
+    animation: slideRight 1s ease-out forwards;
+}
+
+@keyframes slideRight {
+    0% {
+        right: 0; /* Initial position */
+    }
+    100% {
+        right: -20px; /* Move it 20 pixels to the left */
+    }
 }
 
 .company-info-box p{

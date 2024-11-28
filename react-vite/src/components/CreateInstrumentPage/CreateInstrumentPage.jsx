@@ -105,9 +105,6 @@ export default function CreateInstrumentPage() {
                 await dispatch(addAnInstrumentThunk(newInstrument));
                 // after adding it refresh the currentCompany state so the newly-added instrument is included
                 await dispatch(getACompanyThunk(sessionUser.company_id))
-                
-                console.log("!!!!!!!!Form data to be submitted:", newInstrument);
-
                 // after the user info is updated , direct to issuerPanel
                 navigate('/issuerPanel')
             }catch (error) {
