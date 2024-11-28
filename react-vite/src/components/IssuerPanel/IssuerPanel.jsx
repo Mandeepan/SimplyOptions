@@ -15,7 +15,9 @@ export default function IssuerPanel() {
     const currentCompany = useSelector(state => state.currentCompany.currentCompany)
 
     useEffect(() => {
-        dispatch(getAUserThunk(parseInt(sessionUser.id)))
+        if (sessionUser && sessionUser.id) {
+            dispatch(getAUserThunk(parseInt(sessionUser.id)))
+        }
     }, [dispatch, sessionUser]);
 
     useEffect(() => {
@@ -39,9 +41,12 @@ export default function IssuerPanel() {
         {userInfo.is_issuer?
         <div className="issuer-container">
             <h2> Welcome to SimplyOptions Issuer Panel, {sessionUser.first_name}!</h2>
-            <CompanyInfoBox currentCompany={currentCompany} userId={sessionUser.id} />
-            <InstrumentBox currentCompany={currentCompany} />
-            
+            {currentCompany && (
+                        <>
+                            <CompanyInfoBox currentCompany={currentCompany} userId={sessionUser.id} />
+                            <InstrumentBox currentCompany={currentCompany} />
+                        </>
+                    )}  
         </div>
         :
         <div className="non-issuer-container">
