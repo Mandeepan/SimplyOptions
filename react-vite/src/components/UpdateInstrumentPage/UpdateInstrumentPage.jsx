@@ -255,7 +255,7 @@ export default function UpdateInstrumentPage(){
                     </div>
                     {errors.Error && <p className="error">{errors.Error}</p>}
                     {!errors.length && formTouched && <p className="calculated-value">Estimated Instrument Value : $ {issuedValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>}
-                    <button type="submit" disabled={shouldDisable} className="create-company-button">Add Instrument</button>
+                    <button type="submit" disabled={shouldDisable} className="create-company-button">Update Instrument</button>
                 </form>
             </div>
             <div className="create-company-image-container">

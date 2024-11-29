@@ -14,6 +14,17 @@ export default function InstrumentBox(){
     const { setModalContent, closeModal } = useModal();
     const [selectedInstrumentId, setSelectedInstrumentId] = useState(null);
     const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+    const [isCompanyLoading, setIsCompanyLoading] = useState(true);
+
+    useEffect(() => {
+        if (sessionUser?.company_id) {
+            dispatch(getACompanyThunk(sessionUser.company_id)).then(() => {
+                setIsCompanyLoading(false);
+            });
+        } else {
+            setIsCompanyLoading(false);
+        }
+    }, [dispatch, sessionUser]);
 
     useEffect(() => {
         if (sessionUser?.company_id) {
@@ -23,10 +34,12 @@ export default function InstrumentBox(){
 
 
     const handleAddInstrument=()=>{
-        if (currentCompany && currentCompany.id) {
-            navigate('/createInstrument');
-        } else {
-            navigate('/404')
+        if (!isCompanyLoading) {
+            if (currentCompany && currentCompany.id) {
+                navigate('/createInstrument');
+            } else {
+                navigate('/404')
+            }
         }
     }
 
