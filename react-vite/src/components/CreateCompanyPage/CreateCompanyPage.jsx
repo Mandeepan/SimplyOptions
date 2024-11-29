@@ -2,7 +2,7 @@ import "./CreateCompanyPage.css"
 import {useSelector, useDispatch} from 'react-redux'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from "react";
-import { addACompanyThunk } from "../../redux/company";
+import { addACompanyThunk, getACompanyThunk } from "../../redux/company";
 import { updateAUserThunk} from "../../redux/user";
 import { usCities, industrySectors, revenueRanges, employeeRanges } from "./selectOptionList"
 // import coverImage from '../../../public/cover1.jpg';
@@ -34,6 +34,8 @@ export default function CreateCompanyPage(){
     const [shouldDisable, setShouldDisable]=useState(false)
     // monitor if the form has been touched, if not ( first time landing this page), error message should not appear
     const [formTouched, setFormTouched]=useState(false)
+    // if it's demo data, even the form is not touched, button should not be disabled
+    const [demoLinkClicked, setDemoLinkClicked]=useState(false)
 
     // monitor the user change on input fields in the form
     const handleChange = (e) => {
@@ -74,7 +76,7 @@ export default function CreateCompanyPage(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formTouched){
+        if (formTouched || demoLinkClicked){
             // Dispatch thunk to add the company
             const newCompany = {
                 company_name: formValue.companyName,
@@ -102,6 +104,8 @@ export default function CreateCompanyPage(){
                     };
                     // Dispatch the thunk to update the user with the new company info
                     await dispatch(updateAUserThunk(parseInt(sessionUser.id), newUserInfo));
+                    //get updated company info
+                    await dispatch(getACompanyThunk(addedCompany.id))
                 }
                 // after the user info is updated , direct to issuerPanel
                 navigate('/issuerPanel')
@@ -113,12 +117,34 @@ export default function CreateCompanyPage(){
             setErrors({...errors, "Error":"Please enter company information above."})
             setShouldDisable(true)
         }
+
     };
+
+    const handleFillingDemoCompanyData= ()=>{
+        const demoCompany = {
+            companyName: "Demo Company",
+            shortDescription: "This company profile was created for demonstration purpose",
+            aiPrompt: "",
+            foundedYear:1999,
+            apiIdentifier: "",
+            locationIdentifiers: "",
+            categories: "",
+            numEmployeesEnum: "",
+            revenueRange: "",
+            operatingStatus: "",
+            websiteUrl: "",
+            logoUrl:"",
+            investors: ""
+        };
+        setFormValue(demoCompany);
+        setDemoLinkClicked(true)
+    }
 
     return (
         <div className="create-company-page">
         <div className="create-company-container">
         <h2>Create Company Profile</h2>
+        <button onClick={handleFillingDemoCompanyData} className="demo-company-button"> * Click here to fill in sample company information</button>
         <form onSubmit={handleSubmit} className="create-company-form">
             <div className="row1">
                 <div className='each-item'>

@@ -7,6 +7,18 @@
     width: 50%;
 }
 
+.demo-company-button{
+    background-color: transparent;
+    text-decoration: underline;
+    color: pink;
+    text-decoration-color: pink;
+    margin-bottom: 3%;
+}
+
+.demo-company-button:hover{
+    background-color: transparent;
+}
+
 .create-company-page img{
     min-width: 100%;
     min-height: 100%;

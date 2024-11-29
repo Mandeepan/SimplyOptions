@@ -1,24 +1,32 @@
 import {useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import {useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import {useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/ConfirmDeleteModal';
 import {deleteAnInstrumentThunk} from '../../redux/instrument';
 import { getACompanyThunk } from '../../redux/company';
 
-export default function InstrumentBox({currentCompany}){
+export default function InstrumentBox(){
     const navigate =useNavigate()
     const dispatch = useDispatch()
+    const sessionUser = useSelector((state)=>state.session.user)
+    let currentCompany = useSelector(state => state.currentCompany.currentCompany)
     const { setModalContent, closeModal } = useModal();
     const [selectedInstrumentId, setSelectedInstrumentId] = useState(null);
     const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+
+    useEffect(() => {
+        if (sessionUser?.company_id) {
+            dispatch(getACompanyThunk(sessionUser.company_id));
+        }
+    }, [dispatch, sessionUser]);
 
 
     const handleAddInstrument=()=>{
         if (currentCompany && currentCompany.id) {
             navigate('/createInstrument');
         } else {
-            alert("Company information is still loading. Please try again in a moment.");
+            navigate('/404')
         }
     }
 
@@ -114,7 +122,7 @@ export default function InstrumentBox({currentCompany}){
                                         <td>{dateFormatter(instrument.issued_on_et)}</td>
                                         <td>{instrument.instrument_type}</td>
                                         <td>{instrument.instrument_class}</td>
-                                        <td>{instrument.updated_value}</td>
+                                        <td>$ {instrument.updated_value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>{instrument.updated_issued_quantity.toLocaleString('en-US')}</td>
                                         <td>$ {instrument.updated_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                     </tr>

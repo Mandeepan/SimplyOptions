@@ -10,6 +10,7 @@ import InstrumentDetailPage from '../components/InstrumentDetailPage';
 import CreateCompanyPage from "../components/CreateCompanyPage";
 import UpdateCompanyPage from '../components/UpdateCompanyPage/UpdateCompanyPage';
 import UpdateInstrumentPage from '../components/UpdateInstrumentPage/UpdateInstrumentPage';
+import GenericError from '../components/Error'
 // import GenericError from '../components/Error';
 // import * as api from './api';
 
@@ -56,6 +57,14 @@ export const router = createBrowserRouter([
             {
                 path:'updateInstrument/:instrumentId',
                 element:<UpdateInstrumentPage />
+            },
+            {
+                path:'404',
+                element:<GenericError />
+            },
+            {
+                path:'*',
+                element:<GenericError />
             }
         ],
     },

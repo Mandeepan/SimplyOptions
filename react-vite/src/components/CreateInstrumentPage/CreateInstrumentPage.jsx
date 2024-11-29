@@ -30,6 +30,8 @@ export default function CreateInstrumentPage() {
     const [formTouched, setFormTouched]=useState(false)
     // to show the calculated market value
     const [issuedValue,setIssuedValue]=useState(0.00)
+    // if it's demo data, even the form is not touched, button should not be disabled
+    const [demoLinkClicked, setDemoLinkClicked]=useState(false)
 
     // monitor the user change on input fields in the form
     const handleChange = (e) => {
@@ -87,7 +89,7 @@ export default function CreateInstrumentPage() {
         ? new Date(formValue.issuedOnEt).toISOString().split('T')[0]  // This will give 'YYYY-MM-DD'
         : null;
 
-        if (formTouched){
+        if (formTouched || demoLinkClicked){
             const newInstrument ={
                 instrument_name: formValue.instrumentName,
                 company_id: sessionUser.company_id,
@@ -121,10 +123,24 @@ export default function CreateInstrumentPage() {
 
     }
 
+    const handleFillingDemoInstrumentData= ()=>{
+        const demoInstrument = {
+            instrumentName: "Demo Instrument 1",
+            issuedOnEt: "2022-01-01",
+            instrumentType: "Common Share",
+            instrumentClass:"Class A",
+            updatedPrice: "26.3",
+            updatedIssuedQuantity: "10000",
+        };
+        setFormValue(demoInstrument);
+        setDemoLinkClicked(true)
+    }
+
     return(
         <div className="create-company-page">
             <div className="create-company-container">
                 <h2>Instrument Information</h2>
+                <button onClick={handleFillingDemoInstrumentData} className="demo-company-button"> * Click here to fill in sample company information</button>
                 <form onSubmit={handleSubmit} className="create-company-form">
                     <div className="row1">
                         <div className='each-item'>

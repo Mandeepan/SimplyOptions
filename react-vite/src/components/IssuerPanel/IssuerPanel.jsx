@@ -44,7 +44,7 @@ export default function IssuerPanel() {
             {currentCompany && (
                         <>
                             <CompanyInfoBox currentCompany={currentCompany} userId={sessionUser.id} />
-                            <InstrumentBox currentCompany={currentCompany} />
+                            <InstrumentBox />
                         </>
                     )}  
         </div>
