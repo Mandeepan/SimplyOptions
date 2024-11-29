@@ -20,12 +20,19 @@ function deleteCompanyProcess(onConfirm, onCancel){
 
 function deleteInstrumentProcess(onConfirm, onCancel){
     return (
-        <div className="delete-modal-container" data-testid='delete-review-modal'>
-        <h1>Confirm Delete</h1>
-        <p>Are you sure you want to delete this instrument?</p>
-        <button className="delete-yes" onClick={onConfirm} >Yes</button>
-        <button className="delete-no" onClick={onCancel} >No</button>
-    </div>
+        <div className="delete-modal-container" data-testid='delete-spot-modal'>
+            <h1>Confirm Delete</h1>
+            <div className="explanation-note">
+                <p>Do you want to remove the selected instrument?</p>
+                <p className="warning"></p>
+            </div>
+
+            <div className="yes-or-no-buttons">
+                <button className="delete-yes" onClick={onConfirm} >Yes</button>
+                <button className="delete-no" onClick={onCancel} >No</button>
+            </div>
+            
+        </div>
     )
 }
 

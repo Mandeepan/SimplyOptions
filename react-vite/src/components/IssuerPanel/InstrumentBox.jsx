@@ -1,9 +1,18 @@
 import {useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import {useDispatch } from 'react-redux';
+import { useModal } from '../../context/Modal';
+import ConfirmDeleteModal from '../ConfirmDeleteModal/ConfirmDeleteModal';
+import {deleteAnInstrumentThunk} from '../../redux/instrument';
+import { getACompanyThunk } from '../../redux/company';
 
 export default function InstrumentBox({currentCompany}){
     const navigate =useNavigate()
+    const dispatch = useDispatch()
+    const { setModalContent, closeModal } = useModal();
     const [selectedInstrumentId, setSelectedInstrumentId] = useState(null);
+    const [selectedCompanyId, setSelectedCompanyId] = useState(null);
+
 
     const handleAddInstrument=()=>{
         navigate('/createInstrument')
@@ -17,9 +26,43 @@ export default function InstrumentBox({currentCompany}){
         }
     }
 
-    const handleSelectInstrument = (instrumentId) => {
+    const handleSelectInstrument = (instrumentId, companyId) => {
         setSelectedInstrumentId(instrumentId);
+        setSelectedCompanyId (companyId)
     };
+
+    const handleDeleteInstrumentProcess= async (selectedInstrumentId, selectedCompanyId)=>{
+        try{
+            await dispatch(deleteAnInstrumentThunk(selectedInstrumentId))
+            
+        } catch (error) {
+            console.error('Error deleting instrument', error);
+            alert("Can not delete this instrument record, please reach out to help@simplyoptions.com")
+            navigate('/issuerPanel')
+        }
+        try{
+            currentCompany = await dispatch(getACompanyThunk(parseInt(selectedCompanyId)))
+            closeModal();
+        } catch (error) {
+            console.error('Error getting updated company profile:', error);
+            alert("Can not get updated company record, please reach out to help@simplyoptions.com")
+            navigate('/issuerPanel')
+        }
+    }
+
+    const handleDeleteInstrumentClick=(selectedInstrumentId, selectedCompanyId)=>{
+        if (selectedInstrumentId){
+            setModalContent(
+                <ConfirmDeleteModal
+                itemToDelete={"INSTRUMENT"}
+                    onConfirm={()=> handleDeleteInstrumentProcess(parseInt(selectedInstrumentId), parseInt(selectedCompanyId))}
+                    onCancel={closeModal}
+                />
+            );
+        }else{
+            alert("Please select an instrument before proceeding")
+        }        
+    }
 
     const dateFormatter=(dateString)=>{
         const dateObject = new Date(dateString);
@@ -29,8 +72,7 @@ export default function InstrumentBox({currentCompany}){
 
     }
 
-    const shouldUpdateButtonDisable = currentCompany.instruments && currentCompany.instruments.length > 0 ? "update-instrument-button" :"update-instrument-button-hidden"
-    const shouldDeleteButtonDisable = currentCompany.instruments && currentCompany.instruments.length > 0 ? "delete-instrument-button" :"delete-instrument-button-hidden"
+
     const shouldInstrumentTableHidden = currentCompany.instruments && currentCompany.instruments.length > 0 ? "instruments-list-container" : "instruments-list-container-hidden"
 
     return (
@@ -63,7 +105,7 @@ export default function InstrumentBox({currentCompany}){
                                                     className="instrument-radio"
                                                     name="selectedInstrument"
                                                     checked={selectedInstrumentId === instrument.id}
-                                                    onChange={()=>handleSelectInstrument(instrument.id)} /></td>
+                                                    onChange={()=>handleSelectInstrument(instrument.id, currentCompany.id)} /></td>
                                         <td>{instrument.instrument_name}</td>
                                         <td>{dateFormatter(instrument.issued_on_et)}</td>
                                         <td>{instrument.instrument_type}</td>
@@ -82,8 +124,22 @@ export default function InstrumentBox({currentCompany}){
                 </div>
                 <div className="company-buttons">
                     <button className="add-new-instrument-button" onClick={handleAddInstrument}>Add A New Instrument</button>
-                    <button className={shouldUpdateButtonDisable} onClick={handleUpdateInstrument}>Update Selected Instrument</button>
-                    <button className={shouldDeleteButtonDisable}>Delete Selected Instrument</button>
+                    {currentCompany.instruments && currentCompany.instruments.length > 0 && (
+                        <>
+                            <button className="update-instrument-button" onClick={handleUpdateInstrument}>
+                                Update Selected Instrument
+                            </button>
+                            <button
+                                className="delete-instrument-button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleDeleteInstrumentClick(selectedInstrumentId, selectedCompanyId);
+                                }}
+                            >
+                                Delete Selected Instrument
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
