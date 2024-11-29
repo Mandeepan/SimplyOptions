@@ -15,7 +15,11 @@ export default function InstrumentBox({currentCompany}){
 
 
     const handleAddInstrument=()=>{
-        navigate('/createInstrument')
+        if (currentCompany && currentCompany.id) {
+            navigate('/createInstrument');
+        } else {
+            alert("Company information is still loading. Please try again in a moment.");
+        }
     }
 
     const handleUpdateInstrument=()=>{
