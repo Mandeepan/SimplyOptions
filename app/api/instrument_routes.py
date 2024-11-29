@@ -129,7 +129,7 @@ def add_an_instrument():
 
 
 @instrument_routes.route("/<int:instrumentId>", methods=["GET"])
-# @login_required
+@login_required
 def get_an_instrument(instrumentId):
     try:
         instrument = (
