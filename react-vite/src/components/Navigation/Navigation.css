@@ -30,11 +30,15 @@
 
 .search-bar-container {
   display: flex;
+  flex-direction: row;
+  justify-content: left;
   align-items: center;
   border: 1px solid rgb(126, 126, 126);
   border-radius: 5px;
   height: 32px;
   width: 30%;
+  padding:0;
+  
 }
 
 .search-bar-container svg {
@@ -45,8 +49,7 @@
 
 .search-bar-container input {
   border: none;
-  height: 20px;
-  margin-bottom: 5px;
+  height: 100%;
   outline: none;
   background-color: transparent; 
   color: white;

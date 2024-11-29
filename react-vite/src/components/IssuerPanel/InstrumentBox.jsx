@@ -34,7 +34,6 @@ export default function InstrumentBox(){
 
 
     const handleAddInstrument=()=>{
-        console.log("!!!!!!!!! the add instrument button is clicked")
         if (!isCompanyLoading) {
             if (currentCompany && currentCompany.id) {
                 navigate('/createInstrument');

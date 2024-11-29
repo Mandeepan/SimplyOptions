@@ -12,6 +12,8 @@ export default function Layout() {
         dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
     }, [dispatch]);
 
+    
+
     return (
         <>
             <ModalProvider>
