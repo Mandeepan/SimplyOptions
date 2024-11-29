@@ -18,7 +18,7 @@ export default function CreateInstrumentPage() {
         issuedOnEt: "",
         instrumentType: "",
         instrumentClass:"",
-        updatedValue: "",
+        updatedPrice: "",
         updatedIssuedQuantity: "",
     })
 
@@ -105,7 +105,7 @@ export default function CreateInstrumentPage() {
                 await dispatch(addAnInstrumentThunk(newInstrument));
                 // after adding it refresh the currentCompany state so the newly-added instrument is included
                 await dispatch(getACompanyThunk(sessionUser.company_id))
-                // after the user info is updated , direct to issuerPanel
+                // after  , direct to issuerPanel
                 navigate('/issuerPanel')
             }catch (error) {
                 console.error('Error adding instrument or getting updated company state:', error);

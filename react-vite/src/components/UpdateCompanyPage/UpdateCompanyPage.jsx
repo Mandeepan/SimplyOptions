@@ -29,6 +29,24 @@ export default function UpdateCompanyPage(){
         logoUrl:"",
         investors: ""
     }
+    if (currentCompany){
+        initialCompanyValue ={
+            companyName: currentCompany.company_name,
+            shortDescription: currentCompany.short_description,
+            aiPrompt: currentCompany.ai_prompt,
+            foundedYear:currentCompany.founded_year,
+            apiIdentifier: currentCompany.api_identifier,
+            locationIdentifiers: currentCompany.location_identifiers,
+            categories: currentCompany.categories,
+            numEmployeesEnum: currentCompany.num_employees_enum,
+            revenueRange: currentCompany.revenue_range,
+            operatingStatus: currentCompany.operating_status,
+            websiteUrl: currentCompany.website_url,
+            logoUrl:currentCompany.logo_url,
+            investors: currentCompany.investors
+        }
+    }
+
     const [formValue, setFormValue]=useState({initialCompanyValue})
     // Error state
     const [errors, setErrors] = useState({});
@@ -108,23 +126,7 @@ export default function UpdateCompanyPage(){
 
     
 
-    if (currentCompany){
-        initialCompanyValue ={
-            companyName: currentCompany.company_name,
-            shortDescription: currentCompany.short_description,
-            aiPrompt: currentCompany.ai_prompt,
-            foundedYear:currentCompany.founded_year,
-            apiIdentifier: currentCompany.api_identifier,
-            locationIdentifiers: currentCompany.location_identifiers,
-            categories: currentCompany.categories,
-            numEmployeesEnum: currentCompany.num_employees_enum,
-            revenueRange: currentCompany.revenue_range,
-            operatingStatus: currentCompany.operating_status,
-            websiteUrl: currentCompany.website_url,
-            logoUrl:currentCompany.logo_url,
-            investors: currentCompany.investors
-        }
-    }
+    
 
     // monitor the user change on input fields in the form
     const handleChange = (e) => {

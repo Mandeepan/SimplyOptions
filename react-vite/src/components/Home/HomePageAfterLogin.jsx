@@ -9,7 +9,7 @@ import "./HomePageAfterLogin.css"
 export default function HomePageAfterLogin(){
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    const instrumentsObject = useSelector((state) => state.allInstruments.allInstruments);
+    const instrumentsObject = useSelector((state) => state.instruments.allInstruments);
     const instruments = Object.values(instrumentsObject);
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);

@@ -12,7 +12,7 @@ import companyReducer from './company';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    allInstruments: instrumentsReducer,
+    instruments: instrumentsReducer,
     currentUser: userReducer,
     currentCompany: companyReducer,
 });

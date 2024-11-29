@@ -67,6 +67,14 @@
     text-align: center;
     color:rgb(126, 85, 246);
 }
+.company-info-table{
+    margin: 0 5%;
+}
+
+.company-info-table td{
+    padding :0.2rem 0.8rem;
+}
+
 
 .company-info-heading {
     font-weight: bold;
@@ -127,4 +135,8 @@
     font-weight: bolder;
     text-align: center;
     color: rgb(84, 57, 164);
+}
+
+.instrument-radio:checked{
+    accent-color: rgb(84, 57, 164);
 }

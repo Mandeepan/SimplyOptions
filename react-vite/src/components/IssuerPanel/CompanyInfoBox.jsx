@@ -62,42 +62,46 @@ export default function CompanyInfoBox({currentCompany, userId}){
                 <div className="company-controller-body">
                 <div className="company-info-box">
                     <h3><a href={getValidURL(currentCompany.website_url)}>{currentCompany.company_name}</a></h3>
-                    <p>
-                        <span className="company-info-heading">Founded In:</span>
-                        <span className="company-info-content"> {currentCompany.founded_year}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Operating Status:</span>
-                        <span className="company-info-content"> {currentCompany.operating_status ? currentCompany.operating_status : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Category:</span>
-                        <span className="company-info-content"> {currentCompany.categories ? currentCompany.categories : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Location:</span>
-                        <span className="company-info-content"> {currentCompany.location_identifiers ? currentCompany.location_identifiers : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Revenue Range:</span>
-                        <span className="company-info-content"> {currentCompany.revenue_range ? currentCompany.revenue_range : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Employees:</span>
-                        <span className="company-info-content"> {currentCompany.num_employees_enum ? currentCompany.num_employees_enum : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Investors:</span>
-                        <span className="company-info-content"> {currentCompany.investors ? currentCompany.investors : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">AI Prompt:</span>
-                        <span className="company-info-content"> {currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</span>
-                    </p>
-                    <p>
-                        <span className="company-info-heading">Description:</span>
-                        <span className="company-info-content"> {currentCompany.short_description}</span>
-                    </p>
+                    <table className="company-info-table">
+                        <tbody>
+                            <tr>
+                                <td className="company-info-heading">Founded In:</td>
+                                <td className="company-info-content">{currentCompany.founded_year}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Operating Status:</td>
+                                <td className="company-info-content">{currentCompany.operating_status ? currentCompany.operating_status : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Category:</td>
+                                <td className="company-info-content">{currentCompany.categories ? currentCompany.categories : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Location:</td>
+                                <td className="company-info-content">{currentCompany.location_identifiers ? currentCompany.location_identifiers : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Revenue Range:</td>
+                                <td className="company-info-content">{currentCompany.revenue_range ? currentCompany.revenue_range : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Employees:</td>
+                                <td className="company-info-content">{currentCompany.num_employees_enum ? currentCompany.num_employees_enum : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Investors:</td>
+                                <td className="company-info-content">{currentCompany.investors ? currentCompany.investors : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">AI Prompt:</td>
+                                <td className="company-info-content">{currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</td>
+                            </tr>
+                            <tr>
+                                <td className="company-info-heading">Description:</td>
+                                <td className="company-info-content">{currentCompany.short_description}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div className="company-buttons">

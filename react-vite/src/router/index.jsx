@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
                 element:<UpdateCompanyPage />
             },
             {
-                path:'updateInstrument',
+                path:'updateInstrument/:instrumentId',
                 element:<UpdateInstrumentPage />
             }
         ],

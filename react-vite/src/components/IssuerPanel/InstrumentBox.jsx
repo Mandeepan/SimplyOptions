@@ -1,15 +1,25 @@
 import {useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function InstrumentBox({currentCompany}){
     const navigate =useNavigate()
+    const [selectedInstrumentId, setSelectedInstrumentId] = useState(null);
 
     const handleAddInstrument=()=>{
         navigate('/createInstrument')
     }
 
     const handleUpdateInstrument=()=>{
-        navigate('/updateInstrument')
+        if (selectedInstrumentId) {
+            navigate(`/updateInstrument/${selectedInstrumentId}`); 
+        } else {
+            alert("Please select an instrument to update.");
+        }
     }
+
+    const handleSelectInstrument = (instrumentId) => {
+        setSelectedInstrumentId(instrumentId);
+    };
 
     const dateFormatter=(dateString)=>{
         const dateObject = new Date(dateString);
@@ -49,7 +59,11 @@ export default function InstrumentBox({currentCompany}){
                             <tbody>
                                 {currentCompany.instruments.map((instrument, index) => (
                                     <tr key={index} className="instrument-row">
-                                        <td><input type="checkbox" className="instrument-checkbox" /></td>
+                                        <td><input type="radio" 
+                                                    className="instrument-radio"
+                                                    name="selectedInstrument"
+                                                    checked={selectedInstrumentId === instrument.id}
+                                                    onChange={()=>handleSelectInstrument(instrument.id)} /></td>
                                         <td>{instrument.instrument_name}</td>
                                         <td>{dateFormatter(instrument.issued_on_et)}</td>
                                         <td>{instrument.instrument_type}</td>

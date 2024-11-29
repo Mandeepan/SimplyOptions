@@ -21,6 +21,28 @@ export const getAllInstrumentsThunk= () => async (dispatch) => {
   }
 };
 
+//get an instrument by instrument ID
+const GET_AN_INSTRUMENT ='instruments/getAnInstrument'
+
+const getAnInstrument = (instrumentObjectData) => ({
+  type: GET_AN_INSTRUMENT,
+  payload : instrumentObjectData
+})
+
+export const getAnInstrumentThunk= (instrumentId) => async (dispatch) => {
+    const res = await fetch(`/api/instruments/${instrumentId}`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getAnInstrument(data));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+
+
+
 // add a new instrument
 const ADD_AN_INSTRUMENT = 'instruments/addAInstrument'
 
@@ -102,7 +124,9 @@ function instrumentsReducer(state=initialState,action){
     switch (action.type) {
         case GET_ALL_INS:
             return { ...state, allInstruments: normalizer(action.payload) };
-        case ADD_AN_INSTRUMENT:
+        case GET_AN_INSTRUMENT:
+            return { ...state, currentInstrument:action.payload}
+            case ADD_AN_INSTRUMENT:
             return { ...state, currentInstrument:action.payload}
         case UPDATE_AN_INSTRUMENT:
             return { ...state, currentInstrument:action.payload}
