@@ -34,6 +34,7 @@ export default function InstrumentBox(){
 
 
     const handleAddInstrument=()=>{
+        console.log("!!!!!!!!! the add instrument button is clicked")
         if (!isCompanyLoading) {
             if (currentCompany && currentCompany.id) {
                 navigate('/createInstrument');
@@ -98,7 +99,7 @@ export default function InstrumentBox(){
     }
 
 
-    const shouldInstrumentTableHidden = currentCompany.instruments && currentCompany.instruments.length > 0 ? "instruments-list-container" : "instruments-list-container-hidden"
+    // const shouldInstrumentTableHidden = currentCompany.instruments && currentCompany.instruments.length > 0 ? "instruments-list-container" : "instruments-list-container-hidden"
 
     return (
         <div className="company-controller">
@@ -108,9 +109,10 @@ export default function InstrumentBox(){
             <div className="company-controller-body">
                 <div className="company-info-box">
                     <h3>Total Instruments : {currentCompany.instruments?.length}</h3>
-                    <div className={shouldInstrumentTableHidden} style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                    
+                    {/* <div className={shouldInstrumentTableHidden} style={{ maxHeight: '300px', overflowY: 'auto' }}> */}
                     {currentCompany.instruments && currentCompany.instruments.length > 0 ? (
-                        <table className="instrument-table">
+                        <table className="instrument-table" style={{ maxHeight: '300px', overflowY: 'auto' }}>
                             <thead>
                                 <tr className="instrument-table-header">
                                     <th></th>
@@ -145,7 +147,7 @@ export default function InstrumentBox(){
                     ) : (
                         <p className="no-instrument-label">Start the journey to list your company instruments by clicking button below.</p>
                     )}
-                </div>
+                {/* </div> */}
                 </div>
                 <div className="company-buttons">
                     <button className="add-new-instrument-button" onClick={handleAddInstrument}>Add A New Instrument</button>
