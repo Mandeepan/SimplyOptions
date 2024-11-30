@@ -17,7 +17,7 @@ export default function HomePageBeforeLogin() {
         <div className="home-before-login-container">
             <div className="video-background">
                 <video autoPlay loop muted className="fullscreen-video">
-                    <source src="cover.mp4" type="video/mp4" />
+                    <source src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/cover.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             </div>

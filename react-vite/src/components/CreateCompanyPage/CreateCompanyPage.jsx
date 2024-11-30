@@ -331,7 +331,7 @@ export default function CreateCompanyPage(){
         </div>
 
         <div className="create-company-image-container">
-            <img src="/cover1.jpg" alt="Cover" />
+            <img src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/cover1.jpg" alt="Cover" />
         </div>
         </div>
     );

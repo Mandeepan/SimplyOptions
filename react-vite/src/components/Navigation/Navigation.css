@@ -124,3 +124,7 @@
   color: rgb(126, 85, 246,1);
   border:none
 }
+
+.profile-button-container-hidden{
+  display: none;
+}

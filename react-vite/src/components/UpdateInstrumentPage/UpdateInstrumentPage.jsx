@@ -259,7 +259,7 @@ export default function UpdateInstrumentPage(){
                 </form>
             </div>
             <div className="create-company-image-container">
-                <img className="create-instrument-cover" src="/cover3.jpg" alt="Cover" />
+                <img className="create-instrument-cover" src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/cover3.jpg" alt="Cover" />
             </div>
         </div>
     )

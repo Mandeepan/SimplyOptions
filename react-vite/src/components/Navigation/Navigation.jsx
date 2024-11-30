@@ -36,6 +36,9 @@ function Navigation() {
 
 
   const searchBarClassName = sessionUser ? "search-bar-container": "search-bar-container-hidden"
+  const profileButtonClassName = sessionUser? "profile-button-container" :"profile-button-container-hidden"
+
+
   return (
     <header className="nav-bar-container">
       <div className="logo">
@@ -64,9 +67,9 @@ function Navigation() {
           </div>
         )}
       </div>
-      <div>
-        <ProfileButton />
-      </div>
+        <div className={profileButtonClassName}>
+          <ProfileButton />
+        </div>
     </header>
   );
 }

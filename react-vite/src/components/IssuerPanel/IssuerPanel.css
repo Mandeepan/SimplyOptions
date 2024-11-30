@@ -103,7 +103,8 @@
 .instrument-table{
     border:1px rgb(126, 126, 126) solid;
     border-collapse: collapse;
-    width: 100%;
+    width: 90%;
+    margin:0 5%
 }
 
 .instrument-table-hidden{

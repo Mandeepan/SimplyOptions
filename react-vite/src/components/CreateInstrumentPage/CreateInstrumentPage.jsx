@@ -245,7 +245,7 @@ export default function CreateInstrumentPage() {
                 </form>
             </div>
             <div className="create-company-image-container">
-                <img className="create-instrument-cover" src="/cover4.jpg" alt="Cover" />
+                <img className="create-instrument-cover" src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/cover4.jpg" alt="Cover" />
             </div>
         </div>
     )

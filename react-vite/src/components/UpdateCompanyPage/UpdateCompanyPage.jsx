@@ -173,7 +173,7 @@ export default function UpdateCompanyPage(){
     return (
         <div className="create-company-page">
             <div className="create-company-image-container">
-                <img src="/cover2.jpg" alt="Cover" />
+                <img src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/cover2.jpg" alt="Cover" />
             </div>
             <div className="create-company-container">
             <h2>Update Company Profile</h2>
