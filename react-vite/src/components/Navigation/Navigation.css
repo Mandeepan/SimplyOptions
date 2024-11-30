@@ -24,8 +24,27 @@
   background-color: transparent;
 }
 
-.profile-button-hidden{
-  display:none
+.search-results-dropdown {
+  position: absolute;
+  top:5rem;
+  background-color: #cecece;
+  color: rgb(126, 85, 246);
+  border: none;
+  border-radius: 3px;
+  width: 32%; 
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-result-item {
+  border: 1px white solid;
+  cursor: pointer;
+}
+
+.search-result-item:hover{
+  background-color: rgb(126, 85, 246) ;
+  color:white
 }
 
 .search-bar-container {
@@ -36,9 +55,8 @@
   border: 1px solid rgb(126, 126, 126);
   border-radius: 5px;
   height: 32px;
-  width: 30%;
+  width: 35%;
   padding:0;
-  
 }
 
 .search-bar-container svg {
@@ -58,6 +76,10 @@
 
 .search-bar-container-hidden{
   display:none
+}
+
+.search-results-dropdown{
+  border: 1px white solid;
 }
 
 /* Following are for the profile button dropdown menu*/
