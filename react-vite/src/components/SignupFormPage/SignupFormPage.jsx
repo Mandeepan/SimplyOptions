@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
@@ -15,33 +15,62 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [shouldDisable, setShouldDisable]=useState(false)
+  const [formTouched, setFormTouched]=useState(false)
+
+
+  const validateForm = useCallback(() => {
+    const newErrors = {};
+    // all validations
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword="Confirm Password field must be the same as the Password field"
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        newErrors.email= "Please enter a valid email address"
+    }
+    if (password.length < 8){
+      newErrors.password= "Password has at least 8 characters."
+    }
+    if (firstName=="") newErrors.firstName="First name cannot be empty";
+    if (lastName=="") newErrors.lastName="Last name cannot be empty";
+    return newErrors
+  },[email, firstName,lastName,password,confirmPassword])
+
+  useEffect(()=>{
+    if (formTouched) {
+      const newErrors = validateForm();
+      setErrors(newErrors);
+      setShouldDisable(Object.keys(newErrors).length > 0);
+    }
+  },[formTouched, validateForm,email, firstName,lastName,password,confirmPassword])
+
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
+
+  const handleFormChanged=()=>{
+    if (!formTouched) setFormTouched(true)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      return setErrors({
-        confirmPassword:
-          "Confirm Password field must be the same as the Password field",
-      });
-    }
-
-    const serverResponse = await dispatch(
-      thunkSignup({
-        firstName,
-        lastName,
-        email,
-        password,
-        isIssuer
-      })
-    );
-
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      navigate("/");
+    if (formTouched){
+      try{
+        await dispatch(
+          thunkSignup({
+            firstName,
+            lastName,
+            email,
+            password,
+            isIssuer
+          })
+        );
+        navigate('/')
+      }catch (error) {
+          console.error('Error signing up user:', error);
+          setErrors({...errors, "FetchError":error})
+      }
     }
   };
 
@@ -56,7 +85,7 @@ function SignupFormPage() {
       <div className="content-overlay"></div>
       <h2 className='signup-title'>Register A New Account</h2>
       {errors.server && <p className='error'>{errors.server}</p>}
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="signup-form" onSubmit={handleSubmit} onChange={handleFormChanged}>
       <label>
           First Name
           <input
@@ -66,7 +95,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.username && <p className='error'>{errors.first_name}</p>}
+        {errors.firstName && <p className='error'>{errors.firstName}</p>}
         <label>
           Last Name
           <input
@@ -76,7 +105,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.username && <p className='error'>{errors.last_name}</p>}
+        {errors.lastName && <p className='error'>{errors.lastName}</p>}
         <label>
           Email
           <input
@@ -106,6 +135,7 @@ function SignupFormPage() {
             required
           />
         </label>
+        {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
         <label id="issuer-checkbox-container">
           <input
             type="checkbox"
@@ -114,8 +144,8 @@ function SignupFormPage() {
           />
           Register as Issuer
         </label>
-        {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
-        <button type="submit" className="signup-button">Sign Up</button>
+        {errors.FetchError && <p className='error'>{errors.FetchError}</p>}
+        <button type="submit" className="signup-button" disabled={shouldDisable}>Sign Up</button>
       </form>
     </div>
   );

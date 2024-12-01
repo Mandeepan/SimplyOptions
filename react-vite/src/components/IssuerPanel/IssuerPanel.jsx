@@ -38,7 +38,7 @@ export default function IssuerPanel() {
 
     return (
         <div className="issuer-panel-page-container">
-        {userInfo.is_issuer?
+        {userInfo.is_issuer && userInfo.company_id?
         <div className="issuer-container">
             <h2> Welcome to SimplyOptions Issuer Panel, {sessionUser.first_name}!</h2>
             {currentCompany && (
@@ -50,7 +50,7 @@ export default function IssuerPanel() {
         </div>
         :
         <div className="non-issuer-container">
-            <h3>Your current role is not an issuer, you can become an issuer by adding your company.</h3>
+            <h3>Your current role is not an issuer or you signed up as an issuer but have not added a company profile yet.</h3>
             <p>Note : Employer verification is under development and new feature is coming soon.</p>
             <button className="become-issuer-button" onClick={handleBecomeAnIssuer}>Add A Company To Become An Issuer</button>
         </div>

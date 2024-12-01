@@ -84,8 +84,7 @@ export const deleteACompanyThunk= (companyId) => async (dispatch) => {
     const res = await fetch(`/api/companies/${companyId}`,{
         method :'DELETE',
     });
-    console.log("API response: ============")
-    console.log(res)
+
     if (res.ok) {
         const data = await res.json();
         dispatch(deleteACompany(data));
