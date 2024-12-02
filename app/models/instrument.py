@@ -3,6 +3,8 @@ from .instrumentPrice import InstrumentPrice
 from .offer import Offer
 from .listing import Listing
 from .transaction import Transaction
+
+
 class Instrument(db.Model):
     __tablename__ = "instruments"
 
@@ -10,22 +12,30 @@ class Instrument(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    company_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("companies.id")), nullable=False)
+    company_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("companies.id")), nullable=False
+    )
     instrument_name = db.Column(db.String, nullable=False)
-    issuer_user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")))
-    issued_on_et = db.Column(db.Date)
+    issuer_user_id = db.Column(
+        db.Integer, db.ForeignKey(add_prefix_for_prod("users.id"))
+    )
+    issued_on_et = db.Column(db.Date, nullable=False)
     instrument_type = db.Column(db.String, nullable=False)
-    instrument_class = db.Column(db.String, nullable=False)  
+    instrument_class = db.Column(db.String, nullable=False)
     updated_value = db.Column(db.Float(precision=2))
     updated_issued_quantity = db.Column(db.Integer)
     updated_price = db.Column(db.Float(precision=2), nullable=False)
     created_at_et = db.Column(db.DateTime, default=current_eastern_time)
-    updated_at_et = db.Column(db.DateTime, default=current_eastern_time, onupdate=current_eastern_time)
-    
-    instrument_prices = db.relationship('InstrumentPrice', backref='instruments',lazy=True)
-    transactions = db.relationship('Transaction', backref='instruments',lazy=True)
-    offers = db.relationship('Offer', backref='instruments',lazy=True)
-    listings = db.relationship('Listing', backref='instruments',lazy=True)
+    updated_at_et = db.Column(
+        db.DateTime, default=current_eastern_time, onupdate=current_eastern_time
+    )
+
+    instrument_prices = db.relationship(
+        "InstrumentPrice", backref="instruments", lazy=True
+    )
+    transactions = db.relationship("Transaction", backref="instruments", lazy=True)
+    offers = db.relationship("Offer", backref="instruments", lazy=True)
+    listings = db.relationship("Listing", backref="instruments", lazy=True)
 
     def to_dict(self):
         return {
@@ -40,5 +50,5 @@ class Instrument(db.Model):
             "updated_issued_quantity": self.updated_issued_quantity,
             "updated_price": self.updated_price,
             "created_at_et": self.created_at_et,
-            "updated_at_et": self.updated_at_et
+            "updated_at_et": self.updated_at_et,
         }

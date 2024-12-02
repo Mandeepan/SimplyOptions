@@ -9,11 +9,6 @@ auth_routes = Blueprint("auth", __name__)
 
 @auth_routes.route("/")
 def authenticate():
-    """
-    Authenticates a user.// ? ---------------------------------------------------------------------------
-    // * -----
-    // ? ---------------------------------------------------------------------------
-    """
     if current_user.is_authenticated:
         return current_user.to_dict()
     return {"errors": {"message": "Unauthorized"}}, 401
@@ -74,8 +69,6 @@ def sign_up():
             login_user(user)
             return user.to_dict()
         except Exception as e:
-            print("!!!!!!!")
-            print("Database error:", str(e))
             db.session.rollback()
             return {
                 "errors": {"database": "An error occurred while saving the user"}

@@ -48,6 +48,27 @@ function SignupFormPage() {
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
 
+  const checkEmailExists = async (email) => {
+    try {
+      const response = await fetch("/api/users/check-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      console.log("!!!!!!!checkEmailExists response:", data); 
+      if (data.exists) {
+        return "This email is already registered.Please proceed to log in.";
+      }
+      return null;
+    } catch (error) {
+      console.error("Error checking email:", error);
+      return "Unable to verify email uniqueness at the moment.";
+    }
+  };
+
   const handleFormChanged=()=>{
     if (!formTouched) setFormTouched(true)
   }
@@ -56,6 +77,13 @@ function SignupFormPage() {
     e.preventDefault();
 
     if (formTouched){
+      const emailError = await checkEmailExists(email);
+      if (emailError) {
+        setErrors({...errors, emailExistError: emailError });
+        setShouldDisable(true);
+        return;
+      }
+
       try{
         await dispatch(
           thunkSignup({
@@ -116,6 +144,7 @@ function SignupFormPage() {
           />
         </label>
         {errors.email && <p className='error'>{errors.email}</p>}
+        {errors.emailExistError && <p className='error'>{errors.emailExistError}</p>}
         <label>
           Password
           <input

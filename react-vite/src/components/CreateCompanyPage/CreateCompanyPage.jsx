@@ -146,6 +146,9 @@ export default function CreateCompanyPage(){
         <h2>Create Company Profile</h2>
         <button onClick={handleFillingDemoCompanyData} className="demo-company-button"> * Click here to fill in sample company information</button>
         <form onSubmit={handleSubmit} className="create-company-form">
+            <div className="each-item">
+                <p style={{ textAlign: 'left', fontStyle:'italic' }}>All fields with * are required.</p>
+            </div>
             <div className="row1">
                 <div className='each-item'>
                 <label>Company Name *</label>

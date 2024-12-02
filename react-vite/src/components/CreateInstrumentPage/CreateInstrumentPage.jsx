@@ -58,6 +58,7 @@ export default function CreateInstrumentPage() {
         if (!formValue.instrumentName) newErrors.instrumentName = 'Instrument name is required.';
         if (!formValue.instrumentClass) newErrors.instrumentClass = 'Instrument class is required.';
         if (!formValue.instrumentType) newErrors.instrumentType = 'Instrument type is required.';
+        if (!formValue.issuedOnEt) newErrors.issuedOnEt = 'Issued Date is required.';
         if (!formValue.updatedIssuedQuantity) newErrors.updatedIssuedQuantity = 'Issued quantity is required.';
         if (formValue.updatedIssuedQuantity && formValue.updatedIssuedQuantity<=0) newErrors.updatedIssuedQuantity = 'Issued quantity should be a positive rounded number';
         if (!formValue.updatedPrice) newErrors.updatedPrice = 'Issued share price is required.';
@@ -142,6 +143,9 @@ export default function CreateInstrumentPage() {
                 <h2>Instrument Information</h2>
                 <button onClick={handleFillingDemoInstrumentData} className="demo-company-button"> * Click here to fill in sample company information</button>
                 <form onSubmit={handleSubmit} className="create-company-form">
+                    <div className="each-item">
+                        <p style={{ textAlign: 'left' , fontStyle:'italic' }}>All fields with * are required.</p>
+                    </div>
                     <div className="row1">
                         <div className='each-item'>
                             <label>Instrument Name *</label>
@@ -158,12 +162,12 @@ export default function CreateInstrumentPage() {
 
                     <div className="row2">
                         <div className='each-item'>
-                            <label>Issued Date</label>
+                            <label>Issued Date *</label>
                             <DatePicker
                                 selected={formValue.issuedOnEt ? new Date(formValue.issuedOnEt) : null}
                                 onChange={(date) => setFormValue({ ...formValue, issuedOnEt: date })}
                                 dateFormat="yyyy-MM-dd"
-                                className="custom-datepicker" 
+                                className={`custom-datepicker ${errors.issuedOnEt ? 'error-border' : ''}`}
                                 calendarClassName="calendar-custom-style"
                             />
                             {errors.issuedOnEt && <p className="error">{errors.issuedOnEt}</p>}
@@ -172,7 +176,7 @@ export default function CreateInstrumentPage() {
 
                     <div className="row3">
                         <div className='each-item'>
-                            <label>Instrument Type</label>
+                            <label>Instrument Type *</label>
                             <select
                                 name="instrumentType"
                                 value={formValue.instrumentType}
@@ -191,7 +195,7 @@ export default function CreateInstrumentPage() {
 
                     <div className="row4">
                         <div className='each-item'>
-                            <label>Instrument Class</label>
+                            <label>Instrument Class *</label>
                             <select
                                 name="instrumentClass"
                                 value={formValue.instrumentClass}
@@ -212,7 +216,7 @@ export default function CreateInstrumentPage() {
 
                     <div className="row5">
                         <div className='each-item'>
-                            <label>Issued Quantity</label>
+                            <label>Issued Quantity *</label>
                             <input
                                 type="number"
                                 name="updatedIssuedQuantity"
@@ -227,7 +231,7 @@ export default function CreateInstrumentPage() {
 
                     <div className="row6">
                         <div className='each-item'>
-                            <label>Share Price (USD)</label>
+                            <label>Share Price (USD) *</label>
                             <input
                                 type="number"
                                 name="updatedPrice"

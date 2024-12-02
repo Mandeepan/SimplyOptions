@@ -13,6 +13,21 @@ def users():
     return {"users": [user.to_dict() for user in users]}
 
 
+# adding a dedicated route for checking the duplicate user account emails to improve efficiency
+@user_routes.route("/check-email", methods=["POST"])
+def check_email():
+    data = request.get_json()
+    email = data.get("email")
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({"exists": True}), 200
+    else:
+        return jsonify({"exists": False}), 200
+
+
 @user_routes.route("/<int:userId>")
 @login_required
 def get_user(userId):
