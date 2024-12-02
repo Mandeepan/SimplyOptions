@@ -6,12 +6,12 @@ export default function HomePageBeforeLogin() {
 
     const handleLoginClick = () => {
         navigate("/login");
-      };
+    };
 
-      const handleSignUpClick = () => {
-        navigate("/signup");
-      };
-      
+    const handleSignUpClick = () => {
+    navigate("/signup");
+    };
+    
 
     return (
         <div className="home-before-login-container">
@@ -35,7 +35,7 @@ export default function HomePageBeforeLogin() {
                         private markets.
                     </p>
                 </div>
-               
+
                 <div className="user-roles-container">
                     <div className="user-role-box">
                         <h2>Investors</h2>

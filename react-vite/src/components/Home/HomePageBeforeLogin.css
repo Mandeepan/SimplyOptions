@@ -56,7 +56,7 @@
     padding: 20px;
     border: 2px solid #ccc;
     border-radius: 2px;
-    background: rgba(255, 255, 255, 0.6); /* Slight background to improve text visibility */
+    background: rgba(255, 255, 255, 0.6); 
     color: #fff;
 }
 
@@ -90,4 +90,109 @@
 
 li {
     text-align: left;
+}
+
+
+/* Phone Screen Size */
+@media (max-width: 600px) {
+.home-before-login-container {
+    height: auto;
+    padding: 1rem;
+    overflow-y: visible;
+}
+
+.company-name {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+}
+
+.content-overlay {
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.user-roles-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    max-width: 95%;
+    left: 2.5%;
+    overflow-y: auto;
+}
+
+.user-role-box {
+    width: 90%;
+    padding: 0.25rem 0.5rem;
+}
+
+.login-signup-container {
+    width: 90%;
+    margin: 2rem auto;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-signup-container button {
+    width: 100%;
+    min-width: fit-content;
+}
+
+.company-description {
+    max-width: 90%;
+    left: 5%;
+}
+}
+
+
+/* iPad Screen Size */
+@media (max-width: 1024px) {
+.home-before-login-container {
+    height: auto; 
+}
+
+.company-name {
+    font-size: 3.5rem;
+    margin-top: 1rem;
+}
+
+.content-overlay {
+    padding: 1.5rem;
+}
+
+.user-roles-container {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    width: 100%; 
+    overflow-y: visible; 
+}
+
+.user-role-box {
+    width: 90%;
+    padding: 0.25rem 0.5rem;
+}
+
+.login-signup-container {
+    width: 80%; 
+    margin: 2rem auto;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.login-signup-container button {
+    width: 90%;
+}
+
+.company-description {
+    max-width: 85%; 
+    left: 7.5%; 
+}
+
+.user-roles-container {
+    max-width: 90%; 
+    left: 5%; 
+}
 }

@@ -35,6 +35,9 @@ openbb = "*"
 canvas = "*"
 pytz = "*"
 boto3 = "*"
+pandas = "*"
+requests = "*"
+openai = "*"
 
 [dev-packages]
 pylint = "*"
