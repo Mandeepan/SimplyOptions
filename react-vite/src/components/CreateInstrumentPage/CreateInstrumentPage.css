@@ -1,0 +1,22 @@
+.create-instrument-cover{
+    max-width:50%;
+    object-fit:fill; 
+}
+
+
+.custom-datepicker{
+    color:white;
+    margin:20px 0;
+    background-color: transparent;
+    border: 1px white solid;
+    height: 1.8rem;
+    width: 100%;
+}
+
+.custom-datepicker {
+    border: 1px solid white; 
+}
+
+.error-border {
+    border-color: rgb(223, 49, 49); 
+}

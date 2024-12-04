@@ -1,0 +1,73 @@
+.create-company-page{
+    display: flex;
+    flex-direction: row;
+}
+
+.create-company-page .create-company-container, .create-company-image-container{
+    width: 50%;
+}
+
+.demo-company-button{
+    background-color: transparent;
+    text-decoration: underline;
+    color: pink;
+    text-decoration-color: pink;
+    margin-bottom: 3%;
+}
+
+.demo-company-button:hover{
+    background-color: transparent;
+}
+
+.create-company-page img{
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.create-company-page .create-company-container{
+    text-align: center;
+    background-color:rgb(17, 2, 38)
+}
+
+input, select{
+    color:white;
+    margin:20px 0;
+    background-color: transparent;
+    border: 1px white solid;
+    height: 1.8rem;
+}
+
+textarea{
+    width: 100%;
+}
+
+
+.create-company-form .row1, .row2, .row3, .row4, .row5, .row6{
+    display:flex;
+    flex-direction: row;
+}
+.row2 > .each-item >textarea{
+    color:white;
+    margin:20px 0;
+    background-color: transparent;
+    border: 1px white solid;
+    height:4rem;
+}
+
+.each-item{
+    display:flex;
+    flex-direction: column;
+    margin:0 5%;
+    width:90%;
+}
+
+.each-item label{
+    text-align: left;
+    margin-left:0;
+}
+
+.create-company-button{
+    margin-bottom:5%;
+    min-width:30%
+}
+
