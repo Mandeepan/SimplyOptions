@@ -10,6 +10,9 @@ from .api.auth_routes import auth_routes
 from .api.user_routes import user_routes
 from .api.instrument_routes import instrument_routes
 from .api.company_routes import company_routes
+from .api.listing_routes import listing_routes
+from .api.offering_routes import offering_routes
+from .api.transaction_routes import transaction_routes
 
 from .config import Config
 from .models import User, db
@@ -35,6 +38,9 @@ app.register_blueprint(user_routes, url_prefix="/api/users")
 app.register_blueprint(auth_routes, url_prefix="/api/auth")
 app.register_blueprint(instrument_routes, url_prefix="/api/instruments")
 app.register_blueprint(company_routes, url_prefix="/api/companies")
+app.register_blueprint(listing_routes, url_prefix="/api/listings")
+app.register_blueprint(offering_routes, url_prefix="/api/offerings")
+app.register_blueprint(transaction_routes, url_prefix="/api/transactions")
 
 db.init_app(app)
 Migrate(app, db)
