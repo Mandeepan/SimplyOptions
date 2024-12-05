@@ -9,12 +9,14 @@ import sessionReducer from './session';
 import instrumentsReducer from './instrument';
 import userReducer from './user';
 import companyReducer from './company';
+import transactionsReducer from './transaction';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     instruments: instrumentsReducer,
     currentUser: userReducer,
     currentCompany: companyReducer,
+    companyTransactions: transactionsReducer,
 });
 
 let enhancer;

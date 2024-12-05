@@ -5,20 +5,19 @@ import { normalizer } from './utils';
 const GET_ALL_INS ='instruments/getAllInstruments'
 
 const getAllInstruments = (instruments) => ({
-  type: GET_ALL_INS,
-  payload : instruments
+    type: GET_ALL_INS,
+    payload : instruments
 })
 
 export const getAllInstrumentsThunk= () => async (dispatch) => {
-  const res = await fetch('/api/instruments');
-  if (res.ok) {
-      const data = await res.json();
-    //   console.log("API Response: ", data);
-      dispatch(getAllInstruments(data.instruments));
-  } else {
-      const errors = await res.json();
-      return errors;
-  }
+    const res = await fetch('/api/instruments');
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getAllInstruments(data.instruments));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
 };
 
 //get an instrument by instrument ID
@@ -107,8 +106,6 @@ export const deleteAnInstrumentThunk= (instrumentId) => async (dispatch) => {
     const res = await fetch(`/api/instruments/${instrumentId}`,{
         method :'DELETE',
     });
-    console.log("API response: ============")
-    console.log(res)
     if (res.ok) {
         const data = await res.json();
         dispatch(deleteAnInstrument(data));
