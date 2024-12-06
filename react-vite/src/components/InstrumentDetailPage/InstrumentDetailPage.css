@@ -1,3 +1,111 @@
 .instrument-detail-page h1{
     text-align: center;
 }
+
+.detail-page-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height:4rem;
+    margin-top:0;
+    margin-bottom: 0;
+}
+
+.simple-buddy-button{
+    height:4rem;
+    width:4rem;
+    padding:0;
+    margin-left: 2rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #89fffd, #ef32d9); 
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.simple-buddy-button:hover {
+    border-radius: 50%;
+    
+    color:  rgb(89, 26, 235);
+    box-shadow: 0px 0px 15px rgba(89, 26, 235, 0.6);
+}
+
+.simple-buddy-button svg{
+    width:55%;
+    height:55%
+}
+
+#company_name_logo_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.company_logo{
+    width:2rem;
+    height: 2rem;
+    margin-right:0.5rem;
+}
+
+.instrument-details{
+    border:2px white solid;
+    margin :2% 10%;
+    border-radius: 5px;
+    padding-left:2rem;
+}
+
+/*For the Simple Buddy Side Modal*/
+
+.side-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+}
+.side-modal{
+    background: linear-gradient(135deg, #89fffd, #ef32d9); 
+    padding: 2%
+}
+
+.side-modal-content {
+    display: flex;
+    flex-direction: column;
+    color:#4b0082;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    background:transparent;
+}
+
+.close-modal-button {
+    align-self: flex-end;
+    border: none;
+    border-radius: 50%;
+    background:linear-gradient(135deg, #89fffd, #ef32d9) ;
+    color:white;
+    font-size: 1.2em;
+    cursor: pointer;
+    width:2rem;
+    height: 2rem;
+}
+
+.close-modal-button:hover{
+    background: none;
+    color: rgb(89, 26, 235);
+}
+
+.blurred {
+    filter: blur(5px);
+}
+.instrument-details {
+    transition: filter 0.5s ease;
+}
+
+.typing-content{
+    font-family:'Courier New', Courier, monospace; 
+}
