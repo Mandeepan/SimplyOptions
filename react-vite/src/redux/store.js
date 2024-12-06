@@ -10,13 +10,17 @@ import instrumentsReducer from './instrument';
 import userReducer from './user';
 import companyReducer from './company';
 import transactionsReducer from './transaction';
+import listingsReducer from './listings';
+import OffersReducer from './offers';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     instruments: instrumentsReducer,
     currentUser: userReducer,
     currentCompany: companyReducer,
-    companyTransactions: transactionsReducer,
+    transactions: transactionsReducer,
+    listings: listingsReducer,
+    offers: OffersReducer
 });
 
 let enhancer;

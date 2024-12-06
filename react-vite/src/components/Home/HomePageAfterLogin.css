@@ -38,6 +38,16 @@
     color: rgb(84, 57, 164);
 }
 
+.crunchbase-logo-container{
+    margin:0 15%;
+    padding-right:0;
+    text-align: right;
+}
+
+.crunchbase-logo-container img{
+    height: 3rem;
+}
+
 .pagination {
 margin-top: 20px;
 display: flex;

@@ -6,6 +6,7 @@ import { getACompanyThunk } from '../../redux/company'
 import CompanyInfoBox from './CompanyInfoBox';
 import InstrumentBox from './InstrumentBox';
 import PendingBox from './PendingBox'
+import NonPendingBox from './NonPendingBox';
 import "./IssuerPanel.css"
 
 export default function IssuerPanel() {
@@ -47,6 +48,7 @@ export default function IssuerPanel() {
                             <CompanyInfoBox currentCompany={currentCompany} userId={sessionUser.id} />
                             <InstrumentBox />
                             <PendingBox currentCompany={currentCompany} />
+                            <NonPendingBox currentCompany={currentCompany} />
                         </>
                     )}  
         </div>

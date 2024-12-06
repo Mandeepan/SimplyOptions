@@ -1,6 +1,6 @@
 from flask import Blueprint, request, make_response, jsonify
 from flask_login import login_required
-from app.models import Offer, Instrument, db
+from app.models import Offer, Instrument, Company, db
 from datetime import datetime
 
 offering_routes = Blueprint("offerings", __name__)
@@ -50,11 +50,29 @@ def get_an_offer_by_instrument(instrumentId):
 @login_required
 def get_offerings_by_user(userId):
     try:
-        offerings = Offer.query.filter_by(offer_user_id=userId).all()
+        offerings = (
+            db.session.query(Offer, Instrument, Company)
+            .join(Instrument, Instrument.id == Offer.instrument_id)
+            .join(Company, Company.id == Instrument.company_id)
+            .filter(Offer.offer_user_id == userId, Offer.remaining_quantity != 0)
+            .order_by(Offer.created_at_et.desc())
+            .all()
+        )
+
+        if not offerings:
+            return make_response(
+                jsonify({"listing": []}),
+                200,
+                {"Content-Type": "application/json"},
+            )
         offerings_data = [
             {
                 "id": offering.id,
                 "instrument_id": offering.instrument_id,
+                "instrument_name": instrument.instrument_name,
+                "instrument_type": instrument.instrument_type,
+                "instrument_class": instrument.instrument_class,
+                "company_name": company.company_name,
                 "offer_user_id": offering.offer_user_id,
                 "status": offering.status,
                 "offered_price": offering.offered_price,
@@ -67,7 +85,7 @@ def get_offerings_by_user(userId):
                 if offering.settled_on_et
                 else None,
             }
-            for offering in offerings
+            for offering, instrument, company in offerings
         ]
         return make_response(jsonify({"offerings": offerings_data}), 200)
     except Exception as e:

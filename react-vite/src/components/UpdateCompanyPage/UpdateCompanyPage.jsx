@@ -217,7 +217,7 @@ export default function UpdateCompanyPage(){
                     {errors.shortDescription && <p className="error">{errors.shortDescription}</p>}
                     </div>
 
-                    <div className='each-item'>
+                    {/* <div className='each-item'>
                     <label className='each-item'>AI Prompt</label>
                     <textarea
                         type="text"
@@ -226,7 +226,7 @@ export default function UpdateCompanyPage(){
                         onChange={handleChange}
                         style={{ borderColor: errors.aiPrompt ? 'rgb(223,49,49)' : 'white' }}
                     />
-                    </div>
+                    </div> */}
                 </div>
 
 

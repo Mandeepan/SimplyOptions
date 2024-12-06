@@ -2,7 +2,7 @@ from flask import Blueprint, request, make_response, jsonify
 from flask_login import login_required, current_user
 
 # from app.api.aws import get_unique_filename, upload_file_to_s3
-from app.models import Listing, Instrument, db
+from app.models import Listing, Instrument, Company, db
 from datetime import datetime
 
 listing_routes = Blueprint("listings", __name__)
@@ -53,12 +53,30 @@ def get_a_listing_by_instrument(instrumentId):
 @login_required
 def get_listings_by_user(userId):
     try:
-        listings = Listing.query.filter_by(listing_user_id=userId).all()
+        listings = (
+            db.session.query(Listing, Instrument, Company)
+            .join(Instrument, Instrument.id == Listing.instrument_id)
+            .join(Company, Company.id == Instrument.company_id)
+            .filter(Listing.listing_user_id == userId, Listing.remaining_quantity != 0)
+            .order_by(Listing.created_at_et.desc())
+            .all()
+        )
+
+        if not listings:
+            return make_response(
+                jsonify({"listing": []}),
+                200,
+                {"Content-Type": "application/json"},
+            )
 
         listings_data = [
             {
                 "id": listing.id,
                 "instrument_id": listing.instrument_id,
+                "instrument_name": instrument.instrument_name,
+                "instrument_type": instrument.instrument_type,
+                "instrument_class": instrument.instrument_class,
+                "company_name": company.company_name,
                 "listing_user_id": listing.listing_user_id,
                 "status": listing.status,
                 "listed_price": listing.listed_price,
@@ -71,7 +89,7 @@ def get_listings_by_user(userId):
                 if listing.settled_on_et
                 else None,
             }
-            for listing in listings
+            for listing, instrument, company in listings
         ]
 
         response_body = {"listings": listings_data}

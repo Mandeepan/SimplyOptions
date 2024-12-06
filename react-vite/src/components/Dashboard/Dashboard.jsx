@@ -1,26 +1,40 @@
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {useSelector, useDispatch } from 'react-redux'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { getAUserThunk, updateAUserThunk, deleteAUserThunk } from '../../redux/user';
 import { thunkLogout } from '../../redux/session';
 import { getACompanyThunk } from '../../redux/company'
+import { getAllTransactionsForAUserThunk } from '../../redux/transaction';
+import { getAllListingsForAUserThunk } from '../../redux/listings';
+import { getAllOffersForAUserThunk } from '../../redux/offers';
 import { useModal } from '../../context/Modal';
 import FundingModal from './FundingModal';
-
+import { RiPencilFill } from "react-icons/ri";
+import { MdOutlineClose } from "react-icons/md";
 import "./Dashboard.css"
 
 export default function Dashboard(){
-    const navigate =useNavigate()
-    const dispatch =useDispatch()
+    const navigate =useNavigate();
+    const dispatch =useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const userInfo = useSelector(state => state.currentUser.currentUser);
-    const currentCompany = useSelector(state => state.currentCompany.currentCompany)
+    const currentCompany = useSelector(state => state.currentCompany.currentCompany);
+    const userTransactions = useSelector((state)=>state.transactions.userTransactions);
+    const userListings = useSelector((state)=> state.listings.userListings);
+    const userOffers = useSelector((state)=> state.offers.userOffers);
     const { setModalContent, closeModal } = useModal();
+    const [activeTab, setActiveTab]=useState('listings');
+    const [selectedListingId, setSelectedListingId] = useState(null);
+    const [selectedOfferId, setSelectedOfferId] = useState(null);
+    
 
     useEffect(() => {
         if (sessionUser && sessionUser.id) {
             dispatch(getAUserThunk(parseInt(sessionUser.id)))
+            dispatch( getAllTransactionsForAUserThunk(sessionUser.id))
+            dispatch(getAllListingsForAUserThunk(sessionUser.id))
+            dispatch(getAllOffersForAUserThunk(sessionUser.id))
         }
     }, [dispatch, sessionUser]);
 
@@ -95,6 +109,8 @@ export default function Dashboard(){
         
     }
 
+ 
+
     const handleLiquidateFundClick=(userId)=>{
         setModalContent(
             <FundingModal
@@ -104,7 +120,29 @@ export default function Dashboard(){
             />
         );
     }
+
+    const handleSelectListing= (listingId) => {
+        setSelectedListingId(listingId)
+    };
+
+    const handleSelectOffer= (offerId) => {
+        setSelectedOfferId(offerId)
+    };
+
+    const handleUpdateClick=(item)=>{
+        alert(`This update ${item} feature is coming soon`)
+    }
+
+    const handleCancelClick=(item)=>{
+        alert(`This cancel ${item} feature is coming soon`)
+    }
     
+    const handleToggleTab = (tab) => {
+        setActiveTab(tab); // Set the active tab to either 'listings' or 'offers'
+    };
+
+
+
     return (
         <div className="dashboard-container">
             <h1>SimplyOptions User Dashboard</h1>
@@ -183,13 +221,218 @@ export default function Dashboard(){
 
             <div className="std-controller">
                 <div className="std-controller-head-banner">
-                    <h3>TRANSACTIONS</h3>
+                    <h3>LISTINGS & OFFERS</h3>
                 </div>
                 <div className="std-controller-body">
-                    <div className="std-info-box">
-                        <h3>Transaction history is coming soon...</h3>
+                <div className="std-info-box">
+                    {/* Toggle Buttons for Listings and Offers */}
+                    <div className="listings-offers-toggle">
+                            <button
+                                className={`toggle-button-${activeTab === 'listings' ? 'active' : ''}`} // Add 'active' class based on activeTab state
+                                onClick={() => handleToggleTab('listings')} // Set active tab to 'listings'
+                            >
+                                Listings
+                            </button>
+                            <button
+                                className={`toggle-button-${activeTab === 'offers' ? 'active' : ''}`} // Add 'active' class based on activeTab state
+                                onClick={() => handleToggleTab('offers')} // Set active tab to 'offers'
+                            >
+                                Offers
+                            </button>
                     </div>
+                    {/* Listings & Offers Table */}
+                    {activeTab === 'listings' && ( // Show listings table if activeTab is 'listings'
+                            <div className="transaction-table1-container">
+                                {userListings && userListings.length > 0 ? (
+                                    <table className="transaction-table1">
+                                        <thead>
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Update</th>
+                                                <th>Cancel</th>
+                                                <th>ID</th>
+                                                <th>Company Name</th>
+                                                <th>Instrument Name</th>
+                                                <th>Instrument Type</th>
+                                                <th>Instrument Class</th>
+                                                <th>Status</th>
+                                                <th>Listed Price</th>
+                                                <th>Initial Quantity</th>
+                                                <th>Remaining Quantity</th>
+                                                <th>Listed On (ET)</th>
+                                                <th>Settled On (ET)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {userListings.map((listing, index) => (
+                                                <tr key={index}>
+                                                    <td><input type="radio" 
+                                                            className="instrument-radio"
+                                                            name="selectedListingId"
+                                                            checked={selectedListingId === listing.id}
+                                                            onChange={()=>handleSelectListing(listing.id)} />
+                                                    </td>
+                                                    <td>
+                                                        <div className='decision-button-container'>
+                                                            <button className="transaction-update-button"
+                                                                    onClick={(e)=>{e.preventDefault(); handleUpdateClick("listing");}}
+                                                                    disabled={selectedListingId !== listing.id}
+                                                                    >
+                                                                    <RiPencilFill />
+                                                            </button>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='decision-button-container'>
+                                                            <button className="transaction-reject-button"
+                                                                    onClick={(e)=>{e.preventDefault();handleCancelClick("listing")}}
+                                                                    disabled={selectedListingId !== listing.id}
+                                                                    >
+                                                                    <MdOutlineClose />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>{listing.id}</td>
+                                                    <td>{listing.company_name}</td>
+                                                    <td>{listing.instrument_name}</td>
+                                                    <td>{listing.instrument_type}</td>
+                                                    <td>{listing.instrument_class}</td>
+                                                    <td>{listing.status}</td>
+                                                    <td>$ {listing.listed_price.toFixed(2)}</td>
+                                                    <td>{listing.initial_quantity}</td>
+                                                    <td>{listing.remaining_quantity}</td>
+                                                    <td>{listing.listed_on_et}</td>
+                                                    <td>{listing.settled_on_et ? listing.settled_on_et : 'Not Settled'}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <p>No Listings Available</p>
+                                )}
+                            </div>
+                        )}
+                        {activeTab === 'offers' && ( // Show offers table if activeTab is 'offers'
+                            <div className="transaction-table1-container">
+                                {userOffers && userOffers.length > 0 ? (
+                                    <table className="transaction-table1">
+                                        <thead>
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Update</th>
+                                                <th>Cancel</th>
+                                                <th>ID</th>
+                                                <th>Company Name</th>
+                                                <th>Instrument Name</th>
+                                                <th>Instrument Type</th>
+                                                <th>Instrument Class</th>
+                                                <th>Status</th>
+                                                <th>Offered Price</th>
+                                                <th>Initial Quantity</th>
+                                                <th>Remaining Quantity</th>
+                                                <th>Offered On (ET)</th>
+                                                <th>Settled On (ET)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {userOffers.map((offer, index) => (
+                                                <tr key={index}>
+                                                    <td><input type="radio" 
+                                                            className="instrument-radio"
+                                                            name="selectedOfferId"
+                                                            checked={selectedOfferId === offer.id}
+                                                            onChange={()=>handleSelectOffer(offer.id)} />
+                                                    </td>
+                                                    <td>
+                                                        <div className='decision-button-container'>
+                                                            <button className="transaction-update-button"
+                                                                    onClick={(e)=>{e.preventDefault(); handleUpdateClick("offer");}}
+                                                                    disabled={selectedOfferId !== offer.id}
+                                                                    >
+                                                                    <RiPencilFill />
+                                                            </button>
+                                                            </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className='decision-button-container'>
+                                                            <button className="transaction-reject-button"
+                                                                    onClick={(e)=>{e.preventDefault();handleCancelClick("offer")}}
+                                                                    disabled={selectedOfferId !== offer.id}
+                                                                    >
+                                                                    <MdOutlineClose />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                    <td>{offer.id}</td>
+                                                    <td>{offer.company_name}</td>
+                                                    <td>{offer.instrument_name}</td>
+                                                    <td>{offer.instrument_type}</td>
+                                                    <td>{offer.instrument_class}</td>
+                                                    <td>{offer.status}</td>
+                                                    <td>$ {offer.offered_price.toFixed(2)}</td>
+                                                    <td>{offer.initial_quantity}</td>
+                                                    <td>{offer.remaining_quantity}</td>
+                                                    <td>{offer.offered_on_et}</td>
+                                                    <td>{offer.settled_on_et ? offer.settled_on_et : 'Not Settled'}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <p>No Offers Available</p>
+                                )}
+                            </div>)}
                 </div>
+                </div>
+            </div>
+
+
+
+            <div className="std-controller">
+                <div className="std-controller-head-banner">
+                    <h3>TRANSACTIONS</h3>
+                </div>
+                    <div className="company-controller-body">
+                    <div className="company-info-box">
+                        <h3>Total Settled Transactions : {userTransactions?.length}</h3>
+                        {userTransactions && userTransactions.length > 0 && (
+                        <div className="transaction-table-container">
+                        <table className="transaction-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Company</th>
+                                    <th>Instrument</th>
+                                    <th>Position</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Value</th>
+                                    <th>Fees</th>
+                                    <th>Created At</th>
+                                    <th>Settled On</th>                                
+                                </tr>
+                            </thead>
+                            <tbody className="transaction-table-body">
+                                {userTransactions.map((transaction, index) => (
+                                    <tr key={index} className="transaction-row">
+                                        <td>{transaction.id}</td>
+                                        <td>{transaction.company_name}</td>
+                                        <td>{transaction.instrument_name}</td>
+                                        <td>{transaction.position}</td>
+                                        <td>$ {transaction.transaction_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>{transaction.transaction_quantity.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
+                                        <td>$ {(transaction.transaction_quantity*transaction.transaction_price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>$ {transaction.transaction_fee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>{transaction.created_at_et}</td>
+                                        <td>{transaction.settled_on_et}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        </div>
+                    )}
+                    </div>
+            </div>
             </div>
         </div>
     )

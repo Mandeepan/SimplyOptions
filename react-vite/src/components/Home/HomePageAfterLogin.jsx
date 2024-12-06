@@ -64,6 +64,11 @@ export default function HomePageAfterLogin(){
             ))}
         </tbody>
         </table>
+        <div className="crunchbase-logo-container">
+                <a href="https://www.crunchbase.com/home" target="_blank" rel="noopener noreferrer">
+            <img src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/powered_by_crunchbase.png" alt="Powered by Crunchbase"></img>
+        </a>
+        </div>
 
         <div className="pagination">
         <button

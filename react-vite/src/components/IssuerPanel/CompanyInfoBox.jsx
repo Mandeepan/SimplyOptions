@@ -92,10 +92,10 @@ export default function CompanyInfoBox({currentCompany, userId}){
                                 <td className="company-info-heading">Investors:</td>
                                 <td className="company-info-content">{currentCompany.investors ? currentCompany.investors : "Not Available."}</td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <td className="company-info-heading">AI Prompt:</td>
                                 <td className="company-info-content">{currentCompany.ai_prompt ? currentCompany.ai_prompt : "Not Available."}</td>
-                            </tr>
+                            </tr> */}
                             <tr>
                                 <td className="company-info-heading">Description:</td>
                                 <td className="company-info-content">{currentCompany.short_description}</td>

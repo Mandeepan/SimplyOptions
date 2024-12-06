@@ -24,8 +24,13 @@ def get_company_transactions(company_id):
 
         if not transactions:
             return make_response(
-                jsonify({"message": "No transactions found for the given company"}),
-                404,
+                jsonify(
+                    {
+                        "pending_transactions": [],
+                        "non_pending_transactions": [],
+                    }
+                ),
+                200,
                 {"Content-Type": "application/json"},
             )
 
@@ -100,8 +105,8 @@ def get_user_transactions(user_id):
 
         if not transactions:
             return make_response(
-                jsonify({"message": "User couldn't be found"}),
-                404,
+                jsonify({"transactions": []}),
+                200,
                 {"Content-Type": "application/json"},
             )
 

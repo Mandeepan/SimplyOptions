@@ -53,7 +53,7 @@ export const industrySectors = [
     "Logistics",
     "Consulting",
     "Public Services",
-    "Non-Profit"
+    "Other"
 ];
 
 

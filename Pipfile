@@ -38,6 +38,7 @@ boto3 = "*"
 pandas = "*"
 requests = "*"
 openai = "*"
+tqdm = "*"
 
 [dev-packages]
 pylint = "*"

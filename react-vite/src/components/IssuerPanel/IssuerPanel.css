@@ -156,6 +156,67 @@
 }
 
 /*Below is specifically for the transaction decision panel*/
+.company-info-box{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    /* padding-bottom:3rem; */
+
+}
+
+.transaction-table-container{
+    border:1px rgb(126, 126, 126) solid;
+    width: 90%;
+    margin:0 auto;
+    margin-bottom:3rem;
+    overflow: scroll;
+}
+
+.transaction-table{
+
+    border:1px rgb(126, 126, 126) solid;
+    border-collapse: collapse;
+
+}
+
+.transaction-table-hidden{
+    display:none
+}
+
+
+.transaction-table td{
+    /* font-size:90%; */
+    padding:0;
+    margin:0 ;
+    border:1px rgb(126, 126, 126) solid;
+    line-height: 1rem;
+    color: rgb(84, 57, 164);
+    padding-left: 3px;
+    padding-right: 3px;
+
+}
+
+.transaction-table th{
+    border:1px rgb(126, 126, 126) solid;
+    background-color:rgb(126, 126, 126); 
+    padding:0;
+    text-wrap:nowrap;
+}
+
+
+.transaction-table-body{
+
+    margin: 0 5%;
+}
+
+.transaction-row{
+    height:3.5rem;
+}
+
+.transaction-row td{
+    text-wrap:nowrap;
+}
+
 .decision-button-container{
     margin:0%;
     /* padding:1% 5% 1% 5%; */
@@ -167,12 +228,13 @@
 .transaction-approve-button, .transaction-reject-button{
     /* min-width:5rem !important;
     width: 96%; */
-    padding: 0 2px;
+    padding: 0;
     margin: 0% 2% 2% 2%;
     text-align: center;
     border-radius: 3px;
     color:white;
 }
+
 
 
 .transaction-approve-button{
@@ -181,6 +243,11 @@
 
 .transaction-approve-button:hover{
     background-color: rgba(33, 78, 35, 0.842);
+}
+
+.transaction-approve-button:disabled, .transaction-reject-button:disabled{
+    background-color: grey;
+    color:white
 }
 
 .transaction-reject-button{

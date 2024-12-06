@@ -102,3 +102,122 @@
     background-color: transparent;
     color: red
 }
+
+/*Following is for the listing and offer box*/
+
+.transaction-table1-container{
+    border:1px rgb(126, 126, 126) solid;
+    width: 90%;
+    margin:0 auto;
+    margin-bottom: 5% !important;
+    overflow: scroll;
+}
+
+.transaction-table1{
+
+    border:1px rgb(126, 126, 126) solid;
+    border-collapse: collapse;
+
+}
+
+.transaction-table1-hidden{
+    display:none
+}
+
+
+.transaction-table1 td{
+    /* font-size:90%; */
+    padding:0;
+    margin:0 ;
+    border:1px rgb(126, 126, 126) solid;
+    line-height: 1rem;
+    color: rgb(84, 57, 164);
+    padding-left: 3px;
+    padding-right: 3px;
+
+}
+
+.transaction-table1 th{
+    border:1px rgb(126, 126, 126) solid;
+    background-color:rgb(126, 126, 126); 
+    padding:0;
+    text-wrap:nowrap;
+}
+
+.transaction-table1 tr{
+    text-wrap: nowrap;
+    height: 3rem;
+}
+
+.transaction-table1-body{
+
+    margin: 0 5%;
+}
+
+.transaction-row{
+    height:3.5rem;
+}
+
+.transaction-row td{
+    text-wrap:nowrap;
+}
+
+
+.listings-offers-toggle{
+    margin: 3% 5% 0% 5%;
+}
+
+.listings-offers-toggle button{
+    border: 1px #cecece solid;
+    width:50%;
+    border-radius:30px 30px 0px 0px;
+}
+
+.listings-offers-toggle button:hover{
+    border: 1px #cecece solid;
+    width:50%;
+    border-radius:30px 30px 0px 0px;
+    background-color: rgba(65, 44, 116, 1);
+}
+
+.toggle-button-{
+    border: 1px solid rgb(126, 85, 246)!important;
+    color: rgb(126, 85, 246);
+    background-color: transparent;
+    width:50%;
+    border-radius:30px 30px 0px 0px;
+}
+
+
+.transaction-update-button, .transaction-reject-button{
+    width: 96%;
+    height: 80%;
+    padding: 0;
+    margin: 0% 2% 2% 2%;
+    text-align: center;
+    border-radius: 3px;
+    color:white;
+}
+
+
+
+.transaction-update-button{
+    background-color: rgb(232, 222, 27);
+}
+
+.transaction-update-button:hover{
+    background-color:  rgb(154, 154, 13);
+}
+
+.transaction-update-button:disabled, .transaction-reject-button:disabled{
+    background-color: grey;
+    color:white
+}
+
+.transaction-reject-button{
+    background-color:rgb(211, 47, 47);
+}
+
+.transaction-reject-button:hover{
+    background-color:rgba(96, 20, 20, 0.846);
+}
