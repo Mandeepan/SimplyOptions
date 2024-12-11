@@ -13,7 +13,13 @@ listing_routes = Blueprint("listings", __name__)
 @login_required
 def get_a_listing_by_instrument(instrumentId):
     try:
-        listings = Listing.query.filter_by(instrument_id=instrumentId).all()
+        listings = (
+            Listing.query.filter(
+                Listing.instrument_id == instrumentId, Listing.status != "Filled"
+            )
+            .order_by(Listing.listed_price)
+            .all()
+        )
 
         if not listings:
             return make_response(

@@ -18,11 +18,33 @@ export const getAllListingsForAUserThunk= (userId) => async (dispatch) => {
     }
 };
 
-const initialState={userListings:[]}
+
+// getting all listings by instrtument ID 
+const GET_ALL_LIST_BY_INS_ID ='listings/instruments/instrumentId'
+
+const getAllListingsForAnInstrument= (listings) => ({
+    type: GET_ALL_LIST_BY_INS_ID,
+    payload : listings
+})
+
+export const getAllListingsForAnInstrumentThunk= (instrumentId) => async (dispatch) => {
+    const res = await fetch(`/api/listings/instruments/${instrumentId}`);
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(getAllListingsForAnInstrument(data));
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+const initialState={userListings:[], instrumentListings:[]}
 function listingsReducer(state=initialState,action){
     switch (action.type) {
         case GET_ALL_LIST_BY_USER_ID:
             return {...state, userListings:action.payload.listings}
+        case GET_ALL_LIST_BY_INS_ID:
+            return {...state, instrumentListings:action.payload.listings}
         default:
             return state;
     }

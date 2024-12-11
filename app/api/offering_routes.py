@@ -11,7 +11,13 @@ offering_routes = Blueprint("offerings", __name__)
 @login_required
 def get_an_offer_by_instrument(instrumentId):
     try:
-        offerings = Offer.query.filter_by(instrument_id=instrumentId).all()
+        offerings = (
+            Offer.query.filter(
+                Offer.instrument_id == instrumentId, Offer.status != "Filled"
+            )
+            .order_by(Offer.offered_price.desc())
+            .all()
+        )
 
         if not offerings:
             return make_response(

@@ -1,5 +1,6 @@
-.instrument-detail-page h1{
+.instrument-detail-page h1, h2{
     text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .detail-page-header{
@@ -49,9 +50,13 @@
 
 .instrument-details{
     border:2px white solid;
-    margin :2% 10%;
+    margin :1% 10%;
     border-radius: 5px;
     padding-left:2rem;
+}
+
+.instrument-details-table td, .company-details-table td, .price-summary{
+    padding-left:10px
 }
 
 .price-summary {
@@ -66,7 +71,7 @@
 }
 
 .action-buttons{
-    margin-right: 5%;
+    margin: 2% 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -206,4 +211,42 @@
     height: auto;
     padding-left:5%;
     border: 2px grey solid;
+}
+
+
+/*For Offer and Listing Section*/
+.current-user-listing-offer h3{
+    margin:0% 10%;
+    padding:0;
+    text-align: center;
+}
+
+
+.offer-listing-outer-container{
+    display: flex;
+    flex-direction: row;
+    margin: 2% 10%;
+    justify-content: space-evenly;
+}
+
+
+.offers-listing-table-container{
+    border: 1px white solid;
+    width:50%;
+    border-radius: 5px;
+}
+
+.offer-or-listing-table{
+    width:100%;
+    overflow: auto;
+    max-height: 400px;
+}
+
+.offer-or-listing-table th{
+    background:#cecece;
+    color:#4b0082;
+}
+
+.offer-or-listing-table td{
+    text-align: right;
 }
