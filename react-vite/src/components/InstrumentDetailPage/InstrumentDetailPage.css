@@ -54,24 +54,51 @@
     padding-left:2rem;
 }
 
+.price-summary {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.price-summary *{
+    margin-right:2rem;
+}
+
+.action-buttons{
+    margin-right: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.action-buttons button{
+    border-radius: 2px;
+    padding:3px;
+    min-height: 2rem;
+    width: 8rem;
+}
+
+
+
+
 /*For the Simple Buddy Side Modal*/
 
 .side-modal {
     position: fixed;
     top: 0;
     right: 0;
-    width: 25%;
+    width: 30%;
     height: 100%;
-    background: #ffffff;
+    background: linear-gradient(135deg, #89fffd, #ef32d9); 
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    padding: 20px;
+    padding: 2%;
     overflow-y: auto;
-}
-.side-modal{
-    background: linear-gradient(135deg, #89fffd, #ef32d9); 
     padding: 2%
 }
+
 
 .side-modal-content {
     display: flex;
@@ -92,7 +119,9 @@
     cursor: pointer;
     width:2rem;
     height: 2rem;
+    text-align: center;
 }
+
 
 .close-modal-button:hover{
     background: none;
@@ -108,4 +137,73 @@
 
 .typing-content{
     font-family:'Courier New', Courier, monospace; 
+}
+
+
+
+.openAI-logo-container {
+    color:black;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    padding:2%;
+    font-size: smaller;
+    margin: 0;
+    padding:0 10px;
+}
+
+.openAI-logo-container svg {
+    padding:0 1%;
+    width: 1.4rem;
+    height:1.4rem;
+}
+
+.openAI-logo-container img{
+    padding:0 1%;
+    width: 4.7rem;
+    height:1.2rem;
+}
+
+.tooltip-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-tooltip{
+    visibility: hidden;                   
+    background-color: white;
+    color:#4b0082;                         
+    text-align: center;                    
+    border-radius: 4px;                    
+    padding: 1px 3px;
+    font-size:0.7rem;
+    font-style: italic;
+    text-wrap: nowrap;
+
+}
+
+.tooltip-wrapper svg{
+    width: auto;
+    height: 1.2rem;
+    padding-right:10px;
+    margin-right:0;
+}
+
+.tooltip-wrapper:hover .ai-tooltip{
+    visibility: visible;
+    opacity: 1;
+}
+
+.buddy_input{
+    background-color: white;
+    color:#4b0082;
+    border-radius: 50px;
+    width: 95%;
+    min-height:2rem;
+    height: auto;
+    padding-left:5%;
+    border: 2px grey solid;
 }

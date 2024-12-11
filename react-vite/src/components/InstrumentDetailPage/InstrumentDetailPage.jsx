@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { getAnInstrumentThunk } from "../../redux/instrument";
 import { SlGhost } from "react-icons/sl";
-import { ImExit } from "react-icons/im";
+import { IoExit } from "react-icons/io5";
+import { CiCircleQuestion } from "react-icons/ci";
+
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -36,6 +38,13 @@ export function InstrumentDetailPage() {
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
+    };
+
+
+    const handleBackdropClick = (e) => {
+        if (e.target.classList.contains('backdrop')) {
+            handleCloseModal();
+        }
     };
 
     return (
@@ -117,30 +126,57 @@ export function InstrumentDetailPage() {
                     </tbody>
                 </table>
                 <h2>Price History</h2>
+                <div className="price-summary">
+                    <span><strong>Highest Bid Price:</strong> ${instrument.highest_bid_price ? instrument.highest_bid_price.toFixed(2) : "N/A"}</span>
+                    <span><strong>Lowest Ask Price:</strong> ${instrument.lowest_ask_price ? instrument.lowest_ask_price.toFixed(2) : "N/A"}</span>
+                    <span><strong>Last Transaction Price:</strong> ${instrument.last_transaction_price ? instrument.last_transaction_price.toFixed(2) : "N/A"}</span>
+                </div>
+                <div className="action-buttons">
+                    <button className="offer-button">Place An Offer</button>
+                    <button className="list-button">List Your Shares</button>
+                </div>
                 <ul>
                     {instrument.instrument_prices && instrument.instrument_prices.length > 0 ? (
                         instrument.instrument_prices.map((price, index) => (
                             <li key={index}>{price.recorded_on_et}: ${price.recorded_price ? price.recorded_price.toFixed(2) : "N/A"}</li>
                         ))
                     ) : (
-                        <p>No price history available</p>
+                        <p>* No price history available yet</p>
                     )}
                 </ul>
             </div>
             <AnimatePresence>
                 {isModalOpen && (
                     <motion.div 
-                        className="side-modal"
-                        initial={{ x: "100%" }}
-                        animate={{ x: 0 }}
-                        exit={{ x: "100%" }}
-                        transition={{ duration: 0.5 }}
+                    className="backdrop"
+                    onClick={handleBackdropClick}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
                     >
-                        <div className="side-modal-content">
-                            <button className="close-modal-button" onClick={handleCloseModal}><ImExit />                            </button>
-                            <p className="typing-content">Hi, I am SimpleBuddy, here&apos;s what I think about {instrument.company?.company_name}:</p>
-                            <p className="typing-content">{instrument.company?.ai_prompt}. Let me know if you have any questions.</p>
-                        </div>
+                        <motion.div 
+                            className="side-modal"
+                            initial={{ x: "100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "100%" }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <div className="side-modal-content">
+                                <button className="close-modal-button" onClick={handleCloseModal}><IoExit /></button>
+                                <p className="typing-content">Hi, I am SimpleBuddy, here&apos;s what I think about {instrument.company?.company_name}:</p>
+                                <p className="typing-content">{instrument.company?.ai_prompt}. Let me know if you have any questions.</p>
+                            </div>
+                            <div><input className="buddy_input" placeholder="Enter your question here..."></input></div>
+                            <div className="openAI-logo-container">
+                                <div className="tooltip-wrapper">
+                                    <div className="ai-tooltip">AI answer may be inaccurate. Use it cautiously.</div>
+                                    <CiCircleQuestion />
+                                </div>
+                                <p>Powered by</p>
+                                <img src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/OpenAI_Logo.svg.png" alt="Powered by OpenAI"></img>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
