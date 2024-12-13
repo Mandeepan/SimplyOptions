@@ -8,6 +8,9 @@ import { useModal } from '../../context/Modal';
 import { SlGhost } from "react-icons/sl";
 import { IoExit } from "react-icons/io5";
 import { CiCircleQuestion } from "react-icons/ci";
+import AddOfferModal from "./AddOfferModal";
+import AddListingModal from "./AddListingModal";
+
 
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -100,7 +103,32 @@ export function InstrumentDetailPage() {
             </AnimatePresence>
         )
     };
+    // for adding offer / listing offer
+    const handleOpenAddOfferModal=()=>{
+        setModalContent(
+            <AddOfferModal 
+                instrumentId={instrumentId} 
+                closeModalFromPage={() => {
+                    closeModal();
+                    dispatch(getAllOffersForAnInstrumentThunk(instrumentId)); // Refresh offers after successful submission
+                }}
+            />
+        );
+    }
+    const handleOpenAddListingModal=()=>{
+        setModalContent(
+            <AddListingModal 
+                instrumentId={instrumentId} 
+                closeModalFromPage={() => {
+                    closeModal();
+                    dispatch(getAllListingsForAnInstrumentThunk(instrumentId)); // Refresh listings after successful submission
+                }}
+            />
+        );
+    }
 
+
+    // for the side modal ( AI)
     const handleCloseModal = () => {
         closeModal();
     };
@@ -199,16 +227,16 @@ export function InstrumentDetailPage() {
             <div className='transaction-panel'>
                 <div className="current-user-listing-offer">
                     {sessionUser&&currentUserListing && currentUserListing.listed_price && (
-                        <h3>{sessionUser.first_name}, you listed {currentUserListing.remaining_quantity} shares @ ${currentUserListing.listed_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                        <h3>{sessionUser.first_name}, you are currently listing {currentUserListing.remaining_quantity} shares @ ${currentUserListing.listed_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
                     )}
                     {sessionUser&&currentUserOffer && currentUserOffer.offered_price && (
-                        <h3>{sessionUser.first_name}, you offered {currentUserOffer.remaining_quantity} shares @ ${currentUserOffer.offered_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+                        <h3>{sessionUser.first_name}, you are currently offering {currentUserOffer.remaining_quantity} shares @ ${currentUserOffer.offered_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
                     )}
                     
                     </div>
                 <div className="action-buttons">
-                    <button className="offer-button">Place An Offer</button>
-                    <button className="list-button">List Your Shares</button>
+                    <button className="offer-button" onClick={handleOpenAddOfferModal}>Place An Offer</button>
+                    <button className="list-button" onClick={handleOpenAddListingModal}>List Your Shares</button>
                 </div>
                 <div className="offer-listing-outer-container">
                     <div className="offers-listing-table-container">
@@ -232,7 +260,7 @@ export function InstrumentDetailPage() {
                                 </tbody>
                             </table>
                         ):(
-                            <p>No offers yet.</p>  
+                            <h3>No offers yet.</h3>  
                         )}
                     </div>
 
@@ -257,7 +285,7 @@ export function InstrumentDetailPage() {
                                 </tbody>
                             </table>
                         ):(
-                            <p>No shares listed yet.</p>  
+                            <h3>No shares listed yet.</h3>  
                         )}
                     </div>
                 </div>

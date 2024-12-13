@@ -38,13 +38,43 @@ export const getAllListingsForAnInstrumentThunk= (instrumentId) => async (dispat
     }
 };
 
-const initialState={userListings:[], instrumentListings:[]}
+// add a new listing
+const ADD_A_LISTING = 'listings/addAListing'
+
+const addAListing = (ListingObjectData) => ({
+    type: ADD_A_LISTING,
+    payload : ListingObjectData
+})
+
+export const addAListingThunk= (instrumentId, requestData) => async (dispatch) => {
+    const res = await fetch(`/api/listings/instruments/${instrumentId}`,{
+        method :'POST',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addAListing(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+
+
+const initialState={userListings:[], instrumentListings:[], currentListing:{}}
 function listingsReducer(state=initialState,action){
     switch (action.type) {
         case GET_ALL_LIST_BY_USER_ID:
             return {...state, userListings:action.payload.listings}
         case GET_ALL_LIST_BY_INS_ID:
             return {...state, instrumentListings:action.payload.listings}
+        case ADD_A_LISTING:
+            return {...state, currentListing:action.payload}
         default:
             return state;
     }

@@ -37,13 +37,42 @@ export const getAllOffersForAnInstrumentThunk= (instrumentId) => async (dispatch
     }
 };
 
-const initialState={userOffers:[], instrumentOffers:[]}
+// add a new offer
+const ADD_AN_OFFER = 'offers/addAnOffer'
+
+const addAnOffer = (OfferObjectData) => ({
+    type: ADD_AN_OFFER,
+    payload : OfferObjectData
+})
+
+export const addAnOfferThunk= (instrumentId, requestData) => async (dispatch) => {
+    const res = await fetch(`/api/offerings/instruments/${instrumentId}`,{
+        method :'POST',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addAnOffer(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+
+const initialState={userOffers:[], instrumentOffers:[], currentOffer:{}}
 function OffersReducer(state=initialState,action){
     switch (action.type) {
         case GET_ALL_OFFER_BY_USER_ID:
             return {...state, userOffers:action.payload.offerings}
-            case GET_ALL_OFFER_BY_INS_ID:
-                return {...state, instrumentOffers:action.payload.offerings}
+        case GET_ALL_OFFER_BY_INS_ID:
+            return {...state, instrumentOffers:action.payload.offerings}
+        case ADD_AN_OFFER:
+            return {...state, currentOffer:action.payload}
         default:
             return state;
     }

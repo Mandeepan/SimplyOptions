@@ -1,6 +1,6 @@
 from flask import Blueprint, request, make_response, jsonify
 from flask_login import login_required
-from app.models import Offer, Instrument, Company, db
+from app.models import Offer, Instrument, Company, User, Listing, db
 from datetime import datetime
 
 offering_routes = Blueprint("offerings", __name__)
@@ -118,9 +118,74 @@ def post_new_offering(instrumentId):
         initial_quantity = data.get("initial_quantity")
         offer_user_id = data.get("offer_user_id")
 
-        if offered_price is None or initial_quantity is None or offer_user_id is None:
+        user = User.query.get(offer_user_id)
+        existing_offer = Offer.query.filter(
+            Offer.offer_user_id == offer_user_id,
+            Offer.status != "Filled",
+            Offer.instrument_id == instrumentId,
+        ).all()
+        existing_listing = Listing.query.filter(
+            Listing.listing_user_id == offer_user_id,
+            Listing.status != "Filled",
+            Listing.instrument_id == instrumentId,
+        ).all()
+        # check if input data are valid
+        if (
+            offered_price is None
+            or initial_quantity is None
+            or offer_user_id is None
+            or user is None
+        ):
             return make_response(
                 jsonify({"message": "Invalid request data"}),
+                400,
+                {"Content-Type": "application/json"},
+            )
+        # check if the user has any existing open offer for this instrument
+        if len(existing_offer) > 0:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to precess : User has open offer for this instrument and not fully filled yet."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
+
+        # check if the user has existing listing for this instrument
+        if len(existing_listing) > 0:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to precess : User has open listing for this instrument and not fully filled yet."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
+
+        # check if the user is the issuer of this instrument's company
+        if instrument.company_id == user.company_id:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : Issuer role account can not list offer to the company's own instrument."
+                    }
+                ),
+                400,
+                {"Content-Type": "application/json"},
+            )
+
+        # check if the user's available balance is higher than 1.1  of the offer value
+        offer_value_with_margin = initial_quantity * offered_price * 1.1
+        if offer_value_with_margin > user.user_available_balance:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : User available balance is not sufficient for offered value."
+                    }
+                ),
                 400,
                 {"Content-Type": "application/json"},
             )
