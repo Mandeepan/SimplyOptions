@@ -64,6 +64,33 @@ export const addAnOfferThunk= (instrumentId, requestData) => async (dispatch) =>
 };
 
 
+// update an offer
+const UPDATE_AN_OFFER = 'offerings/updateAnOffer'
+
+const updateAnOffer = (offerObjectData) => ({
+    type: UPDATE_AN_OFFER,
+    payload : offerObjectData
+})
+
+export const updateAnOfferThunk= (offerId, requestData) => async (dispatch) => {
+    const res = await fetch(`/api/offerings/${offerId}`,{
+        method :'PATCH',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateAnOffer(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
 const initialState={userOffers:[], instrumentOffers:[], currentOffer:{}}
 function OffersReducer(state=initialState,action){
     switch (action.type) {
@@ -72,6 +99,8 @@ function OffersReducer(state=initialState,action){
         case GET_ALL_OFFER_BY_INS_ID:
             return {...state, instrumentOffers:action.payload.offerings}
         case ADD_AN_OFFER:
+            return {...state, currentOffer:action.payload}
+        case UPDATE_AN_OFFER:
             return {...state, currentOffer:action.payload}
         default:
             return state;

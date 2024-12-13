@@ -65,6 +65,33 @@ export const addAListingThunk= (instrumentId, requestData) => async (dispatch) =
 };
 
 
+// update a listing
+const UPDATE_A_LISTING= 'listings/updateAListing'
+
+const updateAListing = (listingObjectData) => ({
+    type: UPDATE_A_LISTING,
+    payload : listingObjectData
+})
+
+export const updateAListingThunk= (listingId, requestData) => async (dispatch) => {
+    const res = await fetch(`/api/listings/${listingId}`,{
+        method :'PATCH',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateAListing(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
 
 const initialState={userListings:[], instrumentListings:[], currentListing:{}}
 function listingsReducer(state=initialState,action){
@@ -74,6 +101,8 @@ function listingsReducer(state=initialState,action){
         case GET_ALL_LIST_BY_INS_ID:
             return {...state, instrumentListings:action.payload.listings}
         case ADD_A_LISTING:
+            return {...state, currentListing:action.payload}
+        case UPDATE_A_LISTING:
             return {...state, currentListing:action.payload}
         default:
             return state;

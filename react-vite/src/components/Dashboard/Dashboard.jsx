@@ -10,6 +10,8 @@ import { getAllListingsForAUserThunk } from '../../redux/listings';
 import { getAllOffersForAUserThunk } from '../../redux/offers';
 import { useModal } from '../../context/Modal';
 import FundingModal from './FundingModal';
+import UpdateOfferModal from './UpdateOfferModal';
+import UpdateListingModal from './UpdateListingModal';
 import { RiPencilFill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import "./Dashboard.css"
@@ -129,8 +131,28 @@ export default function Dashboard(){
         setSelectedOfferId(offerId)
     };
 
-    const handleUpdateClick=(item)=>{
-        alert(`This update ${item} feature is coming soon`)
+    const handleUpdateClick=(item, itemId)=>{
+        if (item =="listing"){
+            setModalContent(
+                <UpdateListingModal
+                    listingId={itemId} 
+                    closeModalFromPage={() => {
+                        closeModal();
+                        dispatch(getAllListingsForAUserThunk(sessionUser.id)); // Refresh offers after successful submission
+                    }}
+                />
+            );
+        } else {
+            setModalContent(
+                <UpdateOfferModal 
+                    offerId={itemId} 
+                    closeModalFromPage={() => {
+                        closeModal();
+                        dispatch(getAllOffersForAUserThunk(sessionUser.id)); // Refresh offers after successful submission
+                    }}
+                />
+            );
+        } 
     }
 
     const handleCancelClick=(item)=>{
@@ -275,7 +297,7 @@ export default function Dashboard(){
                                                     <td>
                                                         <div className='decision-button-container'>
                                                             <button className="transaction-update-button"
-                                                                    onClick={(e)=>{e.preventDefault(); handleUpdateClick("listing");}}
+                                                                    onClick={(e)=>{e.preventDefault(); handleUpdateClick("listing", listing.id);}}
                                                                     disabled={selectedListingId !== listing.id}
                                                                     >
                                                                     <RiPencilFill />
@@ -346,7 +368,7 @@ export default function Dashboard(){
                                                     <td>
                                                         <div className='decision-button-container'>
                                                             <button className="transaction-update-button"
-                                                                    onClick={(e)=>{e.preventDefault(); handleUpdateClick("offer");}}
+                                                                    onClick={(e)=>{e.preventDefault(); handleUpdateClick("offer",offer.id);}}
                                                                     disabled={selectedOfferId !== offer.id}
                                                                     >
                                                                     <RiPencilFill />

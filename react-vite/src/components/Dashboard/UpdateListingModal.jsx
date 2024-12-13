@@ -1,16 +1,15 @@
-import "./AddOfferListingModal.css"
+
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addAListingThunk } from "../../redux/listings";
+import { useDispatch } from "react-redux";
+import { updateAListingThunk } from "../../redux/listings";
 import { motion } from "framer-motion";
 import CustomAlert from "../CustomAlert/CustomAlert";
 import { useModal } from '../../context/Modal';
 
-export default function AddListingModal({ instrumentId, closeModalFromPage}) {
+export default function UpdateListingModal({ listingId, closeModalFromPage}) {
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user);
     const [listedPrice, setListedPrice] = useState("");
-    const [initialQuantity, setInitialQuantity] = useState("");
+    const [remainingQuantity, setRemainingQuantity] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     // const [alertMessage, setAlertMessage] = useState(null);
@@ -19,7 +18,7 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
     const validateInputs = (value) => {
         setErrorMessage("")
         if (value <= 0 || isNaN(value)) {
-            setErrorMessage("Price and quantity must be a positive number.");
+            setErrorMessage("Listed price and quantity must be a positive number.");
         }
     };
 
@@ -42,16 +41,14 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
 
         const requestData = {
             listed_price: parseFloat(listedPrice),
-            initial_quantity: parseInt(initialQuantity),
-            listing_user_id: sessionUser.id,
+            remaining_quantity: parseInt(remainingQuantity)
         };
 
-        const response = await dispatch(addAListingThunk(instrumentId, requestData));
-
+        const response = await dispatch(updateAListingThunk(listingId, requestData));
         if (response.message) {
             handleShowAlert(response.message, "error");
         } else {
-            handleShowAlert("Listing placed successfully!", "success");
+            handleShowAlert("Listing updated successfully!", "success");
         }
         setIsSubmitting(false);
     };
@@ -70,7 +67,7 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                     animate={{ y: "0", opacity: 1 }}
                     exit={{ y: "-50%", opacity: 0 }}
                 >
-                    <h2>Place A New Listing</h2>
+                    <h2>Update Listing</h2>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -87,13 +84,13 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="initialQuantity">Initial Quantity</label>
+                            <label htmlFor="remainingQuantity">Updated Available Quantity</label>
                             <input
                                 type="number"
-                                id="initialQuantity"
-                                value={initialQuantity}
+                                id="remainingQuantity"
+                                value={remainingQuantity}
                                 onChange={(e) => {
-                                    setInitialQuantity(e.target.value)
+                                    setRemainingQuantity(e.target.value)
                                     validateInputs(e.target.value)
                                 }}
                                 required
@@ -105,7 +102,7 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                                 className="submit-button"
                                 disabled={isSubmitting || errorMessage}
                             >
-                            Submit Listing
+                            Update Listing
                             </button>
                             <button
                                 type="button"

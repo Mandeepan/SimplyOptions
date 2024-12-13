@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAnOfferThunk } from "../../redux/offers";
 import { motion } from "framer-motion";
-import CustomAlert from "./CustomAlert";
+import CustomAlert from "../CustomAlert/CustomAlert";
 import { useModal } from '../../context/Modal';
 
 export default function AddOfferModal({ instrumentId, closeModalFromPage}) {

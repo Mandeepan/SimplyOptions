@@ -1,16 +1,15 @@
-import "./AddOfferListingModal.css"
+
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addAListingThunk } from "../../redux/listings";
+import { useDispatch } from "react-redux";
+import { updateAnOfferThunk } from "../../redux/offers";
 import { motion } from "framer-motion";
 import CustomAlert from "../CustomAlert/CustomAlert";
 import { useModal } from '../../context/Modal';
 
-export default function AddListingModal({ instrumentId, closeModalFromPage}) {
+export default function UpdateOfferModal({ offerId, closeModalFromPage}) {
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user);
-    const [listedPrice, setListedPrice] = useState("");
-    const [initialQuantity, setInitialQuantity] = useState("");
+    const [offeredPrice, setOfferedPrice] = useState("");
+    const [remainingQuantity, setRemainingQuantity] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     // const [alertMessage, setAlertMessage] = useState(null);
@@ -19,7 +18,7 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
     const validateInputs = (value) => {
         setErrorMessage("")
         if (value <= 0 || isNaN(value)) {
-            setErrorMessage("Price and quantity must be a positive number.");
+            setErrorMessage("Offered price and quantity must be a positive number.");
         }
     };
 
@@ -41,17 +40,15 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
         setIsSubmitting(true);
 
         const requestData = {
-            listed_price: parseFloat(listedPrice),
-            initial_quantity: parseInt(initialQuantity),
-            listing_user_id: sessionUser.id,
+            offered_price: parseFloat(offeredPrice),
+            remaining_quantity: parseInt(remainingQuantity)
         };
 
-        const response = await dispatch(addAListingThunk(instrumentId, requestData));
-
+        const response = await dispatch(updateAnOfferThunk(offerId, requestData));
         if (response.message) {
             handleShowAlert(response.message, "error");
         } else {
-            handleShowAlert("Listing placed successfully!", "success");
+            handleShowAlert("Offer updated successfully!", "success");
         }
         setIsSubmitting(false);
     };
@@ -70,30 +67,30 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                     animate={{ y: "0", opacity: 1 }}
                     exit={{ y: "-50%", opacity: 0 }}
                 >
-                    <h2>Place A New Listing</h2>
+                    <h2>Update Offer</h2>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="listedPrice">Listed Price ($)</label>
+                            <label htmlFor="offeredPrice">Offered Price ($)</label>
                             <input
                                 type="number"
-                                id="listedPrice"
-                                value={listedPrice}
+                                id="offeredPrice"
+                                value={offeredPrice}
                                 onChange={(e) => {
-                                    setListedPrice(e.target.value)
+                                    setOfferedPrice(e.target.value)
                                     validateInputs(e.target.value)
                                 }}
                                 required
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="initialQuantity">Initial Quantity</label>
+                            <label htmlFor="remainingQuantity">Updated Available Quantity</label>
                             <input
                                 type="number"
-                                id="initialQuantity"
-                                value={initialQuantity}
+                                id="remainingQuantity"
+                                value={remainingQuantity}
                                 onChange={(e) => {
-                                    setInitialQuantity(e.target.value)
+                                    setRemainingQuantity(e.target.value)
                                     validateInputs(e.target.value)
                                 }}
                                 required
@@ -105,7 +102,7 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                                 className="submit-button"
                                 disabled={isSubmitting || errorMessage}
                             >
-                            Submit Listing
+                            Update Offer
                             </button>
                             <button
                                 type="button"

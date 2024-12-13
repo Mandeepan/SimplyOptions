@@ -1,6 +1,6 @@
 from flask import Blueprint, request, make_response, jsonify
 from flask_login import login_required
-from app.models import Offer, Instrument, Company, User, Listing, db
+from app.models import Offer, Instrument, Company, User, Listing, Transaction, db
 from datetime import datetime
 
 offering_routes = Blueprint("offerings", __name__)
@@ -146,7 +146,7 @@ def post_new_offering(instrumentId):
             return make_response(
                 jsonify(
                     {
-                        "message": "Failed to precess : User has open offer for this instrument and not fully filled yet."
+                        "message": "Failed to process : User has open offer for this instrument and not fully filled yet."
                     }
                 ),
                 404,
@@ -158,7 +158,7 @@ def post_new_offering(instrumentId):
             return make_response(
                 jsonify(
                     {
-                        "message": "Failed to precess : User has open listing for this instrument and not fully filled yet."
+                        "message": "Failed to process : User has open listing for this instrument and not fully filled yet."
                     }
                 ),
                 404,
@@ -240,6 +240,22 @@ def update_offering(offeringId):
         data = request.get_json()
         offered_price = data.get("offered_price")
         remaining_quantity = data.get("remaining_quantity")
+        user_id = offering.offer_user_id
+        pending_transaction = Transaction.query.filter(
+            Transaction.offer_id == offeringId, Transaction.status == "Pending"
+        ).all()
+        user_info = User.query.get(user_id)
+        # check if there's any pending transaction that are linked to this offer
+        if len(pending_transaction) > 0:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : This offer is linked to a pending transaction, please cancel that transaction before updating this offer."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
 
         if offered_price is not None:
             offering.offered_price = offered_price
@@ -259,6 +275,20 @@ def update_offering(offeringId):
             offering.status = "Partially Filled"
         else:
             offering.status = "Not Filled"
+
+        # check if the user available balance is enough to cover the new offer value times 10%
+        new_offer_value = offering.initial_quantity * offering.offered_price * 1.1
+        if user_info.user_available_balance < new_offer_value:
+            db.session.rollback()
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : User available balance is not sufficient to cover the updated offer value."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
 
         db.session.commit()
 

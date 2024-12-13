@@ -2,7 +2,7 @@ from flask import Blueprint, request, make_response, jsonify
 from flask_login import login_required, current_user
 
 # from app.api.aws import get_unique_filename, upload_file_to_s3
-from app.models import Listing, Instrument, Company, Offer, User, db
+from app.models import Listing, Instrument, Company, Offer, User, Transaction, db
 from datetime import datetime
 
 listing_routes = Blueprint("listings", __name__)
@@ -234,6 +234,22 @@ def update_listing(listingId):
         data = request.get_json()
         listed_price = data.get("listed_price")
         remaining_quantity = data.get("remaining_quantity")
+
+        pending_transaction = Transaction.query.filter(
+            Transaction.listing_id == listingId, Transaction.status == "Pending"
+        ).all()
+
+        # check if there's any pending transaction that are linked to this offer
+        if len(pending_transaction) > 0:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : This listing is linked to a pending transaction, please cancel that transaction before updating this listing."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
 
         if listed_price is not None:
             listing.listed_price = listed_price
