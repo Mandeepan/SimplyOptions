@@ -15,7 +15,9 @@ def get_a_listing_by_instrument(instrumentId):
     try:
         listings = (
             Listing.query.filter(
-                Listing.instrument_id == instrumentId, Listing.status != "Filled"
+                Listing.instrument_id == instrumentId,
+                Listing.status != "Filled",
+                Listing.status != "Soft Deleted",
             )
             .order_by(Listing.listed_price)
             .all()
@@ -63,7 +65,11 @@ def get_listings_by_user(userId):
             db.session.query(Listing, Instrument, Company)
             .join(Instrument, Instrument.id == Listing.instrument_id)
             .join(Company, Company.id == Instrument.company_id)
-            .filter(Listing.listing_user_id == userId, Listing.remaining_quantity != 0)
+            .filter(
+                Listing.listing_user_id == userId,
+                Listing.remaining_quantity != 0,
+                Listing.status != "Soft Deleted",
+            )
             .order_by(Listing.created_at_et.desc())
             .all()
         )
@@ -130,12 +136,14 @@ def post_new_listing(instrumentId):
         existing_offer = Offer.query.filter(
             Offer.offer_user_id == listing_user_id,
             Offer.status != "Filled",
+            Offer.status != "Soft Deleted",
             Offer.instrument_id == instrumentId,
         ).all()
 
         existing_listing = Listing.query.filter(
             Listing.listing_user_id == listing_user_id,
             Listing.status != "Filled",
+            Listing.status != "Soft Deleted",
             Listing.instrument_id == instrumentId,
         ).all()
         # check if the input data is valid
@@ -298,11 +306,25 @@ def update_listing(listingId):
 def delete_an_listing(listingId):
     try:
         listing = Listing.query.filter_by(id=listingId).first()
+        pending_transaction = Transaction.query.filter(
+            Transaction.offer_id == listingId, Transaction.status == "Pending"
+        ).all()
 
         if not listing:
             return make_response(jsonify({"message": "Listing couldn't be found"}), 404)
 
-        db.session.delete(listing)
+        if len(pending_transaction) > 0:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : This listing is linked to a pending transaction, please cancel that transaction before deleting this offer."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
+
+        listing.status = "Soft Deleted"
         db.session.commit()
         return make_response(
             jsonify({"message": "successfully deleted"}),

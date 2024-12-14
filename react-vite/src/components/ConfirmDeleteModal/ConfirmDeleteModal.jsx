@@ -36,9 +36,54 @@ function deleteInstrumentProcess(onConfirm, onCancel){
     )
 }
 
+
+function deleteOfferProcess(onConfirm, onCancel){
+    return (
+        <div className="delete-modal-container" data-testid='delete-spot-modal'>
+            <h1>Confirm Delete</h1>
+            <div className="explanation-note">
+                <p>Do you want to remove the selected offer?</p>
+                <p className="warning"></p>
+            </div>
+
+            <div className="yes-or-no-buttons">
+                <button className="delete-yes" onClick={onConfirm} >Yes</button>
+                <button className="delete-no" onClick={onCancel} >No</button>
+            </div>
+            
+        </div>
+    )
+}
+
+function deleteListingProcess(onConfirm, onCancel){
+    return (
+        <div className="delete-modal-container" data-testid='delete-spot-modal'>
+            <h1>Confirm Delete</h1>
+            <div className="explanation-note">
+                <p>Do you want to remove the selected listing?</p>
+                <p className="warning"></p>
+            </div>
+
+            <div className="yes-or-no-buttons">
+                <button className="delete-yes" onClick={onConfirm} >Yes</button>
+                <button className="delete-no" onClick={onCancel} >No</button>
+            </div>
+            
+        </div>
+    )
+}
+
 export default  function ConfirmDeleteModal({itemToDelete,onConfirm, onCancel}) {
-    let response;
-    itemToDelete==="COMPANY" ? response = deleteCompanyProcess( onConfirm, onCancel )
-    : response=deleteInstrumentProcess( onConfirm, onCancel );
-    return response;
+    switch (itemToDelete) {
+        case "COMPANY":
+            return deleteCompanyProcess(onConfirm, onCancel);
+        case "INSTRUMENT":
+            return deleteInstrumentProcess(onConfirm, onCancel);
+        case "OFFER":
+            return deleteOfferProcess(onConfirm,onCancel);
+        case "LISTING":
+            return deleteListingProcess(onConfirm,onCancel)
+        default:
+            throw new Error(`Unknown itemToDelete: ${itemToDelete}`);
+    }
 }

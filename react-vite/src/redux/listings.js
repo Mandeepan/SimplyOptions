@@ -92,6 +92,28 @@ export const updateAListingThunk= (listingId, requestData) => async (dispatch) =
     }
 };
 
+// delete a listing
+const DELETE_A_LISTING = 'listings/deleteAListing'
+
+const deleteAListing = (listingObjectData) => ({
+    type: DELETE_A_LISTING,
+    payload : listingObjectData
+})
+
+export const deleteAListingThunk= (listingId) => async (dispatch) => {
+    const res = await fetch(`/api/listings/${listingId}`,{
+        method :'DELETE',
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(deleteAListing(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
 
 const initialState={userListings:[], instrumentListings:[], currentListing:{}}
 function listingsReducer(state=initialState,action){
@@ -104,6 +126,8 @@ function listingsReducer(state=initialState,action){
             return {...state, currentListing:action.payload}
         case UPDATE_A_LISTING:
             return {...state, currentListing:action.payload}
+        case DELETE_A_LISTING:
+            return {...state, currentListing:{}}
         default:
             return state;
     }

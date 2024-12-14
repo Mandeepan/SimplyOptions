@@ -6,12 +6,14 @@ import { getAUserThunk, updateAUserThunk, deleteAUserThunk } from '../../redux/u
 import { thunkLogout } from '../../redux/session';
 import { getACompanyThunk } from '../../redux/company'
 import { getAllTransactionsForAUserThunk } from '../../redux/transaction';
-import { getAllListingsForAUserThunk } from '../../redux/listings';
-import { getAllOffersForAUserThunk } from '../../redux/offers';
+import { deleteAListingThunk, getAllListingsForAUserThunk } from '../../redux/listings';
+import { deleteAnOfferThunk, getAllOffersForAUserThunk } from '../../redux/offers';
 import { useModal } from '../../context/Modal';
 import FundingModal from './FundingModal';
 import UpdateOfferModal from './UpdateOfferModal';
 import UpdateListingModal from './UpdateListingModal';
+import ConfirmDeleteModal from '../ConfirmDeleteModal/ConfirmDeleteModal';
+import CustomAlert from '../CustomAlert/CustomAlert';
 import { RiPencilFill } from "react-icons/ri";
 import { MdOutlineClose } from "react-icons/md";
 import "./Dashboard.css"
@@ -53,6 +55,18 @@ export default function Dashboard(){
     const handleBecomeAnIssuer= ()=>{
         navigate('/issuerPanel')
     }
+
+    const handleShowAlert = (message, type) => {
+        setModalContent(
+            <CustomAlert
+                message={message}
+                onClose={() => {
+                    closeModal();
+                    if (type === "success") closeModal(); // Refresh parent content on success
+                }}
+            />
+        );
+    };
 
     const handleUpdateBalanceProcess=async (userId, amount)=>{
             const updatedUserInfo = {
@@ -132,7 +146,7 @@ export default function Dashboard(){
     };
 
     const handleUpdateClick=(item, itemId)=>{
-        if (item =="listing"){
+        if (item ==="listing"){
             setModalContent(
                 <UpdateListingModal
                     listingId={itemId} 
@@ -155,8 +169,44 @@ export default function Dashboard(){
         } 
     }
 
-    const handleCancelClick=(item)=>{
-        alert(`This cancel ${item} feature is coming soon`)
+    const handleDeleteOfferProcess = async (offerId) =>{
+        const response = await dispatch(deleteAnOfferThunk(offerId))
+        if (response.message) {
+            handleShowAlert(response.message, "error");
+        } else {
+            handleShowAlert("Offer deleted successfully!", "success");   
+        }
+        dispatch(getAllOffersForAUserThunk(sessionUser.id));
+    }
+
+    const handleDeleteListingProcess = async (listingId) =>{
+        const response = await dispatch(deleteAListingThunk(listingId))
+        if (response.message) {
+            handleShowAlert(response.message, "error");
+        } else {
+            handleShowAlert("Listing deleted successfully!", "success");  
+        }
+        dispatch(getAllListingsForAUserThunk(sessionUser.id));
+    }
+
+    const handleCancelClick=(item, itemId)=>{
+        if (item==="offer") {
+            setModalContent(
+                <ConfirmDeleteModal
+                    itemToDelete={"OFFER"}
+                    onConfirm={()=> handleDeleteOfferProcess(itemId)}
+                    onCancel={closeModal}
+                />
+            )
+        } else {
+            setModalContent(
+                <ConfirmDeleteModal
+                    itemToDelete={"LISTING"}
+                    onConfirm={()=> handleDeleteListingProcess(itemId)}
+                    onCancel={closeModal}
+                />
+            )
+        }
     }
     
     const handleToggleTab = (tab) => {
@@ -307,7 +357,7 @@ export default function Dashboard(){
                                                     <td>
                                                         <div className='decision-button-container'>
                                                             <button className="transaction-reject-button"
-                                                                    onClick={(e)=>{e.preventDefault();handleCancelClick("listing")}}
+                                                                    onClick={(e)=>{e.preventDefault();handleCancelClick("listing", listing.id)}}
                                                                     disabled={selectedListingId !== listing.id}
                                                                     >
                                                                     <MdOutlineClose />
@@ -378,7 +428,7 @@ export default function Dashboard(){
                                                     <td>
                                                         <div className='decision-button-container'>
                                                             <button className="transaction-reject-button"
-                                                                    onClick={(e)=>{e.preventDefault();handleCancelClick("offer")}}
+                                                                    onClick={(e)=>{e.preventDefault();handleCancelClick("offer", offer.id)}}
                                                                     disabled={selectedOfferId !== offer.id}
                                                                     >
                                                                     <MdOutlineClose />

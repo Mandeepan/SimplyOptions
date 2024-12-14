@@ -13,7 +13,9 @@ def get_an_offer_by_instrument(instrumentId):
     try:
         offerings = (
             Offer.query.filter(
-                Offer.instrument_id == instrumentId, Offer.status != "Filled"
+                Offer.instrument_id == instrumentId,
+                Offer.status != "Filled",
+                Offer.status != "Soft Deleted",
             )
             .order_by(Offer.offered_price.desc())
             .all()
@@ -60,7 +62,11 @@ def get_offerings_by_user(userId):
             db.session.query(Offer, Instrument, Company)
             .join(Instrument, Instrument.id == Offer.instrument_id)
             .join(Company, Company.id == Instrument.company_id)
-            .filter(Offer.offer_user_id == userId, Offer.remaining_quantity != 0)
+            .filter(
+                Offer.offer_user_id == userId,
+                Offer.remaining_quantity != 0,
+                Offer.status != "Soft Deleted",
+            )
             .order_by(Offer.created_at_et.desc())
             .all()
         )
@@ -122,11 +128,13 @@ def post_new_offering(instrumentId):
         existing_offer = Offer.query.filter(
             Offer.offer_user_id == offer_user_id,
             Offer.status != "Filled",
+            Offer.status != "Soft Deleted",
             Offer.instrument_id == instrumentId,
         ).all()
         existing_listing = Listing.query.filter(
             Listing.listing_user_id == offer_user_id,
             Listing.status != "Filled",
+            Listing.status != "Soft Deleted",
             Listing.instrument_id == instrumentId,
         ).all()
         # check if input data are valid
@@ -318,6 +326,9 @@ def update_offering(offeringId):
 def delete_an_offering(offeringId):
     try:
         offering = Offer.query.filter_by(id=offeringId).first()
+        pending_transaction = Transaction.query.filter(
+            Transaction.offer_id == offeringId, Transaction.status == "Pending"
+        ).all()
 
         if not offering:
             return make_response(
@@ -326,7 +337,18 @@ def delete_an_offering(offeringId):
                 {"Content-Type": "application/json"},
             )
 
-        db.session.delete(offering)
+        if len(pending_transaction) > 0:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process : This offer is linked to a pending transaction, please cancel that transaction before deleting this offer."
+                    }
+                ),
+                404,
+                {"Content-Type": "application/json"},
+            )
+
+        offering.status = "Soft Deleted"
         db.session.commit()
         return make_response(
             jsonify({"message": "successfully deleted"}),

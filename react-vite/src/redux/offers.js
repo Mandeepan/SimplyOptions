@@ -91,6 +91,28 @@ export const updateAnOfferThunk= (offerId, requestData) => async (dispatch) => {
     }
 };
 
+// delete an offer
+const DELETE_AN_OFFER = 'offerings/deleteAnOffer'
+
+const deleteAnOffer = (offerObjectData) => ({
+    type: DELETE_AN_OFFER,
+    payload : offerObjectData
+})
+
+export const deleteAnOfferThunk= (offerId) => async (dispatch) => {
+    const res = await fetch(`/api/offerings/${offerId}`,{
+        method :'DELETE',
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(deleteAnOffer(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
 const initialState={userOffers:[], instrumentOffers:[], currentOffer:{}}
 function OffersReducer(state=initialState,action){
     switch (action.type) {
@@ -102,6 +124,8 @@ function OffersReducer(state=initialState,action){
             return {...state, currentOffer:action.payload}
         case UPDATE_AN_OFFER:
             return {...state, currentOffer:action.payload}
+        case DELETE_AN_OFFER:
+            return {...state, currentOffer:{}}
         default:
             return state;
     }
