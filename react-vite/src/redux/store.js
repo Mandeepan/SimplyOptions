@@ -12,6 +12,7 @@ import companyReducer from './company';
 import transactionsReducer from './transaction';
 import listingsReducer from './listings';
 import OffersReducer from './offers';
+import chatReducer from './chats';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     currentCompany: companyReducer,
     transactions: transactionsReducer,
     listings: listingsReducer,
-    offers: OffersReducer
+    offers: OffersReducer,
+    chats: chatReducer
 });
 
 let enhancer;

@@ -6,14 +6,13 @@ import { getAllOffersForAnInstrumentThunk, getAllOffersForAUserThunk } from "../
 import { getAllListingsForAnInstrumentThunk, getAllListingsForAUserThunk} from "../../redux/listings";
 import { useModal } from '../../context/Modal';
 import { SlGhost } from "react-icons/sl";
-import { IoExit } from "react-icons/io5";
-import { CiCircleQuestion } from "react-icons/ci";
+
 import AddOfferModal from "./AddOfferModal";
 import AddListingModal from "./AddListingModal";
+import ChatModal from "./ChatModal";
 
 
 
-import { AnimatePresence, motion } from "framer-motion";
 
 import "./InstrumentDetailPage.css";
 
@@ -27,6 +26,8 @@ export function InstrumentDetailPage() {
     const userOffers = useSelector(state => state.offers.userOffers)
     const userListings = useSelector(state => state.listings.userListings)
     const { setModalContent, closeModal } = useModal();
+    
+    
 
     useEffect(() => {
         if (instrumentId) {
@@ -40,6 +41,7 @@ export function InstrumentDetailPage() {
         }
     }, [dispatch, instrumentId, sessionUser]);
 
+
     if (!sessionUser) {
         return <Navigate to='/' />;
     }
@@ -51,56 +53,29 @@ export function InstrumentDetailPage() {
     //check if any of the offers / listing belong to current user is for the current instrument
     let currentUserListing={}
     let currentUserOffer={}
-    userListings.map(listing => {
-        if (listing.instrument_id ==instrumentId){
-            currentUserListing=listing
-        }
-    })
-    userOffers.map(offer => {
-        if (offer.instrument_id ==instrumentId){
-            currentUserOffer=offer
-        }
-    })
-
+    if (userListings) {
+        userListings.map(listing => {
+            if (listing.instrument_id ==instrumentId){
+                currentUserListing=listing
+            }
+        })
+    }
+    if (userOffers){
+        userOffers.map(offer => {
+            if (offer.instrument_id ==instrumentId){
+                currentUserOffer=offer
+            }
+        })
+    }
+    
+    
 
 
     const handleGhostButtonClick = () => {
         setModalContent(
-            <AnimatePresence>
-                {(
-                    <motion.div 
-                    className="backdrop"
-                    onClick={handleBackdropClick}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    >
-                        <motion.div 
-                            className="side-modal"
-                            initial={{ x: "100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <div className="side-modal-content">
-                                <button className="close-modal-button" onClick={handleCloseModal}><IoExit /></button>
-                                <p className="typing-content">Hi, I am SimpleBuddy, here&apos;s what I think about {instrument.company?.company_name}:</p>
-                                <p className="typing-content">{instrument.company?.ai_prompt}. Let me know if you have any questions.</p>
-                            </div>
-                            <div><input className="buddy_input" placeholder="Enter your question here..."></input></div>
-                            <div className="openAI-logo-container">
-                                <div className="tooltip-wrapper">
-                                    <div className="ai-tooltip">AI answer may be inaccurate. Use it cautiously.</div>
-                                    <CiCircleQuestion />
-                                </div>
-                                <p>Powered by</p>
-                                <img src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/OpenAI_Logo.svg.png" alt="Powered by OpenAI"></img>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <ChatModal 
+            closeModalFromPage={closeModal}
+            />
         )
     };
     // for adding offer / listing offer
@@ -128,17 +103,6 @@ export function InstrumentDetailPage() {
     }
 
 
-    // for the side modal ( AI)
-    const handleCloseModal = () => {
-        closeModal();
-    };
-
-
-    const handleBackdropClick = (e) => {
-        if (e.target.classList.contains('backdrop')) {
-            handleCloseModal();
-        }
-    };
 
     return (
         <div className="instrument-detail-page">
@@ -250,7 +214,7 @@ export function InstrumentDetailPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {offers.map((offer, index) => (
+                                    {offers && offers.length>0 && offers.map((offer, index) => (
                                         <tr key={index}>
                                             <td>{offer.offered_on_et || "N/A"}</td>
                                             <td>{offer.remaining_quantity || "N/A"} / {offer.initial_quantity || "N/A"}</td>
@@ -275,7 +239,7 @@ export function InstrumentDetailPage() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {listings.map((listing, index) => (
+                                    {listings && listings.length>0 && listings.map((listing, index) => (
                                         <tr key={index}>
                                             <td>{listing.listed_on_et || "N/A"}</td>
                                             <td>{listing.remaining_quantity || "N/A"} / {listing.initial_quantity || "N/A"}</td>

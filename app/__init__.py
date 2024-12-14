@@ -13,6 +13,7 @@ from .api.company_routes import company_routes
 from .api.listing_routes import listing_routes
 from .api.offering_routes import offering_routes
 from .api.transaction_routes import transaction_routes
+from .api.aichat_routes import chat_bp
 
 from .config import Config
 from .models import User, db
@@ -41,6 +42,7 @@ app.register_blueprint(company_routes, url_prefix="/api/companies")
 app.register_blueprint(listing_routes, url_prefix="/api/listings")
 app.register_blueprint(offering_routes, url_prefix="/api/offerings")
 app.register_blueprint(transaction_routes, url_prefix="/api/transactions")
+app.register_blueprint(chat_bp, url_prefix="/api/chat")
 
 db.init_app(app)
 Migrate(app, db)
