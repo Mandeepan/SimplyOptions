@@ -20,7 +20,16 @@ export default function Layout() {
                 <Modal />
                 {/* Footer */}
                 <footer className="footer">
-                    <p>© {new Date().getFullYear()} SimplyOptions. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} SimplyOptions. All rights reserved. Designed and built by 
+                        <a 
+                            href="https://mandypan.io/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style={{ marginLeft: "5px", color: "rgb(126, 85, 246)" }}
+                        >
+                            Mandy Pan.
+                        </a></p>
+
                 </footer>
             </ModalProvider>
         </>

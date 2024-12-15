@@ -11,6 +11,7 @@ import AddOfferModal from "./AddOfferModal";
 import AddListingModal from "./AddListingModal";
 import ChatModal from "./ChatModal";
 import TakeOfferModal from "./TakeOfferModal";
+import BidListingModal from "./BidListingModal";
 
 
 
@@ -116,6 +117,22 @@ export function InstrumentDetailPage() {
             <TakeOfferModal
                 offer={offer}
                 listing={currentUserListing}
+                closeModalFromPage={() => {
+                    closeModal();
+                    dispatch(getAllListingsForAnInstrumentThunk(instrumentId)); // Refresh listings after successful submission
+                    dispatch( getAllListingsForAUserThunk(sessionUser.id))
+                    dispatch(getAllOffersForAnInstrumentThunk(instrumentId)); 
+                    dispatch(getAllOffersForAUserThunk(sessionUser.id))
+                }}
+            />
+        );
+    }
+
+    const handleOpenBidListingModal=(listing) =>{
+        setModalContent(
+            <BidListingModal
+                offer={currentUserOffer}
+                listing={listing}
                 closeModalFromPage={() => {
                     closeModal();
                     dispatch(getAllListingsForAnInstrumentThunk(instrumentId)); // Refresh listings after successful submission
@@ -279,7 +296,7 @@ export function InstrumentDetailPage() {
                                             <td>{listing.remaining_quantity || "N/A"} / {listing.initial_quantity || "N/A"}</td>
                                             <td>${listing.listed_price ? listing.listed_price.toFixed(2) : "N/A"}</td>
                                             {currentUserOffer && Object.keys(currentUserOffer).length > 0 && ( 
-                                                <td className="enter-deal-button-listing-side-wrapper"><button className="enter-deal-button-listing-side">Enter Deal</button></td>
+                                                <td className="enter-deal-button-listing-side-wrapper"><button className="enter-deal-button-listing-side" onClick={()=> handleOpenBidListingModal(listing)}>Enter Deal</button></td>
                                             )}
                                         </tr>
                                     ))}

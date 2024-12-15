@@ -20,7 +20,7 @@
     flex-direction: column;
     color:#4b0082;
     font-weight: bold;
-    font-family: 'Poppins', sans-serif;
+    font-family:'Courier New', Courier, monospace;
     background:transparent;
 }
 
@@ -63,9 +63,9 @@
 .chat-message {
     max-width: 85%; 
     word-wrap: break-word; 
-    padding: 10px;
+    padding: 1px 10px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size:15px;
 }
 
 .chat-message.user {
