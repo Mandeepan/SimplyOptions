@@ -371,30 +371,6 @@ users = [
         "is_issuer": 1,
         "company_id": 30,
     },
-    {
-        "first_name": "Emily",
-        "last_name": "Martinez",
-        "email": "emily.martinez@simplyoption.com",
-        "password": "emilymartinezpassword",
-        "user_cash_balance": 3100.00,
-        "amount_to_be_debited": 200.00,
-        "amount_to_be_credited": 100.00,
-        "user_available_balance": 3000.00,
-        "is_issuer": 1,
-        "company_id": 31,
-    },
-    {
-        "first_name": "Ethan",
-        "last_name": "Taylor",
-        "email": "ethan.taylor@simplyoption.com",
-        "password": "ethantaylorpassword",
-        "user_cash_balance": 4500.00,
-        "amount_to_be_debited": 300.00,
-        "amount_to_be_credited": 200.00,
-        "user_available_balance": 4400.00,
-        "is_issuer": 1,
-        "company_id": 32,
-    },
 ]
 
 
