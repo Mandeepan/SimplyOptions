@@ -105,7 +105,7 @@ export default function AddOfferModal({ instrumentId, closeModalFromPage}) {
                                 className="submit-button"
                                 disabled={isSubmitting || errorMessage}
                             >
-                            Submit Offer
+                            Submit
                             </button>
                             <button
                                 type="button"

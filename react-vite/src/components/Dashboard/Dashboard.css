@@ -221,3 +221,8 @@
 .transaction-reject-button:hover{
     background-color:rgba(96, 20, 20, 0.846);
 }
+
+.cancel-transaction-button:disabled{
+    background-color: grey;
+    color: white;
+}

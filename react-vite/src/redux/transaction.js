@@ -38,7 +38,84 @@ export const getAllTransactionsForAUserThunk= (userId) => async (dispatch) => {
     }
 };
 
-const initialState={companyPendingTransactions:[],companyNonPendingTransactions:[], userTransactions:[]}
+
+// add a new transaction
+const ADD_A_TRN = 'transactions/addATransaction'
+
+const addATransaction = (TransactionObjectData) => ({
+    type: ADD_A_TRN,
+    payload : TransactionObjectData
+})
+
+export const addATransactionThunk= (requestData) => async (dispatch) => {
+    const res = await fetch(`/api/transactions/`,{
+        method :'POST',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(addATransaction(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+// update a transaction
+const UPDATE_A_TRN = 'transactions/updateATransaction'
+
+const updateATransaction = (transactionObjectData) => ({
+    type:UPDATE_A_TRN,
+    payload : transactionObjectData
+})
+
+export const updateATransactionThunk= (transactionId, requestData) => async (dispatch) => {
+    const res = await fetch(`/api/transactions/${transactionId}`,{
+        method :'PATCH',
+        headers : {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(updateATransaction(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+
+// cancel a transaction
+const DELETE_A_TRN = 'transactions/deleteATransaction'
+
+const deleteATransaction = (transactionObjectData) => ({
+    type: DELETE_A_TRN,
+    payload : transactionObjectData
+})
+
+export const deleteATransactionThunk= (transactionId) => async (dispatch) => {
+    const res = await fetch(`/api/transactions/${transactionId}`,{
+        method :'DELETE',
+    });
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(deleteATransaction(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors;
+    }
+};
+
+const initialState={companyPendingTransactions:[],companyNonPendingTransactions:[], userTransactions:[], currentTransaction:{}}
 function transactionsReducer(state=initialState,action){
     switch (action.type) {
         case GET_ALL_TRN_BY_COMP_ID:
@@ -47,6 +124,12 @@ function transactionsReducer(state=initialState,action){
                     companyNonPendingTransactions: action.payload.non_pending_transactions   };
         case GET_ALL_TRN_BY_USER_ID:
             return {...state, userTransactions:action.payload.transactions}
+        case ADD_A_TRN:
+            return {...state, currentTransactions:action.payload}
+        case UPDATE_A_TRN:
+            return {...state, currentTransactions:action.payload}
+        case DELETE_A_TRN:
+            return {...state, currentTransactions:{}}
         default:
             return state;
     }

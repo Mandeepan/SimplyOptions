@@ -123,7 +123,7 @@ def post_new_listing(instrumentId):
         if not instrument:
             return make_response(
                 jsonify({"message": "Instrument couldn't be found"}),
-                404,
+                403,
                 {"Content-Type": "application/json"},
             )
 
@@ -161,7 +161,7 @@ def post_new_listing(instrumentId):
                         "message": "Failed to precess : User has open offer for this instrument and not fully filled yet."
                     }
                 ),
-                404,
+                403,
                 {"Content-Type": "application/json"},
             )
 
@@ -173,7 +173,7 @@ def post_new_listing(instrumentId):
                         "message": "Failed to precess : User has open listing for this instrument and not fully filled yet."
                     }
                 ),
-                404,
+                403,
                 {"Content-Type": "application/json"},
             )
 
@@ -185,7 +185,7 @@ def post_new_listing(instrumentId):
                         "message": "Failed to process : Issuer role account can not list the company's own instrument."
                     }
                 ),
-                400,
+                403,
                 {"Content-Type": "application/json"},
             )
 
@@ -235,7 +235,7 @@ def update_listing(listingId):
         if not listing:
             return make_response(
                 jsonify({"message": "Listing couldn't be found"}),
-                404,
+                400,
                 {"Content-Type": "application/json"},
             )
 
@@ -255,7 +255,7 @@ def update_listing(listingId):
                         "message": "Failed to process : This listing is linked to a pending transaction, please cancel that transaction before updating this listing."
                     }
                 ),
-                404,
+                403,
                 {"Content-Type": "application/json"},
             )
 
@@ -320,7 +320,7 @@ def delete_an_listing(listingId):
                         "message": "Failed to process : This listing is linked to a pending transaction, please cancel that transaction before deleting this offer."
                     }
                 ),
-                404,
+                403,
                 {"Content-Type": "application/json"},
             )
 

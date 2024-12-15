@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { getAnInstrumentThunk } from "../../redux/instrument";
@@ -10,6 +10,7 @@ import { SlGhost } from "react-icons/sl";
 import AddOfferModal from "./AddOfferModal";
 import AddListingModal from "./AddListingModal";
 import ChatModal from "./ChatModal";
+import TakeOfferModal from "./TakeOfferModal";
 
 
 
@@ -26,6 +27,8 @@ export function InstrumentDetailPage() {
     const userOffers = useSelector(state => state.offers.userOffers)
     const userListings = useSelector(state => state.listings.userListings)
     const { setModalContent, closeModal } = useModal();
+    const [currentUserListing, setCurrentUserListing]=useState({})
+    const [currentUserOffer, setCurrentUserOffer]=useState({})
     
     
 
@@ -41,6 +44,24 @@ export function InstrumentDetailPage() {
         }
     }, [dispatch, instrumentId, sessionUser]);
 
+    //check if any of the offers / listing belong to current user is for the current instrument
+    useEffect(()=>{
+        if (userListings) {
+            userListings.map(listing => {
+                if (listing.instrument_id ==instrumentId){
+                    setCurrentUserListing(listing)
+                }
+            })
+        }
+        if (userOffers){
+            userOffers.map(offer => {
+                if (offer.instrument_id ==instrumentId){
+                    setCurrentUserOffer(offer)
+                }
+            })
+        }
+    },[userListings,userOffers, instrumentId])
+
 
     if (!sessionUser) {
         return <Navigate to='/' />;
@@ -50,23 +71,8 @@ export function InstrumentDetailPage() {
         return <div>Loading instrument details...</div>; // Show loading message while instrument details are being fetched
     }
 
-    //check if any of the offers / listing belong to current user is for the current instrument
-    let currentUserListing={}
-    let currentUserOffer={}
-    if (userListings) {
-        userListings.map(listing => {
-            if (listing.instrument_id ==instrumentId){
-                currentUserListing=listing
-            }
-        })
-    }
-    if (userOffers){
-        userOffers.map(offer => {
-            if (offer.instrument_id ==instrumentId){
-                currentUserOffer=offer
-            }
-        })
-    }
+    
+
     
     
 
@@ -86,6 +92,8 @@ export function InstrumentDetailPage() {
                 closeModalFromPage={() => {
                     closeModal();
                     dispatch(getAllOffersForAnInstrumentThunk(instrumentId)); // Refresh offers after successful submission
+                    dispatch(getAllOffersForAUserThunk(sessionUser.id))
+                    
                 }}
             />
         );
@@ -97,6 +105,23 @@ export function InstrumentDetailPage() {
                 closeModalFromPage={() => {
                     closeModal();
                     dispatch(getAllListingsForAnInstrumentThunk(instrumentId)); // Refresh listings after successful submission
+                    dispatch( getAllListingsForAUserThunk(sessionUser.id))
+                }}
+            />
+        );
+    }
+
+    const handleOpenTakeOfferModal=(offer)=>{
+        setModalContent(
+            <TakeOfferModal
+                offer={offer}
+                listing={currentUserListing}
+                closeModalFromPage={() => {
+                    closeModal();
+                    dispatch(getAllListingsForAnInstrumentThunk(instrumentId)); // Refresh listings after successful submission
+                    dispatch( getAllListingsForAUserThunk(sessionUser.id))
+                    dispatch(getAllOffersForAnInstrumentThunk(instrumentId)); 
+                    dispatch(getAllOffersForAUserThunk(sessionUser.id))
                 }}
             />
         );
@@ -211,6 +236,9 @@ export function InstrumentDetailPage() {
                                         <th>Date</th>
                                         <th>Remaining/Original Qty</th>
                                         <th>Offered Price</th>
+                                        {currentUserListing && Object.keys(currentUserListing).length > 0 && ( 
+                                            <th>Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -219,6 +247,9 @@ export function InstrumentDetailPage() {
                                             <td>{offer.offered_on_et || "N/A"}</td>
                                             <td>{offer.remaining_quantity || "N/A"} / {offer.initial_quantity || "N/A"}</td>
                                             <td>${offer.offered_price ? offer.offered_price.toFixed(2) : "N/A"}</td>
+                                            {currentUserListing && Object.keys(currentUserListing).length > 0 && ( 
+                                                <td className="enter-deal-button-offer-side-wrapper"><button className="enter-deal-button-offer-side" onClick={()=> handleOpenTakeOfferModal(offer)}>Enter Deal</button></td>
+                                            )}
                                         </tr>
                                     ))}
                                 </tbody>
@@ -236,6 +267,9 @@ export function InstrumentDetailPage() {
                                         <th>Date</th>
                                         <th>Remaining/Original Qty</th>
                                         <th>Listed Price</th>
+                                        {currentUserOffer && Object.keys(currentUserOffer).length > 0 && (
+                                            <th>Action</th>
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -244,6 +278,9 @@ export function InstrumentDetailPage() {
                                             <td>{listing.listed_on_et || "N/A"}</td>
                                             <td>{listing.remaining_quantity || "N/A"} / {listing.initial_quantity || "N/A"}</td>
                                             <td>${listing.listed_price ? listing.listed_price.toFixed(2) : "N/A"}</td>
+                                            {currentUserOffer && Object.keys(currentUserOffer).length > 0 && ( 
+                                                <td className="enter-deal-button-listing-side-wrapper"><button className="enter-deal-button-listing-side">Enter Deal</button></td>
+                                            )}
                                         </tr>
                                     ))}
                                 </tbody>

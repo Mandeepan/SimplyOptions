@@ -35,6 +35,7 @@ export default function NonPendingBox({currentCompany}){
                                 <th>Fees</th>
                                 <th>Offered By</th>
                                 <th>Listed By</th>
+                                <th>Status</th>
                                 <th>Created At</th>
                                 <th>Settled On</th>                                
                             </tr>
@@ -50,6 +51,7 @@ export default function NonPendingBox({currentCompany}){
                                     <td>$ {transaction.transaction_fee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                     <td><a href={`mailto:${transaction.offer_user_email}`}>{transaction.offer_user_first_name} {transaction.offer_user_last_name}</a></td>
                                     <td><a href={`mailto:${transaction.listing_user_email}`}>{transaction.listing_user_first_name} {transaction.listing_user_last_name}</a></td>
+                                    <td>{transaction.status}</td>
                                     <td>{transaction.created_at_et}</td>
                                     <td>{transaction.settled_on_et}</td>
                                 </tr>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { getAllTransactionsForACompanyThunk } from '../../redux/transaction';
+import { getAllTransactionsForACompanyThunk, updateATransactionThunk } from '../../redux/transaction';
 import { MdOutlineCheck } from "react-icons/md";
 import { MdOutlineClose } from "react-icons/md";
 import ConfirmApproveReject from './ConfirmApproveReject';
@@ -24,21 +24,40 @@ export default function PendingBox({currentCompany}){
         setSelectedTransactionId(transactionId)
     };
 
-    const handleApproveClick =()=>{
+
+
+    const handleUpdateTransaction = async (transactionId, isApproved) =>{
+        const requestBody={
+            approve: Boolean(isApproved)
+        }
+        const response = await dispatch(updateATransactionThunk(transactionId, requestBody))
+        if (response.message) {
+            alert(response.message);
+        } 
+        dispatch(getAllTransactionsForACompanyThunk(currentCompany.id))
+    }
+
+    const handleApproveClick =(transactionId)=>{
         setModalContent(
             <ConfirmApproveReject
                 decision={"APPROVE"}
-                onConfirm={()=> alert("This feature is coming soon...")}
+                onConfirm={()=>{
+                    handleUpdateTransaction(transactionId, true)
+                    closeModal()
+                }}
                 onCancel={closeModal}
             />
         );
     }
 
-    const handleRejectClick =()=>{
+    const handleRejectClick =(transactionId)=>{
         setModalContent(
             <ConfirmApproveReject
                 decision={"REJECT"}
-                onConfirm={()=> alert("This feature is coming soon...")}
+                onConfirm={()=>{
+                    handleUpdateTransaction(transactionId, false)
+                    closeModal()
+                }}
                 onCancel={closeModal}
             />
         );
@@ -81,13 +100,13 @@ export default function PendingBox({currentCompany}){
                                     <td>
                                         <div className='decision-button-container'>
                                             <button className="transaction-approve-button"
-                                                    onClick={(e)=>{e.preventDefault(); handleApproveClick();}}
+                                                    onClick={(e)=>{e.preventDefault(); handleApproveClick(transaction.id);}}
                                                     disabled={selectedTransactionId !== transaction.id}
                                                     >
                                                     <MdOutlineCheck />
                                             </button>
                                             <button className="transaction-reject-button"
-                                                    onClick={(e)=>{e.preventDefault();handleRejectClick()}}
+                                                    onClick={(e)=>{e.preventDefault();handleRejectClick(transaction.id)}}
                                                     disabled={selectedTransactionId !== transaction.id}
                                                     >
                                                     <MdOutlineClose />

@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { getAUserThunk, updateAUserThunk, deleteAUserThunk } from '../../redux/user';
 import { thunkLogout } from '../../redux/session';
 import { getACompanyThunk } from '../../redux/company'
-import { getAllTransactionsForAUserThunk } from '../../redux/transaction';
+import { getAllTransactionsForAUserThunk, deleteATransactionThunk } from '../../redux/transaction';
 import { deleteAListingThunk, getAllListingsForAUserThunk } from '../../redux/listings';
 import { deleteAnOfferThunk, getAllOffersForAUserThunk } from '../../redux/offers';
 import { useModal } from '../../context/Modal';
@@ -189,6 +189,16 @@ export default function Dashboard(){
         dispatch(getAllListingsForAUserThunk(sessionUser.id));
     }
 
+    const handleCancelTransactionProcess = async (transactionId)=>{
+        const response = await dispatch(deleteATransactionThunk(transactionId))
+        if (response.message) {
+            handleShowAlert(response.message, "error");
+        } else {
+            handleShowAlert("Transaction cancelled successfully!", "success");  
+        }
+        dispatch(getAllTransactionsForAUserThunk(sessionUser.id));
+    }
+
     const handleCancelClick=(item, itemId)=>{
         if (item==="offer") {
             setModalContent(
@@ -198,11 +208,19 @@ export default function Dashboard(){
                     onCancel={closeModal}
                 />
             )
-        } else {
+        } else if (item==="listing") {
             setModalContent(
                 <ConfirmDeleteModal
                     itemToDelete={"LISTING"}
                     onConfirm={()=> handleDeleteListingProcess(itemId)}
+                    onCancel={closeModal}
+                />
+            )
+        } else{
+            setModalContent(
+                <ConfirmDeleteModal
+                    itemToDelete={"TRANSACTION"}
+                    onConfirm={()=> handleCancelTransactionProcess(itemId)}
                     onCancel={closeModal}
                 />
             )
@@ -466,7 +484,7 @@ export default function Dashboard(){
                 </div>
                     <div className="company-controller-body">
                     <div className="company-info-box">
-                        <h3>Total Settled Transactions : {userTransactions?.length}</h3>
+                        <h3>Total Transactions : {userTransactions?.length}</h3>
                         {userTransactions && userTransactions.length > 0 && (
                         <div className="transaction-table-container">
                         <table className="transaction-table">
@@ -480,8 +498,10 @@ export default function Dashboard(){
                                     <th>Quantity</th>
                                     <th>Value</th>
                                     <th>Fees</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
-                                    <th>Settled On</th>                                
+                                    <th>Settled On</th>  
+                                    <th>Cancel</th>                              
                                 </tr>
                             </thead>
                             <tbody className="transaction-table-body">
@@ -495,8 +515,15 @@ export default function Dashboard(){
                                         <td>{transaction.transaction_quantity.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</td>
                                         <td>$ {(transaction.transaction_quantity*transaction.transaction_price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                                         <td>$ {transaction.transaction_fee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                                        <td>{transaction.status}</td>
                                         <td>{transaction.created_at_et}</td>
                                         <td>{transaction.settled_on_et}</td>
+                                        <td><button
+                                                className="cancel-transaction-button"
+                                                disabled={transaction.status!="Pending"}
+                                                onClick={(e)=>{e.preventDefault();handleCancelClick("transaction", transaction.id)}}
+                                            >
+                                            Cancel</button></td>
                                     </tr>
                                 ))}
                             </tbody>

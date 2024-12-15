@@ -256,20 +256,97 @@ def get_transaction_by_id(transaction_id):
 def add_transaction():
     try:
         data = request.get_json()
+        instrument_id = data.get("instrument_id")
+        offer_id = data.get("offer_id")
+        listing_id = data.get("listing_id")
+        transaction_price = data.get("transaction_price")
+        transaction_quantity = data.get("transaction_quantity")
 
+        transaction_fee = transaction_price * transaction_quantity * 0.05
+        total_value_offer_side = transaction_price * transaction_quantity * 1.025
+        total_value_listing_side = transaction_price * transaction_quantity * 0.025
+
+        offer_record = Offer.query.filter_by(id=offer_id).first()
+        listing_record = Listing.query.filter_by(id=listing_id).first()
+        offer_user = User.query.filter_by(id=offer_record.offer_user_id).first()
+        listing_user = User.query.filter_by(id=listing_record.listing_user_id).first()
+
+        if (
+            not offer_user.user_available_balance
+        ) or offer_user.user_available_balance < total_value_offer_side:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process: Owner of this offer record doesn't have sufficient fund in account"
+                    }
+                ),
+                403,
+            )
+
+        if (
+            not listing_user.user_available_balance
+        ) or listing_user.user_available_balance < total_value_listing_side:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "Failed to process: Owner of this listing record doesn't have sufficient fund in account"
+                    }
+                ),
+                403,
+            )
+        # 1. create transaction record
         new_transaction = Transaction(
-            instrument_id=data.get("instrument_id"),
-            offer_id=data.get("offer_id"),
-            listing_id=data.get("listing_id"),
-            transaction_price=data.get("transaction_price"),
-            transaction_quantity=data.get("transaction_quantity"),
+            instrument_id=instrument_id,
+            offer_id=offer_id,
+            listing_id=listing_id,
+            transaction_price=transaction_price,
+            transaction_quantity=transaction_quantity,
             status="Pending",
-            transaction_fee=0,
+            transaction_fee=transaction_fee,
             created_at_et=datetime.utcnow(),
             updated_at_et=datetime.utcnow(),
         )
 
         db.session.add(new_transaction)
+
+        # 2. update user balance
+        offer_user.amount_to_be_debited = (
+            offer_user.amount_to_be_debited + total_value_offer_side
+        )
+        offer_user.user_available_balance = (
+            offer_user.user_cash_balance
+            - offer_user.amount_to_be_debited
+            + offer_user.amount_to_be_credited
+        )
+        listing_user.amount_to_be_debited = (
+            listing_user.amount_to_be_debited + total_value_listing_side
+        )
+        listing_user.amount_to_be_credited = (
+            listing_user.amount_to_be_credited
+            + transaction_price * transaction_quantity
+        )
+        listing_user.user_available_balance = (
+            listing_user.user_cash_balance
+            - listing_user.amount_to_be_debited
+            + listing_user.amount_to_be_credited
+        )
+
+        # 3. update remaining quantity in Offer and Listing
+        offer_record.remaining_quantity = (
+            offer_record.remaining_quantity - transaction_quantity
+        )
+        if offer_record.remaining_quantity == 0:
+            offer_record.status = "Filled"
+        else:
+            offer_record = "Partially Filled"
+        listing_record.remaining_quantity = (
+            listing_record.remaining_quantity - transaction_quantity
+        )
+        if listing_record.remaining_quantity == 0:
+            listing_record.status = "Filled"
+        else:
+            listing_record.status = "Partially Filled"
+
         db.session.commit()
 
         transaction_data = {
@@ -301,7 +378,11 @@ def add_transaction():
 @login_required
 def update_transaction(transaction_id):
     try:
-        transaction = Transaction.query.get(transaction_id)
+        transaction = Transaction.query.filter_by(id=transaction_id).first()
+        offer_record = Offer.query.filter_by(id=transaction.offer_id).first()
+        listing_record = Listing.query.filter_by(id=transaction.listing_id).first()
+        offer_user = User.query.filter_by(id=offer_record.offer_user_id).first()
+        listing_user = User.query.filter_by(id=listing_record.listing_user_id).first()
 
         if not transaction:
             return make_response(
@@ -311,30 +392,72 @@ def update_transaction(transaction_id):
             )
 
         data = request.get_json()
-        new_status = data.get("status")
+        is_approved = data.get("approve")
+        print("===============")
+        print(is_approved)
+        print(type(is_approved))
+        if is_approved:
+            new_status = "Completed"
+        else:
+            new_status = "Rejected"
 
-        if new_status not in ["Completed", "Rejected"]:
-            return make_response(
-                jsonify(
-                    {
-                        "message": "Invalid status. Only 'Completed' or 'Rejected' are allowed"
-                    }
-                ),
-                400,
-                {"Content-Type": "application/json"},
-            )
-
+        # 1. update transaction status
         eastern = pytz.timezone("America/New_York")
         current_time_et = datetime.now(eastern)
-
         transaction.status = new_status
         transaction.updated_at_et = current_time_et
+        transaction.settled_on_et = current_time_et.date()
 
-        if new_status == "Completed":
-            transaction.settled_on_et = current_time_et.date()
-            transaction.transaction_fee = (
-                transaction.transaction_price * transaction.transaction_quantity * 0.05
-            )  # Example fee calculation
+        # 2. update user cash balances
+        offer_debit = (
+            transaction.transaction_price * transaction.transaction_quantity * 1.025
+        )
+        listing_debit = (
+            transaction.transaction_price * transaction.transaction_quantity * 0.025
+        )
+        listing_credit = (
+            transaction.transaction_price * transaction.transaction_quantity
+        )
+        if is_approved:
+            offer_user.user_cash_balance = offer_user.user_cash_balance - offer_debit
+            listing_user.user_cash_balance = (
+                listing_user.user_cash_balance + listing_credit - listing_credit
+            )
+        # for both scenarios, rebalance is needed
+        offer_user.amount_to_be_debited = offer_user.amount_to_be_debited - offer_debit
+        offer_user.user_available_balance = (
+            offer_user.user_cash_balance
+            + offer_user.amount_to_be_credited
+            - offer_user.amount_to_be_debited
+        )
+        listing_user.amount_to_be_credited = (
+            listing_user.amount_to_be_credited - listing_credit
+        )
+        listing_user.amount_to_be_debited = (
+            listing_user.amount_to_be_debited - listing_debit
+        )
+        listing_user.user_available_balance = (
+            listing_user.user_cash_balance
+            + listing_user.amount_to_be_credited
+            - listing_user.amount_to_be_debited
+        )
+
+        # 3. update remaining quantity and status in the offer and listing record when rejected
+        if not is_approved:
+            offer_record.remaining_quantity = (
+                offer_record.remaining_quantity + transaction.transaction_quantity
+            )
+            if offer_record.remaining_quantity == offer_record.initial_quantity:
+                offer_record.status = "Not Filled"
+            else:
+                offer_record.status = "Partially Filled"
+            listing_record.remaining_quantity = (
+                listing_record.remaining_quantity + transaction.transaction_quantity
+            )
+            if listing_record.remaining_quantity == listing_record.initial_quantity:
+                listing_record.status = "Not Filled"
+            else:
+                listing_record.status = "Partially Filled"
 
         db.session.commit()
 
@@ -370,16 +493,62 @@ def update_transaction(transaction_id):
 def delete_a_transaction(transactionId):
     try:
         transaction = Transaction.query.filter_by(id=transactionId).first()
+        offer_record = Offer.query.filter_by(id=transaction.offer_id).first()
+        listing_record = Listing.query.filter_by(id=transaction.listing_id).first()
+        offer_user = User.query.filter_by(id=offer_record.offer_user_id).first()
+        listing_user = User.query.filter_by(id=listing_record.listing_user_id).first()
 
         if not transaction:
             return make_response(
                 jsonify({"message": "Transaction couldn't be found"}), 404
             )
 
-        db.session.delete(transaction)
+        # 1. update transaction status
+        transaction.status = "Cancelled"
+
+        # 2. update offer & listing remaining quantity and status
+        offer_record.remaining_quantity = (
+            offer_record.remaining_quantity + transaction.transaction_quantity
+        )
+        if offer_record.remaining_quantity == offer_record.initial_quantity:
+            offer_record.status = "Not Filled"
+        else:
+            offer_record.status = "Partially Filled"
+        listing_record.remaining_quantity = (
+            listing_record.remaining_quantity + transaction.transaction_quantity
+        )
+        if listing_record.remaining_quantity == listing_record.initial_quantity:
+            listing_record.status = "Not Filled"
+        else:
+            listing_record.status = "Partially Filled"
+
+        # 3. update user available balances
+        offer_user.amount_to_be_debited = (
+            offer_user.amount_to_be_debited
+            - transaction.transaction_price * transaction.transaction_quantity
+            - transaction.transaction_fee / 2
+        )
+        offer_user.user_available_balance = (
+            offer_user.user_cash_balance
+            - offer_user.amount_to_be_debited
+            + offer_user.amount_to_be_credited
+        )
+        listing_user.amount_to_be_debited = (
+            listing_user.amount_to_be_debited - transaction.transaction_fee / 2
+        )
+        listing_user.amount_to_be_credited = (
+            listing_user.amount_to_be_credited
+            - transaction.transaction_price * transaction.transaction_quantity
+        )
+        listing_user.user_available_balance = (
+            listing_user.user_cash_balance
+            - listing_user.amount_to_be_debited
+            + listing_user.amount_to_be_credited
+        )
+
         db.session.commit()
         return make_response(
-            jsonify({"message": "successfully deleted"}),
+            jsonify({"success": "successfully cancelled"}),
             200,
             {"Content-Type": "application/json"},
         )

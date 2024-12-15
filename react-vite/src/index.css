@@ -75,3 +75,7 @@ button:disabled{
 textarea, input, td{
     letter-spacing: -0.8px;
 }
+
+input:disabled{
+    background-color: #dfdcdc;
+}

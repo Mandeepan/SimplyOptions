@@ -173,7 +173,7 @@
 }
 
 .transaction-table{
-
+    width: 100%;
     border:1px rgb(126, 126, 126) solid;
     border-collapse: collapse;
 

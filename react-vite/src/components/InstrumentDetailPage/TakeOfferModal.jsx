@@ -1,25 +1,29 @@
 import "./AddOfferListingModal.css"
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addAListingThunk } from "../../redux/listings";
+import { useDispatch } from "react-redux";
+import { addATransactionThunk } from "../../redux/transaction";
 import { motion } from "framer-motion";
 import CustomAlert from "../CustomAlert/CustomAlert";
 import { useModal } from '../../context/Modal';
 
-export default function AddListingModal({ instrumentId, closeModalFromPage}) {
+
+export default function TakeOfferModal({offer,listing, closeModalFromPage}){
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user);
-    const [listedPrice, setListedPrice] = useState("");
-    const [initialQuantity, setInitialQuantity] = useState("");
+    const [transactionQuantity, setTransactionQuantity] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    // const [alertMessage, setAlertMessage] = useState(null);
     const { setModalContent, closeModal } = useModal();
 
-    const validateInputs = (value) => {
+
+    const availableTransactionQuantity = Math.min(offer.remaining_quantity, listing.remaining_quantity)
+    const validateInputs = (e) => {
         setErrorMessage("")
+        const value = e.target.value
         if (value <= 0 || isNaN(value)) {
-            setErrorMessage("Price and quantity must be a positive number.");
+            setErrorMessage(`Quantity must be a positive number.`);
+        }
+        if (value>availableTransactionQuantity){
+            setErrorMessage(`Quantity cannot exceed offer remaining quantity or listing remaining quantity.`);
         }
     };
 
@@ -41,22 +45,24 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
         setIsSubmitting(true);
 
         const requestData = {
-            listed_price: parseFloat(listedPrice),
-            initial_quantity: parseInt(initialQuantity),
-            listing_user_id: sessionUser.id,
+            instrument_id: parseFloat(listing.instrument_id),
+            offer_id: parseInt(offer.id),
+            listing_id: parseInt(listing.id),
+            transaction_price: offer.offered_price,
+            transaction_quantity: parseInt(transactionQuantity)
         };
 
-        const response = await dispatch(addAListingThunk(instrumentId, requestData));
+        const response = await dispatch(addATransactionThunk(requestData));
 
         if (response.message) {
             handleShowAlert(response.message, "error");
         } else {
-            handleShowAlert("Listing placed successfully!", "success");
+            handleShowAlert("Transaction placed successfully! Issuer admin will review it.", "success");
         }
         setIsSubmitting(false);
     };
 
-    return (
+    return(
         <>
             <motion.div 
                 className="modal-backdrop"
@@ -70,31 +76,28 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                     animate={{ y: "0", opacity: 1 }}
                     exit={{ y: "-50%", opacity: 0 }}
                 >
-                    <h2>Place A New Listing</h2>
+                    <h2>Transaction Confirmation</h2>
+                    <p>* Transaction price is fixed to the offered price.</p>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="listedPrice">Listed Price ($)</label>
+                            <label htmlFor="transactionPrice">Transaction Price ($)</label>
                             <input
                                 type="number"
-                                id="listedPrice"
-                                value={listedPrice}
-                                onChange={(e) => {
-                                    setListedPrice(e.target.value)
-                                    validateInputs(e.target.value)
-                                }}
-                                required
+                                id="transactionPrice"
+                                value={offer.offered_price}
+                                disabled={true}
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="initialQuantity">Initial Quantity</label>
+                            <label htmlFor="transactionQuantity">Transaction Quantity</label>
                             <input
                                 type="number"
-                                id="initialQuantity"
-                                value={initialQuantity}
+                                id="transactionQuantity"
+                                value={transactionQuantity}
                                 onChange={(e) => {
-                                    setInitialQuantity(e.target.value)
-                                    validateInputs(e.target.value)
+                                    setTransactionQuantity(e.target.value)
+                                    validateInputs(e)
                                 }}
                                 required
                             />
@@ -105,7 +108,7 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
                                 className="submit-button"
                                 disabled={isSubmitting || errorMessage}
                             >
-                            Submit
+                            Confirm
                             </button>
                             <button
                                 type="button"
@@ -120,5 +123,5 @@ export default function AddListingModal({ instrumentId, closeModalFromPage}) {
             </motion.div>
         </>
         
-    );
+    )
 }

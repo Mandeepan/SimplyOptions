@@ -3,10 +3,12 @@ import {useSelector, useDispatch } from 'react-redux'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { getAUserThunk } from '../../redux/user';
 import { getACompanyThunk } from '../../redux/company'
+// import { useModal } from '../../context/Modal';
 import CompanyInfoBox from './CompanyInfoBox';
 import InstrumentBox from './InstrumentBox';
 import PendingBox from './PendingBox'
 import NonPendingBox from './NonPendingBox';
+
 import "./IssuerPanel.css"
 
 export default function IssuerPanel() {
@@ -15,6 +17,7 @@ export default function IssuerPanel() {
     const sessionUser = useSelector((state) => state.session.user);
     const userInfo = useSelector(state => state.currentUser.currentUser);
     const currentCompany = useSelector(state => state.currentCompany.currentCompany)
+    // const { setModalContent, closeModal } = useModal();
 
     useEffect(() => {
         if (sessionUser && sessionUser.id) {

@@ -73,6 +73,24 @@ function deleteListingProcess(onConfirm, onCancel){
     )
 }
 
+function deleteTransactionProcess(onConfirm, onCancel){
+    return (
+        <div className="delete-modal-container" data-testid='delete-spot-modal'>
+            <h1>Confirm Cancel</h1>
+            <div className="explanation-note">
+                <p>Do you want to cancel the selected transaction?</p>
+                <p className="warning"></p>
+            </div>
+
+            <div className="yes-or-no-buttons">
+                <button className="delete-yes" onClick={onConfirm} >Yes</button>
+                <button className="delete-no" onClick={onCancel} >No</button>
+            </div>
+            
+        </div>
+    )
+}
+
 export default  function ConfirmDeleteModal({itemToDelete,onConfirm, onCancel}) {
     switch (itemToDelete) {
         case "COMPANY":
@@ -83,6 +101,8 @@ export default  function ConfirmDeleteModal({itemToDelete,onConfirm, onCancel}) 
             return deleteOfferProcess(onConfirm,onCancel);
         case "LISTING":
             return deleteListingProcess(onConfirm,onCancel)
+        case "TRANSACTION":
+            return  deleteTransactionProcess(onConfirm,onCancel)
         default:
             throw new Error(`Unknown itemToDelete: ${itemToDelete}`);
     }
