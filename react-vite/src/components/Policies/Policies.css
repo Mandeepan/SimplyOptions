@@ -1,0 +1,38 @@
+.rules-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgb(142, 121, 152,0.5);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .rules-container h2 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .rules-container h3 {
+    color:   rgb(126, 85, 246);
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .rules-container ul {
+    padding-left: 20px;
+    list-style: disc;
+  }
+  
+  .rules-container li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  
+  .rules-container p {
+    color: #666;
+    margin-bottom: 15px;
+  }
+  

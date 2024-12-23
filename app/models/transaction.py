@@ -31,6 +31,8 @@ class Transaction(db.Model):
         db.DateTime, default=current_eastern_time, onupdate=current_eastern_time
     )
 
+    documents = db.relationship("Document", backref="transactions", lazy=True)
+
     def to_dict(self):
         return {
             "id": self.id,

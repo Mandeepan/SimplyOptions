@@ -6,6 +6,9 @@ import { FaUserLarge } from "react-icons/fa6";
 import { FaBriefcase } from "react-icons/fa";
 import { MdOutlineLogout } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
+import { FaLayerGroup } from "react-icons/fa";
+
+
 
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
@@ -72,6 +75,10 @@ function ProfileButton() {
               <li className='profile-list-item-with-icon'>
                 <MdSpaceDashboard />
                 <button className='profile-mode-button' onClick={handleDashboardClick}>User Dashboard</button>
+              </li>
+              <li className="profile-list-item-with-icon">
+                <FaLayerGroup />
+                <button className="profile-terms" onClick={()=>{navigate("/policies")}}>Terms & Policies</button>
               </li>
               <li className='profile-list-item-with-icon'>
                 <MdOutlineLogout />

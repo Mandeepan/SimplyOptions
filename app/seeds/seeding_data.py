@@ -1047,30 +1047,35 @@ transactions = [
 
 documents = [
     {
+        "transaction_id": 1,
         "listing_id": 4,
         "offer_id": 8,
-        "user_id": 1,
+        "user_id": 5,
         "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
     },
     {
+        "transaction_id": 2,
         "listing_id": 2,
-        "offer_id": 1,
+        "offer_id": 2,
         "user_id": 3,
         "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
     },
     {
-        "listing_id": 5,
+        "transaction_id": 3,
+        "listing_id": 3,
         "offer_id": 3,
-        "user_id": 1,
+        "user_id": 2,
         "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
     },
     {
+        "transaction_id": 4,
         "listing_id": 4,
-        "offer_id": 5,
-        "user_id": 4,
+        "offer_id": 4,
+        "user_id": 2,
         "doc_url": "https://www.sec.gov/Archives/edgar/data/1298978/000119312505054368/dex1012.htm",
     },
     {
+        "transaction_id": 5,
         "listing_id": 5,
         "offer_id": 5,
         "user_id": 1,
