@@ -168,7 +168,11 @@ export function InstrumentDetailPage() {
                         </tr>
                         <tr>
                             <td><strong>Issued On:</strong></td>
-                            <td>{instrument.issued_on_et}</td>
+                            <td>{new Date(instrument.issued_on_et).toLocaleDateString('en-US', {
+                                                                    month: 'long', 
+                                                                    day: '2-digit', 
+                                                                    year: 'numeric',
+                                                                })}</td>
                         </tr>
                         <tr>
                             <td><strong>Updated Value:</strong></td>
