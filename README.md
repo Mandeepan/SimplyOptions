@@ -1,132 +1,73 @@
-# Flask React Project
+## SimplyOptions
 
-This is the starter for the Flask React project.
+SimplyOptions is a platform streamlining private share trading with secure API integrations. It allows existing shareholders (e.g., former employees of the private company) to list their shares, it also allows investors or potentail buyers to post their offer. The platform also provide admin panel for issuers(company representative) to approve or reject transactions with full access to all historical transactions.
 
-## Getting started
+Live website is here : [https://api-project-auth.onrender.com/](https://simplyoptions.onrender.com/)
 
-1. Clone this repository (only this branch).
+I used the following tools to build this web application : 
 
-2. Install dependencies.
+#### Frontend
 
-   ```bash
-   pipenv install -r requirements.txt
-   ```
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)<br/>
 
-3. Create a __.env__ file based on the example with proper settings for your
-   development environment.
+#### Backend
 
-4. Make sure the SQLite3 database connection URL is in the __.env__ file.
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-323330?style=for-the-badge&logo=sql&logoColor=blue)
+![Pipenv](https://img.shields.io/badge/pipenv-%23121011.svg?style=for-the-badge&logo=python&logoColor=yellow)
+![PostgreSQL](https://img.shields.io/badge/postgreSQL-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)<br/>
 
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention.**
+#### Other Tools
+![OpenAI API](https://img.shields.io/badge/OpenAI_API-412991?style=for-the-badge&logo=openai&logoColor=white)
+![CrunchBase API](https://img.shields.io/badge/CrunchBase_API-%2300A1F1.svg?style=for-the-badge&logo=data&logoColor=white)
+![AWS S3](https://img.shields.io/badge/AWS_S3-%23FF9900.svg?style=for-the-badge&logo=amazonaws&logoColor=white)<br/>
 
-6. Get into your pipenv, migrate your database, seed your database, and run your
-   Flask app:
+## Features
+Platform description on home page.
+![Screenshot 2025-01-01 at 5 34 52 PM](https://github.com/user-attachments/assets/259fabd7-5a9f-4ea6-ad27-6ac989de7432)
 
-   ```bash
-   pipenv shell
-   ```
+Authentication with strict error handling
+![Screenshot 2025-01-01 at 5 36 16 PM](https://github.com/user-attachments/assets/89e7c021-6c24-4164-b40f-41c092fd44e3)
+![Screenshot 2025-01-01 at 5 36 56 PM](https://github.com/user-attachments/assets/2cb7304b-3675-4ce8-9e94-73b519e08346)
 
-   ```bash
-   flask db upgrade
-   ```
+Landing page with all available instruments. User can also dynamically search a specific one at search bar
+![Screenshot 2025-01-01 at 5 37 40 PM](https://github.com/user-attachments/assets/bb2b2bc7-f539-41de-a73c-b80ec8407e62)
+![Screenshot 2025-01-01 at 5 37 52 PM](https://github.com/user-attachments/assets/22eb6d46-b7be-47d0-acc8-f3f7ccd8f1a3)
 
-   ```bash
-   flask seed all
-   ```
+By selecting specific instrument, it will direct user to the instrument page. 
+User can see all relevant informaiton, ask SimpleBuddy(Gen AI Chatbox) any questions about the company and instrument.
+User can also place offer or list their shares
+![Screenshot 2025-01-01 at 5 39 56 PM](https://github.com/user-attachments/assets/45637c4f-bb66-4bbf-a861-efe836a2360d)
+![Screenshot 2025-01-01 at 5 41 55 PM](https://github.com/user-attachments/assets/bb379595-cc3c-442e-9fdc-d255edc64bea)
+![Screenshot 2025-01-01 at 5 42 05 PM](https://github.com/user-attachments/assets/95f53396-67a3-43d4-a5d3-4fdd0053b41c)
+![Screenshot 2025-01-01 at 5 42 12 PM](https://github.com/user-attachments/assets/e4b42bab-4e7a-4df8-81a7-8507ffdb9f7c)
 
-   ```bash
-   flask run
-   ```
+Platform comes with strict rules on certain opertations. A detailed guide is provided at user menu.
+![Screenshot 2025-01-01 at 5 44 53 PM](https://github.com/user-attachments/assets/b0286ffa-dea7-4d05-a7b4-d4f0b76f7913)
 
-7. The React frontend has no styling applied. Copy the __.css__ files from your
-   Authenticate Me project into the corresponding locations in the
-   __react-vite__ folder to give your project a unique look.
+User can take the counterparty offer to enter a transaction, which will become a pending transaction waiting for issuer's decision
+![Screenshot 2025-01-01 at 5 55 08 PM](https://github.com/user-attachments/assets/67c77028-19b1-4afc-962d-a1d193946399)
 
-8. To run the React frontend in development, `cd` into the __react-vite__
-   directory and run `npm i` to install dependencies. Next, run `npm run build`
-   to create the `dist` folder. The starter has modified the `npm run build`
-   command to include the `--watch` flag. This flag will rebuild the __dist__
-   folder whenever you change your code, keeping the production version up to
-   date.
+At User Dashboard, user can deposit or withdraw funds, update existing listing or offers, and review historical settled transactions.
+![Screenshot 2025-01-01 at 5 46 07 PM](https://github.com/user-attachments/assets/2f007db4-ed20-4c4f-b2b6-0be2ed5d73b3)
+![Screenshot 2025-01-01 at 5 46 22 PM](https://github.com/user-attachments/assets/f29d8b46-4530-4333-aaa8-f2539980dc37)
 
-## Deployment through Render.com
+At the issuer panel, the issuer role user can see company info, update company info or unlist company from the platform.
+The issuer user can also add a company instrument, see the full list of instruments info, update or delete an instrument.
+The issuer user can also approve or reject any pending transactions, and see all settled tranasctions.
+![Screenshot 2025-01-01 at 5 50 16 PM](https://github.com/user-attachments/assets/82ccf96f-9594-40b3-964e-6895b8ed1a6d)
+![Screenshot 2025-01-01 at 5 51 30 PM](https://github.com/user-attachments/assets/1c592611-23ab-40cc-bd51-1cea8dc9b698)
+![Screenshot 2025-01-01 at 5 51 48 PM](https://github.com/user-attachments/assets/a231055b-8131-488a-82cf-2e56a17e042e)
 
-First, recall that Vite is a development dependency, so it will not be used in
-production. This means that you must already have the __dist__ folder located in
-the root of your __react-vite__ folder when you push to GitHub. This __dist__
-folder contains your React code and all necessary dependencies minified and
-bundled into a smaller footprint, ready to be served from your Python API.
 
-Begin deployment by running `npm run build` in your __react-vite__ folder and
-pushing any changes to GitHub.
 
-Refer to your Render.com deployment articles for more detailed instructions
-about getting started with [Render.com], creating a production database, and
-deployment debugging tips.
 
-From the Render [Dashboard], click on the "New +" button in the navigation bar,
-and click on "Web Service" to create the application that will be deployed.
 
-Select that you want to "Build and deploy from a Git repository" and click
-"Next". On the next page, find the name of the application repo you want to
-deploy and click the "Connect" button to the right of the name.
 
-Now you need to fill out the form to configure your app. Most of the setup will
-be handled by the __Dockerfile__, but you do need to fill in a few fields.
 
-Start by giving your application a name.
 
-Make sure the Region is set to the location closest to you, the Branch is set to
-"main", and Runtime is set to "Docker". You can leave the Root Directory field
-blank. (By default, Render will run commands from the root directory.)
 
-Select "Free" as your Instance Type.
 
-### Add environment variables
 
-In the development environment, you have been securing your environment
-variables in a __.env__ file, which has been removed from source control (i.e.,
-the file is gitignored). In this step, you will need to input the keys and
-values for the environment variables you need for production into the Render
-GUI.
 
-Add the following keys and values in the Render GUI form:
-
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
-
-Add the following keys and values:
-
-- DATABASE_URL (copy value from the **External Database URL** field)
-
-**Note:** Add any other keys and values that may be present in your local
-__.env__ file. As you work to further develop your project, you may need to add
-more environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment.
-
-### Deploy
-
-Now you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your Dockerfile
-commands being executed and any errors that occur.
-
-When deployment is complete, open your deployed site and check to see that you
-have successfully deployed your Flask application to Render! You can find the
-URL for your site just below the name of the Web Service at the top of the page.
-
-**Note:** By default, Render will set Auto-Deploy for your project to true. This
-setting will cause Render to re-deploy your application every time you push to
-main, always keeping it up to date.
-
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
-# SimplyOptions
