@@ -104,7 +104,7 @@ function SignupFormPage() {
   return (
     <div className="signup-page">
       <div className="video-background">
-          <video autoPlay loop muted className="fullscreen-video">
+          <video autoPlay loop muted  playsInline disablePictureInPicture controls={false} className="fullscreen-video">
               <source src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/cover.mp4" type="video/mp4" />
               Your browser does not support the video tag.
           </video>

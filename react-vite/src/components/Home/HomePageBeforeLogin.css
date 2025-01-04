@@ -14,6 +14,7 @@
     overflow: hidden;
     z-index: -2;
     pointer-events: none;
+    user-select: none;
 }
 
 .fullscreen-video {
@@ -22,6 +23,7 @@
     object-fit: cover;
     filter: brightness(0.2); /* Dim the video with a dark tone */
     pointer-events: none;
+    user-select: none;
 }
 
 .video-overlay {
