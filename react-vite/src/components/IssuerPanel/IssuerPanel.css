@@ -107,15 +107,19 @@
     border:1px rgb(126, 126, 126) solid;
 }
 
-.instrument-table{
+.instrument-table-container{
     border:1px rgb(126, 126, 126) solid;
-    border-collapse: collapse;
     width: 90%;
     margin:0 5%;
-    overflow-y: auto;
-    /* overflow-x: scroll;
-    max-height:15rem;
-    overflow-y: scroll; */
+    margin-bottom:1rem;
+    overflow: scroll;
+}
+
+.instrument-table{
+    border:1px rgb(126, 126, 126) solid;
+    /* border-collapse: collapse; */
+    width: 100%;
+    margin:0!important;
 }
 
 .instrument-table-hidden{
@@ -138,7 +142,9 @@
 .instrument-table th{
     border:1px rgb(126, 126, 126) solid;
     background-color:rgb(126, 126, 126); 
-    padding:0
+    padding:0; 
+    text-wrap: nowrap;
+    height: 1rem ;
 }
 
 .update-instrument-button-hidden, .delete-instrument-button-hidden{
@@ -171,6 +177,8 @@
     margin-bottom:3rem;
     overflow: scroll;
 }
+
+
 
 .transaction-table{
     width: 100%;
@@ -258,3 +266,80 @@
     background-color:rgba(96, 20, 20, 0.846);
 }
 
+@media (max-width: 480px) {
+    .issuer-container h2{
+        font-size: 1.5rem;
+        margin:0 5%
+    }
+
+    .company-controller{
+        display:flex;
+        flex-direction: column;
+        margin:2% 4%;
+    }
+
+
+    .company-controller-head-banner{
+        width: 40%;
+        height: 2rem;
+        animation: slideLeft 1s ease-out forwards;
+    }
+
+    @keyframes slideLeft {
+        0% {
+            left: 0; /* Initial position */
+        }
+        100% {
+            left: -5px; /* Move it 20 pixels to the left */
+        }
+    }
+
+    .company-controller-head-banner h3{
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .company-controller-body{
+        animation: slideRight 1s ease-out forwards;
+    }
+
+    @keyframes slideRight {
+        0% {
+            right: 0; /* Initial position */
+        }
+        100% {
+            right: -5px; /* Move it 20 pixels to the left */
+        }
+    }
+
+
+    .instrument-table{
+        border:1px rgb(126, 126, 126) solid;
+        border-collapse: collapse;
+        width: 95%;
+        margin:0 2.5%;
+        overflow: scroll;
+        max-height:5rem;
+    }
+
+    .instrument-table tr{
+        text-wrap: nowrap;
+        height: 1rem ;
+    }
+
+    .company-buttons{
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        align-items: center;
+        margin:0.5rem 2rem;  
+    }
+
+    .company-buttons button{
+        border-radius: 3px;
+        min-width:max-content;
+        margin-top:0.25rem;
+        width:80% 
+    }
+
+}

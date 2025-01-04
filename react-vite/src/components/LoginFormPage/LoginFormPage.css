@@ -1,3 +1,10 @@
+.login-content-overlay {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    padding: 20px;
+}
+
 .login-page{
     max-width: 30%;
     position:relative;
@@ -51,3 +58,17 @@
   text-align: center;
 }
 
+
+@media (max-width: 480px) {
+
+    .login-page{
+        max-width: 90%;
+        position:relative;
+        left: 5%;
+        margin-top:5rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 1px;
+        
+    }
+    
+}

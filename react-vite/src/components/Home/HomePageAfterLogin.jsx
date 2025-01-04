@@ -38,32 +38,35 @@ export default function HomePageAfterLogin(){
     return (
     <div className="homepage-container">
         <h1>Explore Instruments</h1>
-        <table className="instruments-table">
-        <thead>
-            <tr>
-            <th>Company Name</th>
-            <th>Instrument Name</th>
-            <th>Instrument Type</th>
-            <th>Instrument Class</th>
-            <th>Updated Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {currentInstruments.map((instrument) => (
-            <tr key={instrument.id}>
-                <td>
-                <a href={`/instruments/${instrument.id}`} target="_blank" rel="noopener noreferrer">
-                    {instrument.company_name}
-                </a>
-                </td>
-                <td>{instrument.instrument_name}</td>
-                <td>{instrument.instrument_type}</td>
-                <td>{instrument.instrument_class}</td>
-                <td>$ {instrument.updated_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-            </tr>
-            ))}
-        </tbody>
-        </table>
+        <div className="instruments-table-container">
+            <table className="instruments-table">
+            <thead>
+                <tr>
+                <th>Company Name</th>
+                <th>Instrument Name</th>
+                <th>Instrument Type</th>
+                <th>Instrument Class</th>
+                <th>Updated Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {currentInstruments.map((instrument) => (
+                <tr key={instrument.id}>
+                    <td>
+                    <a href={`/instruments/${instrument.id}`} target="_blank" rel="noopener noreferrer">
+                        {instrument.company_name}
+                    </a>
+                    </td>
+                    <td>{instrument.instrument_name}</td>
+                    <td>{instrument.instrument_type}</td>
+                    <td>{instrument.instrument_class}</td>
+                    <td>$ {instrument.updated_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        </div>
+        
         <div className="crunchbase-logo-container">
                 <a href="https://www.crunchbase.com/home" target="_blank" rel="noopener noreferrer">
             <img src="https://simplyoptionsbucket.s3.us-east-1.amazonaws.com/public/powered_by_crunchbase.png" alt="Powered by Crunchbase"></img>

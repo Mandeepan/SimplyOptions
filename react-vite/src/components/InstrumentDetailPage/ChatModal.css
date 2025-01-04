@@ -177,3 +177,60 @@
     opacity: 1;
 }
 
+@media (max-width: 480px) {
+    .side-modal {
+        width: 100%;
+    }
+    .side-modal-content {
+        font-weight:normal;
+        width:90%;
+        margin-left:5%;
+    }
+    .chat-input-container{
+        width:90%;
+        margin-left:5%;
+    }
+
+    .openAI-logo-container {
+        width:90%;
+        margin-left:5%;
+    }
+    
+    .openAI-logo-container svg {
+        padding:0 1%;
+        width: 1.4rem;
+        height:1.4rem;
+    }
+
+    .openAI-logo-container p{
+        font-size:0.7rem;
+        text-wrap: nowrap;
+    }
+    
+    .openAI-logo-container img{
+        padding:0 1%;
+        width: 50%;
+        height:1rem;
+    }
+    
+    .tooltip-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ai-tooltip{
+        visibility: hidden;                   
+        background-color: white;
+        color:#4b0082;                         
+        text-align: center;                    
+        border-radius: 4px;                    
+        padding: 1px 3px;
+        font-size:0.7rem;
+        font-style: italic;
+        overflow-wrap: break-word;
+        height: auto;
+    }
+    
+}

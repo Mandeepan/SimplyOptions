@@ -61,6 +61,8 @@ textarea{
     width:90%;
 }
 
+
+
 .each-item label{
     text-align: left;
     margin-left:0;
@@ -71,3 +73,22 @@ textarea{
     min-width:30%
 }
 
+@media (max-width: 480px) {
+    .create-company-image-container{
+        display:none;
+    }
+
+    .create-company-page .create-company-container{
+        width: 100%;
+        background: transparent;
+    }
+
+    .create-company-page .create-company-image-container{
+        width: 0%;
+    }
+
+    .create-company-container h2{
+        font-size:1.2rem;
+        text-align: center;
+    }
+}

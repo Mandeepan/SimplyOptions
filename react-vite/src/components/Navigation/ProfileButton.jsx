@@ -51,11 +51,18 @@ function ProfileButton() {
 
   const handleIssuerPanelClick = () => {
     navigate("/issuerPanel");
+    closeMenu()
   };
 
   const handleDashboardClick = () => {
     navigate("/dashboard");
+    closeMenu()
   };
+  const handlePolicyClick =()=>{
+    navigate("/policies"); 
+    closeMenu()
+    
+  }
 
   const profileButtonClassName = user ? "profile-button": "profile-button-hidden"
   return (
@@ -78,7 +85,7 @@ function ProfileButton() {
               </li>
               <li className="profile-list-item-with-icon">
                 <FaLayerGroup />
-                <button className="profile-terms" onClick={()=>{navigate("/policies")}}>Terms & Policies</button>
+                <button className="profile-terms" onClick={handlePolicyClick}>Terms & Policies</button>
               </li>
               <li className='profile-list-item-with-icon'>
                 <MdOutlineLogout />

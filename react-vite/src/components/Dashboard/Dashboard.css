@@ -226,3 +226,77 @@
     background-color: grey;
     color: white;
 }
+
+@media (max-width: 480px) {
+    .dashboard-container h1{
+        font-size: 1.5rem;
+    }
+
+    .std-controller{
+        display:flex;
+        flex-direction: column;
+        margin:2% 2.5%;
+    }
+
+
+    .std-controller-head-banner{
+        width: 40%;
+        height: 2rem;
+        animation: slideLeft 1s ease-out forwards;
+    }
+
+    @keyframes slideLeft {
+        0% {
+            left: 0; /* Initial position */
+        }
+        100% {
+            left: -5px; /* Move it 20 pixels to the left */
+        }
+    }
+
+    .std-controller-head-banner h3{
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .std-controller-body{
+        animation: slideRight 1s ease-out forwards;
+    }
+
+    @keyframes slideRight {
+        0% {
+            right: 0; /* Initial position */
+        }
+        100% {
+            right: -5px; /* Move it 20 pixels to the left */
+        }
+    }
+
+    .funding-buttons button{
+        border-radius: 3px;
+        min-width: 5rem;
+        margin-right:0.25rem;
+    }
+    .funding-buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin: 0;
+        padding:1rem;
+        width: 100%;
+    }
+
+    .std-info-table td{
+        padding :0.25rem 0.5rem;
+    }
+
+    .transaction-table1 tr{
+        text-wrap: nowrap;
+        height: 1rem ;
+    }
+    
+
+    .transaction-row{
+        height:2.5rem;
+    }
+}

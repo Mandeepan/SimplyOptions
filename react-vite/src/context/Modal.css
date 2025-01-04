@@ -23,3 +23,9 @@
   background-color:white;
   width: 40%;
 }
+
+@media (max-width: 480px) {
+  #modal-content{
+    width:100%
+  }
+}

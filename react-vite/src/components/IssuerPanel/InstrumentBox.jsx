@@ -111,6 +111,7 @@ export default function InstrumentBox(){
                     
                     {/* <div className={shouldInstrumentTableHidden} style={{ maxHeight: '300px', overflowY: 'auto' }}> */}
                     {currentCompany.instruments && currentCompany.instruments.length > 0 ? (
+                        <div className="instrument-table-container">
                         <table className="instrument-table" style={{ maxHeight: '300px', overflowY: 'auto' }}>
                             <thead>
                                 <tr className="instrument-table-header">
@@ -143,6 +144,7 @@ export default function InstrumentBox(){
                                 ))}
                             </tbody>
                         </table>
+                        </div>
                     ) : (
                         <p className="no-instrument-label">Start the journey to list your company instruments by clicking button below.</p>
                     )}

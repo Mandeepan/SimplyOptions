@@ -15,14 +15,18 @@
     text-align: center;
 }
 
-.instruments-table {
+.instruments-table-container {
     width: 100%;
     border-collapse: collapse;
     background-color: #cecece;
     max-width:70%;
     justify-self: center;
+    overflow-x: auto;
 }
 
+.instruments-table{
+    width:100%
+}
 .instruments-table th, .instruments-table td {
     border: 2px solid #cecece; 
     padding: 8px;
@@ -62,3 +66,35 @@ min-width: 7rem;
 border:none
 }
   
+
+@media (max-width: 480px) {
+    .homepage-container {
+        padding: 5px;
+    }
+
+    .instruments-table-container {
+        width: 90%;
+        margin-left:5%;
+        border-collapse: collapse;
+        background-color: #cecece;
+        max-width:100%;
+        justify-self:flex-start;
+    }
+
+    .instruments-table {
+        padding:5px;
+        overflow: visible!important;
+    }
+
+    .instruments-table th, .instruments-table td {
+        border: 1px solid #cecece; 
+        padding: 0px 3px 3px 3px;
+        text-align:left;
+    }
+
+    .crunchbase-logo-container{
+        margin:0 5%;
+        padding-right:0;
+        text-align: right;
+    }
+}

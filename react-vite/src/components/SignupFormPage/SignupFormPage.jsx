@@ -58,7 +58,6 @@ function SignupFormPage() {
         body: JSON.stringify({ email }),
       });
       const data = await response.json();
-      console.log("!!!!!!!checkEmailExists response:", data); 
       if (data.exists) {
         return "This email is already registered.Please proceed to log in.";
       }

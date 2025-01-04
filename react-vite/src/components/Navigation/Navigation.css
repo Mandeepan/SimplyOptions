@@ -35,6 +35,7 @@
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
+  border: 1px white solid;
 }
 
 .search-result-item {
@@ -78,9 +79,7 @@
   display:none
 }
 
-.search-results-dropdown{
-  border: 1px white solid;
-}
+
 
 /* Following are for the profile button dropdown menu*/
 
@@ -127,4 +126,22 @@
 
 .profile-button-container-hidden{
   display: none;
+}
+
+
+@media (max-width: 480px) {
+  .search-results-dropdown {
+    position: absolute;
+    top:5rem;
+    left:10%;
+    background-color: #cecece;
+    color: rgb(126, 85, 246);
+    border: none;
+    border-radius: 3px;
+    width: 80%; 
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    border: 1px white solid;
+  }
 }

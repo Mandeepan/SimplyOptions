@@ -5,15 +5,14 @@ export default function GenericError() {
 
     console.error('Error:', error);
 
-    const errorMessage = error?.data || error?.message || "An unknown error occurred";
+    const errorMessage = error?.data || error?.message || "Page does not exist.";
 
     return (
         <div style={{ textAlign: 'center', padding: '2rem' }}>
-            <h1>Uh oh, something went wrong</h1>
-            <h2>We are currently experiencing some technical issues. Please try again later.</h2>
+            <h1 style={{fontSize: '1.5rem'}}>Uh oh, something went wrong</h1>
             {errorMessage && (
-                <p style={{ color: 'red', marginTop: '1rem' }}>
-                    {`Error Details: ${errorMessage}`}
+                <p className="error" style={{marginTop: '1rem', fontSize: '1rem' }}>
+                    {`${errorMessage}`}
                 </p>
             )}
         </div>

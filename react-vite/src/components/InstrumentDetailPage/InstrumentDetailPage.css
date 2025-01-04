@@ -130,3 +130,48 @@
     width: 100%;
     border-radius: 3px;
 }
+
+@media (max-width: 480px) {
+    .detail-page-header{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height:10rem;
+        margin-top:0;
+        margin-bottom: 0;
+    }
+
+    .detail-page-header h1{
+        font-size: 1.5rem
+    }
+
+    .instrument-details{
+        border:1px white solid;
+        width:90%;
+        margin-left:5%;
+        margin-right:5%!important;
+        border-radius: 5px;
+        padding-left:0.5rem;
+    }
+
+    .instrument-details h2{
+        font-size: 1.2rem
+    }
+    
+
+    .offer-listing-outer-container{
+        display: flex;
+        flex-direction: column;
+        margin: 2% 5%;
+        justify-content: space-evenly;
+    }
+
+    .offers-listing-table-container{
+        margin: 2% 0%;
+        width:100%;
+        overflow: scroll;
+        max-height:300px
+
+    }
+}
