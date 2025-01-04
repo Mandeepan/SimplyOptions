@@ -62,10 +62,6 @@
 
 
 @media (max-width: 480px) {
-    .delete-modal-container{
-        border:1px red solid;
-    }
-
     .delete-modal-container h1{
         font-size: 1.4rem;
     }

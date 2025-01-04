@@ -89,7 +89,8 @@
   padding:0.5rem 1rem;
   background-color: white;
   position: absolute;
-  right:2%
+  right:2%;
+  z-index:1000
 }
 .profile-dropdown > li {
   list-style-type: none;

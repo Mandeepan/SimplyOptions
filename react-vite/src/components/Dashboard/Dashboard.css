@@ -237,6 +237,9 @@
         flex-direction: column;
         margin:2% 2.5%;
     }
+    .std-info-content{
+        z-index:0
+    }
 
 
     .std-controller-head-banner{

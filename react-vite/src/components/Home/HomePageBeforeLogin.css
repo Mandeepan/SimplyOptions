@@ -147,6 +147,10 @@ li {
 
 /* iPad Screen Size */
 @media (max-width: 480px) {
+    .video-background {
+        display: none; /* Hide the video background on small screens */
+    }
+    
 .home-before-login-container {
     height: auto; 
 }

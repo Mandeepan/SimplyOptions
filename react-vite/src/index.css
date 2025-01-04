@@ -79,3 +79,11 @@ textarea, input, td{
 input:disabled{
     background-color: #dfdcdc;
 }
+
+@media (max-width: 480px){
+    .footer{
+        word-wrap: break-word;
+        margin-left:10%;
+        width:80%;
+    }
+}
