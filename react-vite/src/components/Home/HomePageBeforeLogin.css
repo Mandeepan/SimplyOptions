@@ -13,6 +13,7 @@
     height: 100%;
     overflow: hidden;
     z-index: -2;
+    pointer-events: none;
 }
 
 .fullscreen-video {
@@ -20,6 +21,7 @@
     height: 100%;
     object-fit: cover;
     filter: brightness(0.2); /* Dim the video with a dark tone */
+    pointer-events: none;
 }
 
 .video-overlay {
@@ -147,9 +149,6 @@ li {
 
 /* iPad Screen Size */
 @media (max-width: 480px) {
-    .video-background {
-        display: none; /* Hide the video background on small screens */
-    }
     
 .home-before-login-container {
     height: auto; 

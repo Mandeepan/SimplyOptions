@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 export default function HomePageBeforeLogin() {
     const navigate = useNavigate();
 
-    const handleLoginClick = () => {
+    const handleLoginClick = (e) => {
+        e.preventDefault();
         navigate("/login");
     };
 
-    const handleSignUpClick = () => {
-    navigate("/signup");
+    const handleSignUpClick = (e) => {
+        e.preventDefault();
+        navigate("/signup");
     };
     
 
