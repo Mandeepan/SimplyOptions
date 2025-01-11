@@ -186,6 +186,13 @@
         width:90%;
         margin-left:5%;
     }
+
+    .chat-history {
+        display: flex;
+        flex-direction: column;
+        padding:4%
+    }
+    
     .chat-input-container{
         width:90%;
         margin-left:5%;

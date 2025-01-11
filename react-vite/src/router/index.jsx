@@ -12,6 +12,7 @@ import UpdateCompanyPage from '../components/UpdateCompanyPage/UpdateCompanyPage
 import UpdateInstrumentPage from '../components/UpdateInstrumentPage/UpdateInstrumentPage';
 import GenericError from '../components/Error'
 import Policies from '../components/Policies'
+import UserGuide from '../components/UserGuide';
 // import GenericError from '../components/Error';
 // import * as api from './api';
 
@@ -62,6 +63,10 @@ export const router = createBrowserRouter([
             {
                 path:'policies',
                 element:<Policies />
+            },
+            {
+                path:'userGuide',
+                element:<UserGuide />
             },
             {
                 path:'404',

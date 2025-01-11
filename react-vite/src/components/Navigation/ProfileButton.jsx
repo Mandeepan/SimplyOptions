@@ -7,6 +7,8 @@ import { FaBriefcase } from "react-icons/fa";
 import { MdOutlineLogout } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaLayerGroup } from "react-icons/fa";
+import { FaBookOpen } from "react-icons/fa";
+
 
 
 
@@ -64,6 +66,11 @@ function ProfileButton() {
     
   }
 
+  const handleUserGuideClick=()=>{
+    navigate("/userGuide"); 
+    closeMenu()
+  }
+
   const profileButtonClassName = user ? "profile-button": "profile-button-hidden"
   return (
     <>
@@ -75,6 +82,10 @@ function ProfileButton() {
           {user ? (
             <>
               <li className='profile-username'>Hi, {user.first_name}</li>
+              <li className='profile-list-item-with-icon'>
+                <FaBookOpen />
+                <button className='profile-user-guide' onClick={handleUserGuideClick} >User Guide</button>
+              </li>
               <li className='profile-list-item-with-icon'>
                 <FaBriefcase />
                 <button className='profile-my-portfolio' onClick={handleIssuerPanelClick} >Issuer Panel</button>
